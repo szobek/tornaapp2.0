@@ -30,8 +30,12 @@ public class Welcome extends JFrame{
         pack();
 
 
-
-
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createDialog(null,users.get(0));
+            }
+        });
     }
 
     public void showUsers(){
@@ -50,7 +54,7 @@ public class Welcome extends JFrame{
 
         userListTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-
+                System.out.println("klikk");
                 if (!e.getValueIsAdjusting() && userListTable.getSelectedRow() != -1) {
                     int a = userListTable.convertRowIndexToModel(userListTable.getSelectedRow());
                     String email = userListTable.getModel().getValueAt(a, 2).toString();
@@ -59,7 +63,7 @@ public class Welcome extends JFrame{
                     while (!users.get(i).getEmail().equals(email)) {
                         i++;
                     }
-                    User modifyUser = (i>users.size()||i<0)?users.get(i):new User("","","","",0,new UserRight(0,false,false));
+                    User modifyUser = (i>users.size()||i<0)?new User("","","","",0,new UserRight(0,false,false)):users.get(i);
 
                     createDialog(null,modifyUser);
 
@@ -70,29 +74,9 @@ public class Welcome extends JFrame{
         sp2.setViewportView(userListTable);
     }
 
-    private void createDialog(final JFrame frame,User user){
-        final JDialog modelDialog = new JDialog(frame, "Swing Tester",
-                Dialog.ModalityType.APPLICATION_MODAL);
-        modelDialog.setBounds(132, 132, 300, 200);
-        Container dialogContainer = modelDialog.getContentPane();
-        dialogContainer.setLayout(new BorderLayout());
-        dialogContainer.add(new JLabel(user.getUserName()), BorderLayout.CENTER);
-        JPanel modalPanel = new JPanel();
-        modalPanel.setLayout(new FlowLayout());
-        JLabel lblFirstName = new JLabel(user.getFirstName());
-        JLabel lblLastName = new JLabel(user.getLastName());
-        JButton okButton = new JButton("Ok");
+    private void createDialog(JFrame frame,User user){
 
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modelDialog.setVisible(false);
-            }
-        });
-
-        modalPanel.add(okButton);
-        dialogContainer.add(modalPanel, BorderLayout.SOUTH);
-modelDialog.setVisible(true);
+        new ModalUserModify();
 
     }
 
