@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,12 +30,8 @@ public class Welcome extends JFrame{
         pack();
 
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createDialog(null);
-            }
-        });
+
+
     }
 
     public void showUsers(){
@@ -49,20 +47,42 @@ public class Welcome extends JFrame{
         }
         DefaultTableModel tm = new DefaultTableModel(tableData,columnNames);
         userListTable.setModel(tm);
+
+        userListTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+
+                if (!e.getValueIsAdjusting() && userListTable.getSelectedRow() != -1) {
+                    int a = userListTable.convertRowIndexToModel(userListTable.getSelectedRow());
+                    String email = userListTable.getModel().getValueAt(a, 2).toString();
+
+                    int i = 0;
+                    while (!users.get(i).getEmail().equals(email)) {
+                        i++;
+                    }
+                    User modifyUser = (i>users.size()||i<0)?users.get(i):new User("","","","",0,new UserRight(0,false,false));
+
+                    createDialog(null,modifyUser);
+
+                }
+
+            }
+        });
         sp2.setViewportView(userListTable);
     }
 
-    private void createDialog(final JFrame frame){
+    private void createDialog(final JFrame frame,User user){
         final JDialog modelDialog = new JDialog(frame, "Swing Tester",
                 Dialog.ModalityType.APPLICATION_MODAL);
         modelDialog.setBounds(132, 132, 300, 200);
         Container dialogContainer = modelDialog.getContentPane();
         dialogContainer.setLayout(new BorderLayout());
-        dialogContainer.add(new JLabel("                         Welcome to Swing!")
-                , BorderLayout.CENTER);
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new FlowLayout());
+        dialogContainer.add(new JLabel(user.getUserName()), BorderLayout.CENTER);
+        JPanel modalPanel = new JPanel();
+        modalPanel.setLayout(new FlowLayout());
+        JLabel lblFirstName = new JLabel(user.getFirstName());
+        JLabel lblLastName = new JLabel(user.getLastName());
         JButton okButton = new JButton("Ok");
+
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,9 +90,10 @@ public class Welcome extends JFrame{
             }
         });
 
-        panel1.add(okButton);
-        dialogContainer.add(panel1, BorderLayout.SOUTH);
+        modalPanel.add(okButton);
+        dialogContainer.add(modalPanel, BorderLayout.SOUTH);
 modelDialog.setVisible(true);
 
     }
+
 }
