@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Welcome extends JFrame{
@@ -9,7 +10,7 @@ public class Welcome extends JFrame{
     private JMenu sec;
     private JTable userListTable;
     private JScrollPane sp2;
-    private JScrollPane sc;
+
     private ArrayList<User> users;
     public Welcome(){
         showUsers();
@@ -17,6 +18,9 @@ public class Welcome extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        setTitle("Alkalmazás");
+        Image im = Toolkit.getDefaultToolkit().getImage("./src/main/resources/t5.png");
+        setIconImage(im);
         pack();
 
     }
