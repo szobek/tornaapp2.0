@@ -80,4 +80,39 @@ public class DBHandler {
 
         return users;
     }
+
+    public static boolean updateUserData(User user) {
+        Connection con = null;
+        try {
+            con = connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        boolean success=false;
+        if (con != null) {
+            try {
+
+                String query = "UPDATE `user_data` inner join users on users.id=user_data.user_id SET `first_name` = ?, `last_name`=?,`phone`=? WHERE users.email = ?";
+
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                preparedStmt.setString(1, user.getFirstName());
+                preparedStmt.setString(2, user.getLastName());
+                preparedStmt.setString(3, user.getPhone());
+                preparedStmt.setString(4, user.getEmail());
+                //
+
+                preparedStmt.executeUpdate();
+
+                con.close();
+                success=true;
+
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;
+    }
 }

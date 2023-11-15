@@ -20,11 +20,19 @@ public class ModalUserModify extends JDialog{
 
         if (user != null){
             this.user = user;
+Success.UPDATED.setSuc(false);
+
             setInputDatas();
         }
 
         saveButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null,"Mentés");
+
+            if (user != null){
+                getInputDatas();
+                DBHandler.updateUserData(user);
+
+
+            }
             dispose();
         });
         cancelButton.addActionListener(e -> {
@@ -40,6 +48,11 @@ public class ModalUserModify extends JDialog{
         txtVezetek.setText(this.user.getLastName());
         txtPhone.setText(this.user.getPhone());
         lblModifyUserName.setText(this.user.getUserName());
+    }
+    private void getInputDatas(){
+        this.user.setFirstName(txtKereszt.getText());
+        this.user.setLastName(txtVezetek.getText());
+        this.user.setPhone(txtPhone.getText());
     }
 
     public JPanel returnPanel(){

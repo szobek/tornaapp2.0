@@ -2,9 +2,9 @@ import javax.swing.*;
 
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 
 public class Welcome{
@@ -20,7 +20,9 @@ public class Welcome{
     private JMenuItem newUser;
     private JMenuItem userList;
     private JPanel contentPanel;
-
+private Object[][] tableData;
+private DefaultTableModel tableModel;
+private String[] columnNames = { "Név", "Telefon", "E-mail" };
     private JFrame welcome;
 
     private ArrayList<User> users;
@@ -49,17 +51,12 @@ createMenu();
         contentPanel.setVisible(true);
         scrollPane.setVisible(true);
         this.users = DBHandler.getAllFromDB();
-        String[] columnNames = { "Név", "Telefon", "E-mail" };
-        Object[][] tableData = new Object[users.size()][3];
-        for (int i = 0; i < users.size(); i++) {
-            tableData[i][0] = users.get(i).getUserName();
 
-            tableData[i][1] = users.get(i).getPhone();
-            tableData[i][2] = users.get(i).getEmail();
 
-        }
-        DefaultTableModel tm = new DefaultTableModel(tableData,columnNames);
-        userListTable.setModel(tm);
+        tableData = new Object[users.size()][3];
+reFreshTableData(tableData);
+        tableModel = new DefaultTableModel(tableData,columnNames);
+        userListTable.setModel(tableModel);
 userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 userListTable.setAutoCreateRowSorter(true);
 userListTable.setRowSelectionAllowed(true);
@@ -76,7 +73,7 @@ userListTable.setRowSelectionAllowed(true);
                 }
                 User modifyUser = (i>users.size()||i<0)?new User("","","","",0,new UserRight(0,false,false)):users.get(i);
 
-                createDialog(modifyUser);
+                createDialog(modifyUser,tableModel);
 
             }
 
@@ -86,22 +83,11 @@ userListTable.setRowSelectionAllowed(true);
 
     private void createMenu(){
 
-        userList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                showUsers();
-            }
-        });
-newUser.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        createDialog(null);
-    }
-});
+        userList.addActionListener(e -> showUsers());
+newUser.addActionListener(e -> createDialog(null,tableModel));
     }
 
-    private void createDialog(User user){
+    private void createDialog(User user, DefaultTableModel tm){
 
 
 
@@ -111,6 +97,24 @@ d.setContentPane(s);
         d.setSize(350,250);
         d.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         d.setVisible(true);
+
+        showUsers();
+    }
+
+    private void reFreshTableData(Object[][] tableData){
+        DefaultTableModel dm = (DefaultTableModel) userListTable.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+
+        for (int i = 0; i < users.size(); i++) {
+            tableData[i][0] = users.get(i).getUserName();
+            tableData[i][1] = users.get(i).getPhone();
+            tableData[i][2] = users.get(i).getEmail();
+
+        }
+
     }
 
 }
