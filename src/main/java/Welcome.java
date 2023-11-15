@@ -3,6 +3,8 @@ import javax.swing.*;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Welcome{
@@ -14,13 +16,16 @@ public class Welcome{
     private JScrollPane sp2;
     private JMenu thirdMenu;
     private JButton button1;
+    private JMenuBar menuBar;
+    private JMenuItem newUser;
+    private JMenuItem userList;
 
     private JFrame welcome;
 
     private ArrayList<User> users;
     public Welcome(){
         JFrame frame = new JFrame();
-        showUsers(frame);
+
 
         frame.setContentPane(WelcomePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,13 +36,13 @@ public class Welcome{
         frame.setIconImage(im);
         frame.pack();
 
-
+createMenu();
         button1.addActionListener(e -> {
 
         });
     }
 
-    public void showUsers(JFrame frame){
+    public void showUsers(){
         this.users = DBHandler.getAllFromDB();
         String[] columnNames = { "Név", "Telefon", "E-mail" };
         Object[][] tableData = new Object[users.size()][3];
@@ -71,7 +76,16 @@ public class Welcome{
         sp2.setViewportView(userListTable);
     }
 
-    private void createMenu(){}
+    private void createMenu(){
+
+        userList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showUsers();
+            }
+        });
+
+    }
 
     private void createDialog(User user){
 
