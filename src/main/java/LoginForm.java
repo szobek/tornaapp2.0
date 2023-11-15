@@ -13,31 +13,29 @@ public class LoginForm extends JFrame {
         setContentPane(loginPanel);
         setTitle("login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 textField1.setText("kunszt.norbert@gmail.com");
 passwordField1.setText("rrrrrr");
         pack();
         setVisible(true);
 
-        btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        btnLogin.addActionListener(e -> {
 
-                String email = textField1.getText();
-                String psw = PasswordHash.hashing(String.valueOf(passwordField1.getPassword()));
+            String email = textField1.getText();
+            String psw = PasswordHash.hashing(String.valueOf(passwordField1.getPassword()));
 
-                if(email.isEmpty())JOptionPane.showMessageDialog(null,"Email nem lehet üres");
+            if(email.isEmpty())JOptionPane.showMessageDialog(null,"Email nem lehet üres");
 
-                if(psw.isEmpty())JOptionPane.showMessageDialog(null,"Jelszó nem lehet üres");
+            if(psw.isEmpty())JOptionPane.showMessageDialog(null,"Jelszó nem lehet üres");
 
-                User user = DBHandler.checkLogin(email,psw);
+            User user = DBHandler.checkLogin(email,psw);
 
-                if(user!=null){
-                    openAnother();
-                } else {
-                    JOptionPane.showMessageDialog(null,"Hibás adatok");
-                }
-                System.out.println(user);
+            if(user!=null){
+                openAnother();
+            } else {
+                JOptionPane.showMessageDialog(null,"Hibás adatok");
             }
+            System.out.println(user);
         });
     }
 

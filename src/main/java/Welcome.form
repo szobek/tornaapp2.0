@@ -52,7 +52,7 @@
                   </component>
                 </children>
               </grid>
-              <grid id="22073" class="javax.swing.JMenu" binding="sec" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              <grid id="22073" class="javax.swing.JMenu" binding="secondNenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints/>
                 <properties>
                   <text value="Felhasználó"/>
@@ -62,12 +62,18 @@
                   <component id="bc644" class="javax.swing.JMenuItem">
                     <constraints/>
                     <properties>
-                      <text value="33"/>
+                      <text value="Új felhasználó"/>
+                    </properties>
+                  </component>
+                  <component id="14990" class="javax.swing.JMenuItem">
+                    <constraints/>
+                    <properties>
+                      <text value="Felhasználó lista"/>
                     </properties>
                   </component>
                 </children>
               </grid>
-              <grid id="801c1" class="javax.swing.JMenu" binding="thirsMenu" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="801c1" class="javax.swing.JMenu" binding="thirdMenu" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints/>
                 <properties>
