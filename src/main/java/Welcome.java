@@ -62,6 +62,7 @@ createMenu();
         userListTable.setModel(tm);
 userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 userListTable.setAutoCreateRowSorter(true);
+userListTable.setRowSelectionAllowed(true);
 
         userListTable.getSelectionModel().addListSelectionListener(e -> {
 
