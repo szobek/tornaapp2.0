@@ -13,21 +13,26 @@ public class Welcome{
     private JMenu firstMenu;
     private JMenu secondNenu;
     private JTable userListTable;
-    private JScrollPane sp2;
+    private JScrollPane scrollPane;
     private JMenu thirdMenu;
-    private JButton button1;
+
     private JMenuBar menuBar;
     private JMenuItem newUser;
     private JMenuItem userList;
+    private JPanel contentPanel;
 
     private JFrame welcome;
 
     private ArrayList<User> users;
     public Welcome(){
         JFrame frame = new JFrame();
+        frame.setBounds(100,100,800,600);
 
+//scrollPane.setVisible(false);
+        contentPanel.setVisible(false);
 
         frame.setContentPane(WelcomePanel);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -37,12 +42,12 @@ public class Welcome{
         frame.pack();
 
 createMenu();
-        button1.addActionListener(e -> {
 
-        });
     }
 
     public void showUsers(){
+        contentPanel.setVisible(true);
+        scrollPane.setVisible(true);
         this.users = DBHandler.getAllFromDB();
         String[] columnNames = { "Név", "Telefon", "E-mail" };
         Object[][] tableData = new Object[users.size()][3];
@@ -55,6 +60,8 @@ createMenu();
         }
         DefaultTableModel tm = new DefaultTableModel(tableData,columnNames);
         userListTable.setModel(tm);
+userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+userListTable.setAutoCreateRowSorter(true);
 
         userListTable.getSelectionModel().addListSelectionListener(e -> {
 
@@ -73,7 +80,7 @@ createMenu();
             }
 
         });
-        sp2.setViewportView(userListTable);
+        scrollPane.setViewportView(userListTable);
     }
 
     private void createMenu(){
@@ -81,10 +88,16 @@ createMenu();
         userList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 showUsers();
             }
         });
-
+newUser.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        createDialog(null);
+    }
+});
     }
 
     private void createDialog(User user){
