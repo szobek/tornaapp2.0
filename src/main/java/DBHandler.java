@@ -115,4 +115,48 @@ public class DBHandler {
         }
         return success;
     }
+
+    public static boolean saveNewUserInDb(User newUser) {
+        Connection con = null;
+        try {
+            con = connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        ResultSet rs;
+        long id = 0;
+        boolean success=false;
+        if (con != null) {
+            try {
+                String psw = PasswordHash.hashing("CTf23");
+                String query = "INSERT INTO `users` VALUES (NULL, '"+newUser.getEmail()+"', '"+psw+"', NULL, NULL, NULL, '0');";
+                Statement stmt = con.createStatement();
+
+                stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+                rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+
+                query = "insert into user_data (id,user_id,first_name,last_name,phone) values(null," + id + ",'"
+                        + newUser.getFirstName() + "','" + newUser.getLastName() + "','" + newUser.getPhone() + "')";
+                stmt = con.createStatement();
+                stmt.executeUpdate(query);
+
+                query = "insert into user_rights (id,user_id,newuser,listreserves) values(null," + id + ",0,0)";
+                stmt = con.createStatement();
+                stmt.executeUpdate(query);
+
+                con.close();
+                success=true;
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;
+
+    }
 }

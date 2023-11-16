@@ -49,6 +49,9 @@ Success.UPDATED.setSuc(false);
         txtPhone.setText(this.user.getPhone());
         lblModifyUserName.setText(this.user.getUserName());
     }
+    public User getDataFromModal(){
+        return new User(txtPhone.getText(),txtKereszt.getText(), txtVezetek.getText(), txtEmail.getText(),0,new UserRight(0,false,false));
+    }
     private void getInputDatas(){
         this.user.setFirstName(txtKereszt.getText());
         this.user.setLastName(txtVezetek.getText());
