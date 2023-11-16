@@ -103,6 +103,11 @@ if(user==null){
     User newUser = d.getDataFromModal();
     DBHandler.saveNewUserInDb(newUser);
 
+} else {
+
+   if (d.fn()){
+       DBHandler.deleteUser(user);
+   }
 }
         showUsers();
     }

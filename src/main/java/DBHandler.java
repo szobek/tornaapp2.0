@@ -155,4 +155,48 @@ public class DBHandler {
 
 
     }
+
+    public static boolean deleteUser(User user) {
+
+        Connection con
+
+                ;
+        try {
+            con = connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        boolean success=false;
+        if (con != null) {
+            try {
+
+                String query = "UPDATE `user_data` inner join users on users.id=user_data.user_id SET `first_name` = ?, `last_name`=?,`phone`=? WHERE users.email = ?";
+
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                preparedStmt.setString(1, "");
+                preparedStmt.setString(2, "");
+                preparedStmt.setString(3, "");
+                preparedStmt.setString(4, user.getEmail());
+
+
+                preparedStmt.executeUpdate();
+
+
+                query = "UPDATE `users` set deleted=1 WHERE users.email = ?";
+
+                preparedStmt = con.prepareStatement(query);
+                preparedStmt.setString(1, user.getEmail());
+                //
+
+                preparedStmt.executeUpdate();
+                con.close();
+                success=true;
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;	}
 }

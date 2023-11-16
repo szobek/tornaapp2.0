@@ -1,11 +1,11 @@
 import javax.swing.*;
 
 
-public class ModalUserModify extends JDialog{
+public class ModalUserModify extends JDialog {
     private JButton saveButton;
     private JTextField txtVezetek;
     private JTextField txtKereszt;
-    private  JPanel ModalMainPanel;
+    private JPanel ModalMainPanel;
     private JTextField txtPhone;
     private JTextField txtEmail;
     private JLabel lblEmail;
@@ -14,20 +14,21 @@ public class ModalUserModify extends JDialog{
     private JLabel lblPhone;
     private JLabel lblModifyUserName;
     private JButton cancelButton;
-    private  User user;
+    private JButton btnDeleteUser;
+    private User user;
 
     ModalUserModify(User user) {
 
-        if (user != null){
+        if (user != null) {
             this.user = user;
-Success.UPDATED.setSuc(false);
+            Success.UPDATED.setSuc(false);
 
             setInputDatas();
         }
 
         saveButton.addActionListener(e -> {
 
-            if (user != null){
+            if (user != null) {
                 getInputDatas();
                 DBHandler.updateUserData(user);
 
@@ -36,6 +37,11 @@ Success.UPDATED.setSuc(false);
             dispose();
         });
         cancelButton.addActionListener(e -> dispose());
+        btnDeleteUser.addActionListener(e -> {
+            Success.DELETED.setSuc(true);
+
+            dispose();
+        });
     }
 
     private void setInputDatas() {
@@ -46,18 +52,24 @@ Success.UPDATED.setSuc(false);
         txtPhone.setText(this.user.getPhone());
         lblModifyUserName.setText(this.user.getUserName());
     }
-    public User getDataFromModal(){
-        return new User(txtPhone.getText(),txtKereszt.getText(), txtVezetek.getText(), txtEmail.getText(),0,new UserRight(0,false,false));
+
+    public User getDataFromModal() {
+        return new User(txtPhone.getText(), txtKereszt.getText(), txtVezetek.getText(), txtEmail.getText(), 0, new UserRight(0, false, false));
     }
-    private void getInputDatas(){
+
+    private void getInputDatas() {
         this.user.setFirstName(txtKereszt.getText());
         this.user.setLastName(txtVezetek.getText());
         this.user.setPhone(txtPhone.getText());
     }
 
-    public JPanel returnPanel(){
-        ModalMainPanel.setSize(300,200);
+    public JPanel returnPanel() {
+        ModalMainPanel.setSize(300, 200);
         return ModalMainPanel;
+    }
+
+    public boolean fn() {
+        return Success.DELETED.isSuc();
     }
 
 }

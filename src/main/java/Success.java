@@ -1,5 +1,5 @@
 public enum Success {
-    UPDATED(false),INSERTED(true);
+    UPDATED(false),INSERTED(true),DELETED(false);
 
     private  boolean suc;
     private Success(boolean data){
