@@ -35,10 +35,7 @@ Success.UPDATED.setSuc(false);
             }
             dispose();
         });
-        cancelButton.addActionListener(e -> {
-
-            dispose();
-        });
+        cancelButton.addActionListener(e -> dispose());
     }
 
     private void setInputDatas() {

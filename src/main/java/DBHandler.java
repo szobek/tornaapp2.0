@@ -9,14 +9,14 @@ public class DBHandler {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tornaapp", "root", "");
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
         return con;
     }
 
     public static User checkLogin(String email, String password) {
         User user=null;
-        Connection con = null;
+        Connection con;
         try {
             con = connectToDb();
         } catch (Exception e) {
@@ -52,13 +52,13 @@ public class DBHandler {
 
     public static ArrayList<User> getAllFromDB() {
 
-        Connection con = null;
+        Connection con;
         try {
             con = connectToDb();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<>();
         if (con != null) {
             try {
                 String query = "select users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves from user_data inner join users on users.id=user_data.user_id inner join user_rights on user_rights.user_id=users.id where users.deleted=0";
@@ -81,15 +81,14 @@ public class DBHandler {
         return users;
     }
 
-    public static boolean updateUserData(User user) {
-        Connection con = null;
+    public static void updateUserData(User user) {
+        Connection con;
         try {
             con = connectToDb();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-        boolean success=false;
         if (con != null) {
             try {
 
@@ -105,7 +104,6 @@ public class DBHandler {
                 preparedStmt.executeUpdate();
 
                 con.close();
-                success=true;
 
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
@@ -113,11 +111,11 @@ public class DBHandler {
         } else {
             System.err.println("hiba...");
         }
-        return success;
+
     }
 
-    public static boolean saveNewUserInDb(User newUser) {
-        Connection con = null;
+    public static void saveNewUserInDb(User newUser) {
+        Connection con;
         try {
             con = connectToDb();
         } catch (Exception e) {
@@ -126,7 +124,6 @@ public class DBHandler {
         }
         ResultSet rs;
         long id = 0;
-        boolean success=false;
         if (con != null) {
             try {
                 String psw = PasswordHash.hashing("CTf23");
@@ -149,14 +146,13 @@ public class DBHandler {
                 stmt.executeUpdate(query);
 
                 con.close();
-                success=true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
-        return success;
+
 
     }
 }

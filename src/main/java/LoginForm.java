@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class LoginForm extends JFrame {
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JPanel loginPanel;
     private JButton btnLogin;
-private Action action;
 
     public LoginForm() {
         setContentPane(loginPanel);
@@ -19,17 +18,14 @@ passwordField1.setText("rrrrrr");
         pack();
         setVisible(true);
 //TODO enterre is jelentkezzen be
-action=new AbstractAction() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        checkLogin();
-    }
-};
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkLogin();
+            }
+        };
 passwordField1.addActionListener(action);
-        btnLogin.addActionListener(e -> {
-
-           checkLogin();
-        });
+        btnLogin.addActionListener(e -> checkLogin());
     }
 
     public static void main(String[] args) {

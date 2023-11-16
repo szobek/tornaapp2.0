@@ -2,7 +2,7 @@ import javax.swing.*;
 
 
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+
 import java.awt.*;
 
 import java.util.ArrayList;
@@ -20,9 +20,8 @@ public class Welcome{
     private JMenuItem newUser;
     private JMenuItem userList;
     private JPanel contentPanel;
-private Object[][] tableData;
-private DefaultTableModel tableModel;
-private String[] columnNames = { "Név", "Telefon", "E-mail" };
+    private DefaultTableModel tableModel;
+private final String[] columnNames = { "Név", "Telefon", "E-mail" };
     private JFrame welcome;
 
     private ArrayList<User> users;
@@ -50,10 +49,12 @@ createMenu();
     public void showUsers(){
         contentPanel.setVisible(true);
         scrollPane.setVisible(true);
+        scrollPane.getViewport().setSize(600,500);
+        userListTable.setSize(600,500);
         this.users = DBHandler.getAllFromDB();
 
 
-        tableData = new Object[users.size()][3];
+        Object[][] tableData = new Object[users.size()][3];
 reFreshTableData(tableData);
         tableModel = new DefaultTableModel(tableData,columnNames);
         userListTable.setModel(tableModel);
