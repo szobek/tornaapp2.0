@@ -95,13 +95,16 @@ newUser.addActionListener(e -> createDialog(null,tableModel));
         ModalUserModify d= new ModalUserModify(user);
         JPanel s =  d.returnPanel();
 d.setContentPane(s);
-        d.setSize(350,250);
+        d.setSize(400,250);
         d.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         d.setVisible(true);
 if(user==null){
     //TODO új user felvitele db-be visszajelzés
     User newUser = d.getDataFromModal();
-    DBHandler.saveNewUserInDb(newUser);
+
+    if(DBHandler.saveNewUserInDb(newUser)){
+        JOptionPane.showMessageDialog(null,"Új user mentve");
+    }
 
 } else {
 

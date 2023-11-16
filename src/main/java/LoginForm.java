@@ -17,7 +17,6 @@ textField1.setText("kunszt.norbert@gmail.com");
 passwordField1.setText("rrrrrr");
         pack();
         setVisible(true);
-//TODO enterre is jelentkezzen be
         Action action = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

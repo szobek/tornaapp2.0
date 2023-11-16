@@ -24,6 +24,8 @@ public class ModalUserModify extends JDialog {
             Success.UPDATED.setSuc(false);
 
             setInputDatas();
+        } else {
+            btnDeleteUser.setVisible(false);
         }
 
         saveButton.addActionListener(e -> {

@@ -114,8 +114,9 @@ public class DBHandler {
 
     }
 
-    public static void saveNewUserInDb(User newUser) {
+    public static boolean saveNewUserInDb(User newUser) {
         Connection con;
+        boolean success=false;
         try {
             con = connectToDb();
         } catch (Exception e) {
@@ -146,13 +147,14 @@ public class DBHandler {
                 stmt.executeUpdate(query);
 
                 con.close();
+                success=true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
-
+return success;
 
     }
 
