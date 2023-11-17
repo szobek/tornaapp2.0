@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class DBHandler {
     private static Connection connectToDb() {
@@ -160,9 +161,9 @@ return success;
 
     public static boolean deleteUser(User user) {
 
-        Connection con
+        //TODO át kell nézni!!
 
-                ;
+        Connection con;
         try {
             con = connectToDb();
         } catch (Exception e) {
@@ -172,26 +173,30 @@ return success;
         boolean success=false;
         if (con != null) {
             try {
+                UUID uuid = UUID.randomUUID();
+                String uuidAsString = uuid.toString();
 
-                String query = "UPDATE `user_data` inner join users on users.id=user_data.user_id SET `first_name` = ?, `last_name`=?,`phone`=? WHERE users.email = ?";
+                String email = user.getEmail();
+
+
+                String query = "UPDATE `users` " +
+                "inner join user_data on users.id=user_data.user_id " +
+                        "inner join user_rights on user_rights.user_id=users.id " +
+                        "SET  user_rights.newuser=0," +
+                        "user_rights.listreserves=0 ," +
+                        "user_data.first_name = ''," +
+                        "users.email='"+uuidAsString+"'," +
+                        "user_data.last_name='', " +
+                        "users.deleted=1 ," +
+                        "phone='' " +
+                        "WHERE users.email = ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
-                preparedStmt.setString(1, "");
-                preparedStmt.setString(2, "");
-                preparedStmt.setString(3, "");
-                preparedStmt.setString(4, user.getEmail());
+preparedStmt.setString(1,email);
 
 
                 preparedStmt.executeUpdate();
 
-
-                query = "UPDATE `users` set deleted=1 WHERE users.email = ?";
-
-                preparedStmt = con.prepareStatement(query);
-                preparedStmt.setString(1, user.getEmail());
-                //
-
-                preparedStmt.executeUpdate();
                 con.close();
                 success=true;
             } catch (SQLException e) {
