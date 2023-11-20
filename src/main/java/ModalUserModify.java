@@ -1,7 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 
-public class ModalUserModify extends JDialog {
+public class ModalUserModify {
     private JButton saveButton;
     private JTextField txtVezetek;
     private JTextField txtKereszt;
@@ -17,52 +19,85 @@ public class ModalUserModify extends JDialog {
     private JButton btnDeleteUser;
     private User user;
 
-    ModalUserModify(User user) {
+    ModalUserModify(User user, JFrame frame) {
 
-        if (user != null) {
-            this.user = user;
-            Success.UPDATED.setSuc(false);
+        createDialogBase(user, frame);
+    }
 
+    ModalUserModify(JFrame frame) {
+        createDialogBase(null, frame);
+    }
+
+    private void createDialogBase(User mUser, JFrame frame) {
+        JDialog dialog = new JDialog(frame, "Felhasználói adatok", true);
+        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+
+        JPanel s = returnPanel();
+        dialog.setContentPane(s);
+        if (mUser != null) {
+            this.user = mUser;
             setInputDatas();
-        } else {
-            btnDeleteUser.setVisible(false);
         }
-
-        saveButton.addActionListener(e -> {
-
-            if (user != null) {
-                getInputDatas();
-                DBHandler.updateUserData(user);
-
+        dialog.setSize(480, 250);
+        dialog.setLocationRelativeTo(null);
+        dialog.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                System.out.println("jdialog window closed");
 
             }
-            dispose();
+
+
         });
-        cancelButton.addActionListener(e -> dispose());
+        saveButton.addActionListener(e -> {
+            user=(user==null)?new User("","","","",0, new UserRight(0,false,false)):user;
+            if(user.getEmail().isEmpty()){
+                getInputDatas();
+                DBHandler.saveNewUserInDb(user);
+                dialog.dispose();
+            } else {
+getInputDatas();
+                if (DBHandler.updateUserData(user)) dialog.dispose();
+            }
+
+        });
+        cancelButton.addActionListener(e -> dialog.dispose());
+
+        if (user == null) btnDeleteUser.setVisible(false);
+
         btnDeleteUser.addActionListener(e -> {
             Success.DELETED.setSuc(true);
+            if (JOptionPane.showConfirmDialog(frame, "Valóban törli?", "Törlés", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
-            dispose();
+                if (Success.DELETED.isSuc()) {
+                    if(DBHandler.deleteUser(user)){
+                        dialog.dispose();
+                    }
+                }
+            }
+
+            dialog.dispose();
         });
+
+        dialog.setVisible(true);
+        dialog.pack();
     }
 
-    private void setInputDatas() {
+
+    public void setInputDatas() {
         txtEmail.setText(this.user.getEmail());
         txtEmail.setEnabled(this.user.getEmail().isEmpty());
-        txtKereszt.setText(this.user.getFirstName());
-        txtVezetek.setText(this.user.getLastName());
+        txtKereszt.setText(this.user.getLastName());
+        txtVezetek.setText(this.user.getFirstName());
         txtPhone.setText(this.user.getPhone());
         lblModifyUserName.setText(this.user.getUserName());
-    }
-
-    public User getDataFromModal() {
-        return new User(txtPhone.getText(), txtKereszt.getText(), txtVezetek.getText(), txtEmail.getText(), 0, new UserRight(0, false, false));
     }
 
     private void getInputDatas() {
         this.user.setFirstName(txtKereszt.getText());
         this.user.setLastName(txtVezetek.getText());
         this.user.setPhone(txtPhone.getText());
+        this.user.setEmail(txtEmail.getText());
     }
 
     public JPanel returnPanel() {
@@ -70,8 +105,6 @@ public class ModalUserModify extends JDialog {
         return ModalMainPanel;
     }
 
-    public boolean fn() {
-        return Success.DELETED.isSuc();
-    }
+
 
 }

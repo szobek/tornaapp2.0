@@ -3,7 +3,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private int userId;
+    private final int userId;
     private UserRight userRight;
 
 
@@ -19,7 +19,7 @@ public class User {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + ", telefon: " + phone;
+        return lastName + " " + firstName + ", telefon: " + phone;
     }
 
     public String getUserName() {
@@ -67,4 +67,7 @@ public class User {
         this.userRight = userRight;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

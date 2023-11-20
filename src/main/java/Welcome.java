@@ -5,9 +5,10 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 
+
 import java.util.ArrayList;
 
-public class Welcome{
+public class Welcome {
     private JPanel WelcomePanel;
     private JPanel meuPanel;
     private JMenu firstMenu;
@@ -20,14 +21,15 @@ public class Welcome{
     private JMenuItem newUser;
     private JMenuItem userList;
     private JPanel contentPanel;
-    private DefaultTableModel tableModel;
-private final String[] columnNames = { "Név", "Telefon", "E-mail" };
-    private JFrame welcome;
+    private final String[] columnNames = {"Név", "Telefon", "E-mail"};
+
 
     private ArrayList<User> users;
-    public Welcome(){
-        JFrame frame = new JFrame();
-        frame.setBounds(100,100,800,600);
+    private final JFrame frame;
+
+    public Welcome() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 800, 600);
 
 //scrollPane.setVisible(false);
         contentPanel.setVisible(false);
@@ -42,25 +44,25 @@ private final String[] columnNames = { "Név", "Telefon", "E-mail" };
         frame.setIconImage(im);
         frame.pack();
 
-createMenu();
+        createMenu();
 
     }
 
-    public void showUsers(){
+    public void showUsers() {
         contentPanel.setVisible(true);
         scrollPane.setVisible(true);
-        scrollPane.getViewport().setSize(600,500);
-        userListTable.setSize(600,500);
+        scrollPane.getViewport().setSize(600, 500);
+        userListTable.setSize(600, 500);
         this.users = DBHandler.getAllFromDB();
 
 
         Object[][] tableData = new Object[users.size()][3];
-reFreshTableData(tableData);
-        tableModel = new DefaultTableModel(tableData,columnNames);
+        reFreshTableData(tableData);
+        DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames);
         userListTable.setModel(tableModel);
-userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-userListTable.setAutoCreateRowSorter(true);
-userListTable.setRowSelectionAllowed(true);
+        userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userListTable.setAutoCreateRowSorter(true);
+        userListTable.setRowSelectionAllowed(true);
 
         userListTable.getSelectionModel().addListSelectionListener(e -> {
 
@@ -72,9 +74,9 @@ userListTable.setRowSelectionAllowed(true);
                 while (!users.get(i).getEmail().equals(email)) {
                     i++;
                 }
-                User modifyUser = (i>users.size()||i<0)?new User("","","","",0,new UserRight(0,false,false)):users.get(i);
+                User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(0, false, false)) : users.get(i);
 
-                createDialog(modifyUser,tableModel);
+                createDialog(modifyUser, frame);
 
             }
 
@@ -82,40 +84,23 @@ userListTable.setRowSelectionAllowed(true);
         scrollPane.setViewportView(userListTable);
     }
 
-    private void createMenu(){
+    private void createMenu() {
 
         userList.addActionListener(e -> showUsers());
-newUser.addActionListener(e -> createDialog(null,tableModel));
+        newUser.addActionListener(e -> createDialog(null, frame));
     }
 
-    private void createDialog(User user, DefaultTableModel tm){
+    private void createDialog(User user, JFrame frame) {
 
 
-
-        ModalUserModify d= new ModalUserModify(user);
-        JPanel s =  d.returnPanel();
-d.setContentPane(s);
-        d.setSize(400,250);
-        d.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        d.setVisible(true);
-if(user==null){
-    //TODO új user felvitele db-be visszajelzés
-    User newUser = d.getDataFromModal();
-
-    if(DBHandler.saveNewUserInDb(newUser)){
-        JOptionPane.showMessageDialog(null,"Új user mentve");
-    }
-
-} else {
-
-   if (d.fn()){
-       DBHandler.deleteUser(user);
-   }
-}
+        if (user == null) new ModalUserModify(frame);
+        else new ModalUserModify(user, frame);
         showUsers();
+
     }
 
-    private void reFreshTableData(Object[][] tableData){
+
+    private void reFreshTableData(Object[][] tableData) {
         DefaultTableModel dm = (DefaultTableModel) userListTable.getModel();
         int rowCount = dm.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -130,5 +115,6 @@ if(user==null){
         }
 
     }
+
 
 }

@@ -82,8 +82,10 @@ public class DBHandler {
         return users;
     }
 
-    public static void updateUserData(User user) {
+    public static boolean updateUserData(User user) {
+        System.out.println("módosított: "+user);
         Connection con;
+        boolean success = false;
         try {
             con = connectToDb();
         } catch (Exception e) {
@@ -105,14 +107,14 @@ public class DBHandler {
                 preparedStmt.executeUpdate();
 
                 con.close();
-
+success=true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
-
+return success;
     }
 
     public static boolean saveNewUserInDb(User newUser) {

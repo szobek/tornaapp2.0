@@ -1,5 +1,8 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class LoginForm extends JFrame {
@@ -25,6 +28,8 @@ passwordField1.setText("rrrrrr");
         };
 passwordField1.addActionListener(action);
         btnLogin.addActionListener(e -> checkLogin());
+
+
     }
 
     public static void main(String[] args) {
