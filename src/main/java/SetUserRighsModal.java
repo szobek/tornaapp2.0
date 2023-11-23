@@ -43,7 +43,7 @@ public class SetUserRighsModal {
         });
         btnCancel.addActionListener(e -> dialog.dispose());
         setInputData();
-
+buttonPanel.setSize(400,200);
 
         dialog.setVisible(true);
         dialog.pack();
