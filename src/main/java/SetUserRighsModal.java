@@ -10,13 +10,14 @@ public class SetUserRighsModal {
     private JButton btnSaveRights;
     private JButton btnCancel;
     private JPanel buttonPanel;
-private User user;
+    private User user;
+
     SetUserRighsModal(User user, JFrame frame) {
-         createDialogBase(user,frame);
+        createDialogBase(user, frame);
     }
 
     private void createDialogBase(User mUser, JFrame frame) {
-        this.user=mUser;
+        this.user = mUser;
         JDialog dialog = new JDialog(frame, "Felhasználói jogok", true);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
@@ -36,27 +37,25 @@ private User user;
 
         btnSaveRights.addActionListener(e -> {
             System.out.println("save!!!");
-getInputDatas();
-DBHandler.saveUserRightsInDB(user);
-dialog.dispose();
+            getInputDatas();
+            DBHandler.saveUserRightsInDB(user);
+            dialog.dispose();
         });
-       btnCancel.addActionListener(e -> dialog.dispose());
-setInputDatas();
-
-
+        btnCancel.addActionListener(e -> dialog.dispose());
+        setInputData();
 
 
         dialog.setVisible(true);
         dialog.pack();
     }
 
-    private void setInputDatas() {
+    private void setInputData() {
 
         cbCreateNewUser.setSelected(user.getUserRight().isCreateUser());
         cbReserveList.setSelected(user.getUserRight().isReserveList());
     }
 
     private void getInputDatas() {
-        this.user.setUserRight(new UserRight(this.user.getUserId(),cbReserveList.isSelected(),cbCreateNewUser.isSelected()));
+        this.user.setUserRight(new UserRight(this.user.getUserId(), cbReserveList.isSelected(), cbCreateNewUser.isSelected()));
     }
 }
