@@ -88,6 +88,7 @@ public class Welcome {
 
         userList.addActionListener(e -> showUsers());
         newUser.addActionListener(e -> createDialog(null, frame));
+
     }
 
     private void createDialog(User user, JFrame frame) {
@@ -98,6 +99,8 @@ public class Welcome {
         showUsers();
 
     }
+
+
 
 
     private void reFreshTableData(Object[][] tableData) {

@@ -17,18 +17,21 @@ public class ModalUserModify {
     private JLabel lblModifyUserName;
     private JButton cancelButton;
     private JButton btnDeleteUser;
+    private JButton btnUserRights;
     private User user;
 
     ModalUserModify(User user, JFrame frame) {
 
-        createDialogBase(user, frame);
+        createDialogBase(user, frame,true);
+
+
     }
 
     ModalUserModify(JFrame frame) {
-        createDialogBase(null, frame);
+        createDialogBase(null, frame,false);
     }
 
-    private void createDialogBase(User mUser, JFrame frame) {
+    private void createDialogBase(User mUser, JFrame frame, boolean widthter) {
         JDialog dialog = new JDialog(frame, "Felhasználói adatok", true);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
@@ -39,7 +42,8 @@ public class ModalUserModify {
             this.user = mUser;
             setInputDatas();
         }
-        dialog.setSize(480, 250);
+        if(widthter){dialog.setSize(620, 250);}else {dialog.setSize(480, 250);}
+
         dialog.setLocationRelativeTo(null);
         dialog.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
@@ -63,7 +67,10 @@ getInputDatas();
         });
         cancelButton.addActionListener(e -> dialog.dispose());
 
-        if (user == null) btnDeleteUser.setVisible(false);
+        if (user == null){
+            btnUserRights.setVisible(false);
+            btnDeleteUser.setVisible(false);
+        }
 
         btnDeleteUser.addActionListener(e -> {
             Success.DELETED.setSuc(true);
@@ -78,6 +85,7 @@ getInputDatas();
 
             dialog.dispose();
         });
+        btnUserRights.addActionListener(e ->   createRightsDialog(user,frame));
 
         dialog.setVisible(true);
         dialog.pack();
@@ -103,6 +111,13 @@ getInputDatas();
     public JPanel returnPanel() {
         ModalMainPanel.setSize(300, 200);
         return ModalMainPanel;
+    }
+
+    private void createRightsDialog(User user, JFrame frame) {
+        new SetUserRighsModal(user,frame);
+        System.out.println("open dialog");
+     //   showUsers();
+
     }
 
 
