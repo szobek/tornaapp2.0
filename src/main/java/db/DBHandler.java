@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import hash.PasswordHash;
 public class DBHandler {
-    private static Connection connectToDb() {
+    public static Connection connectToDb() {
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

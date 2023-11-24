@@ -30,24 +30,11 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="56696" class="javax.swing.JMenuItem">
+                  <component id="84502" class="javax.swing.JMenuItem" binding="menuItemReserveList">
                     <constraints/>
                     <properties>
-                      <selected value="false"/>
-                      <text value="Még egy"/>
-                    </properties>
-                  </component>
-                  <component id="90a18" class="javax.swing.JMenuItem">
-                    <constraints/>
-                    <properties>
-                      <selected value="false"/>
-                      <text value="Még egy"/>
-                    </properties>
-                  </component>
-                  <component id="84502" class="javax.swing.JMenuItem">
-                    <constraints/>
-                    <properties>
-                      <text value="Lista"/>
+                      <hideActionText value="false"/>
+                      <text value="Lista a foglalásokról"/>
                     </properties>
                   </component>
                 </children>

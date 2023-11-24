@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+
+import db.ReservesFromDB;
 import model.User;
 import model.UserRight;
 import db.DBHandler;
@@ -26,6 +28,7 @@ public class Welcome {
     private JMenuItem newUser;
     private JMenuItem userList;
     private JPanel contentPanel;
+    private JMenuItem menuItemReserveList;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
 
 
@@ -98,7 +101,7 @@ public class Welcome {
 
         userList.addActionListener(e -> showUsers());
         newUser.addActionListener(e -> createDialog(null, frame));
-
+menuItemReserveList.addActionListener(e->createReserveListDialog());
     }
 
     private void createDialog(User user, JFrame frame) {
@@ -109,7 +112,12 @@ public class Welcome {
         showUsers();
 
     }
+    private void createReserveListDialog() {
 
+        new ModalReserveList(frame);
+        showUsers();
+
+    }
 
 
 
