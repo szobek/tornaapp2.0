@@ -1,8 +1,10 @@
+import db.DBHandler;
+import hash.PasswordHash;
+import model.User;
+import modal.Welcome;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 
 public class LoginForm extends JFrame {
@@ -16,8 +18,8 @@ public class LoginForm extends JFrame {
         setTitle("login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-textField1.setText("kunszt.norbert@gmail.com");
-passwordField1.setText("rrrrrr");
+        textField1.setText("kunszt.norbert@gmail.com");
+        passwordField1.setText("rrrrrr");
         pack();
         setVisible(true);
         Action action = new AbstractAction() {
@@ -26,36 +28,36 @@ passwordField1.setText("rrrrrr");
                 checkLogin();
             }
         };
-passwordField1.addActionListener(action);
+        passwordField1.addActionListener(action);
         btnLogin.addActionListener(e -> checkLogin());
 
 
     }
 
     public static void main(String[] args) {
-new LoginForm();
+        new LoginForm();
     }
 
-    private void openAnother(){
+    private void openAnother() {
         new Welcome();
         dispose();
 
     }
 
-    private void checkLogin(){
+    private void checkLogin() {
         String email = textField1.getText();
         String psw = PasswordHash.hashing(String.valueOf(passwordField1.getPassword()));
 
-        if(email.isEmpty())JOptionPane.showMessageDialog(null,"Email nem lehet üres");
+        if (email.isEmpty()) JOptionPane.showMessageDialog(null, "Email nem lehet üres");
 
-        if(psw.isEmpty())JOptionPane.showMessageDialog(null,"Jelszó nem lehet üres");
+        if (psw.isEmpty()) JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres");
 
-        User user = DBHandler.checkLogin(email,psw);
+        User user = DBHandler.checkLogin(email, psw);
 
-        if(user!=null){
+        if (user != null) {
             openAnother();
         } else {
-            JOptionPane.showMessageDialog(null,"Hibás adatok");
+            JOptionPane.showMessageDialog(null, "Hibás adatok");
         }
 
     }

@@ -1,7 +1,17 @@
+package modal;
+
+
+
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import model.User;
+import db.DBHandler;
+import model.UserRight;
 
 public class SetUserRighsModal {
     private JPanel userRightsMainPanel;
@@ -38,8 +48,7 @@ public class SetUserRighsModal {
         btnSaveRights.addActionListener(e -> {
             System.out.println("save!!!");
             getInputDatas();
-            DBHandler.saveUserRightsInDB(user);
-            dialog.dispose();
+           if( DBHandler.saveUserRightsInDB(user)) dialog.dispose();
         });
         btnCancel.addActionListener(e -> dialog.dispose());
         setInputData();
@@ -56,6 +65,6 @@ buttonPanel.setSize(400,200);
     }
 
     private void getInputDatas() {
-        this.user.setUserRight(new UserRight(this.user.getUserId(), cbReserveList.isSelected(), cbCreateNewUser.isSelected()));
+        this.user.setUserRight(new UserRight( cbReserveList.isSelected(), cbCreateNewUser.isSelected()));
     }
 }

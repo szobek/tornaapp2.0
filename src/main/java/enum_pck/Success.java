@@ -1,8 +1,10 @@
+package enum_pck;
+
 public enum Success {
     UPDATED(false),INSERTED(true),DELETED(false);
 
     private  boolean suc;
-    private Success(boolean data){
+    Success(boolean data){
         this.suc=data;
     }
 

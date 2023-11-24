@@ -1,7 +1,13 @@
+package modal;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import model.User;
 
+import db.DBHandler;
+import model.UserRight;
+import enum_pck.Success;
 
 public class ModalUserModify {
     private JButton saveButton;
@@ -54,14 +60,20 @@ public class ModalUserModify {
 
         });
         saveButton.addActionListener(e -> {
-            user=(user==null)?new User("","","","",0, new UserRight(0,false,false)):user;
+            user=(user==null)?new User("","","","",0, new UserRight(false,false)):user;
             if(user.getEmail().isEmpty()){
                 getInputDatas();
-                DBHandler.saveNewUserInDb(user);
-                dialog.dispose();
+               if( DBHandler.saveNewUserInDb(user)) {
+                   Success.INSERTED.setSuc(true);
+                   if(Success.INSERTED.isSuc()) dialog.dispose();
+               }
+
             } else {
 getInputDatas();
-                if (DBHandler.updateUserData(user)) dialog.dispose();
+                if (DBHandler.updateUserData(user)){
+                    Success.UPDATED.setSuc(true);
+                    if(Success.UPDATED.isSuc()) dialog.dispose();
+                }
             }
 
         });
@@ -88,6 +100,10 @@ getInputDatas();
         btnUserRights.addActionListener(e ->   createRightsDialog(user,frame));
 
         dialog.setVisible(true);
+        lblEmail.setForeground(Color.BLACK);
+        lblVezetek.setForeground(Color.BLACK);
+        lblKereszt.setForeground(Color.BLACK);
+        lblPhone.setForeground(Color.BLACK);
         dialog.pack();
     }
 

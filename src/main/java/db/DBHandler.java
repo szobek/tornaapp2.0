@@ -1,7 +1,11 @@
+package db;
+
+import model.UserRight;
+import model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
-
+import hash.PasswordHash;
 public class DBHandler {
     private static Connection connectToDb() {
         Connection con = null;
@@ -36,7 +40,7 @@ public class DBHandler {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
 
-                    user = new User(rs.getString("phone"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getInt("id"), new UserRight(rs.getInt("id"),rs.getBoolean("listreserves"),rs.getBoolean("newuser")));
+                    user = new User(rs.getString("phone"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getInt("id"), new UserRight(rs.getBoolean("listreserves"),rs.getBoolean("newuser")));
                 } else {
                     System.err.println("hiba a loginnal");
                 }
@@ -68,7 +72,7 @@ public class DBHandler {
                 while (rs.next()) {
                     users.add(new User(rs.getString("phone"), rs.getString("first_name"),
                             rs.getString("last_name"), rs.getString("email"),rs.getInt("id"),
-                            new UserRight(rs.getInt("id"),rs.getBoolean("listreserves"),rs.getBoolean("newuser"))));
+                            new UserRight(rs.getBoolean("listreserves"),rs.getBoolean("newuser"))));
                 }
 
 
@@ -210,7 +214,7 @@ preparedStmt.setString(1,email);
         return success;	}
 
     public static boolean saveUserRightsInDB(User user) {
-        Connection con = null;
+        Connection con;
         try {
             con = connectToDb();
         } catch (Exception e) {

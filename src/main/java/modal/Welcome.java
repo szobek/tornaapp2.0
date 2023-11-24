@@ -1,9 +1,14 @@
+package modal;
+
 import javax.swing.*;
 
 
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+import model.User;
+import model.UserRight;
+import db.DBHandler;
 
 
 import java.util.ArrayList;
@@ -42,6 +47,11 @@ public class Welcome {
         frame.setTitle("Alkalmazás");
         Image im = Toolkit.getDefaultToolkit().getImage("./src/main/resources/t5.png");
         frame.setIconImage(im);
+        meuPanel.setVisible(true);
+        firstMenu.setVisible(true);
+        secondNenu.setVisible(true);
+        thirdMenu.setVisible(true);
+        menuBar.setVisible(true);
         frame.pack();
 
         createMenu();
@@ -74,7 +84,7 @@ public class Welcome {
                 while (!users.get(i).getEmail().equals(email)) {
                     i++;
                 }
-                User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(0, false, false)) : users.get(i);
+                User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight( false, false)) : users.get(i);
 
                 createDialog(modifyUser, frame);
 
