@@ -1,18 +1,11 @@
 package modal;
 
 import javax.swing.*;
-
-
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.*;
-
-import db.ReservesFromDB;
 import model.User;
 import model.UserRight;
 import db.DBHandler;
-
-
 import java.util.ArrayList;
 
 public class Welcome {
@@ -29,6 +22,7 @@ public class Welcome {
     private JMenuItem userList;
     private JPanel contentPanel;
     private JMenuItem menuItemReserveList;
+    private JMenuItem menuItemCreateReserve;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
 
 
@@ -56,9 +50,12 @@ public class Welcome {
         thirdMenu.setVisible(true);
         menuBar.setVisible(true);
         frame.pack();
-
         createMenu();
 
+    }
+
+    private void getDataFromDB(){
+        this.users = DBHandler.getAllFromDB();
     }
 
     public void showUsers() {
@@ -66,7 +63,7 @@ public class Welcome {
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         userListTable.setSize(600, 500);
-        this.users = DBHandler.getAllFromDB();
+        getDataFromDB();
 
 
         Object[][] tableData = new Object[users.size()][3];
@@ -102,6 +99,7 @@ public class Welcome {
         userList.addActionListener(e -> showUsers());
         newUser.addActionListener(e -> createDialog(null, frame));
 menuItemReserveList.addActionListener(e->createReserveListDialog());
+menuItemCreateReserve.addActionListener(e->createReserveMakeDialog());
     }
 
     private void createDialog(User user, JFrame frame) {
@@ -118,7 +116,12 @@ menuItemReserveList.addActionListener(e->createReserveListDialog());
         showUsers();
 
     }
+    private void createReserveMakeDialog() {
+        getDataFromDB();
+        new ModalCreateReserve(frame,users);
+        //showUsers();
 
+    }
 
 
     private void reFreshTableData(Object[][] tableData) {

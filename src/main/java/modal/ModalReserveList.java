@@ -1,6 +1,6 @@
 package modal;
 
-import db.ReservesFromDB;
+import db.ReservesInDB;
 import model.Reserve;
 
 import javax.swing.*;
@@ -16,16 +16,13 @@ public class ModalReserveList {
     private JLabel lblTest;
     private ArrayList<Reserve> reserves;
 
-    ModalReserveList(JFrame frame){
+    ModalReserveList(JFrame frame) {
         JDialog dialog = new JDialog(frame, "Felhasználói adatok", true);
-dialog.setLayout(new FlowLayout());
-labelPanel.setVisible(true);
-lblTest.setText("valamo");
-lblTest.setVisible(true);
-dialog.setContentPane(ReserveListMainPanel);
+        dialog.setLayout(new FlowLayout());
+        dialog.setContentPane(ReserveListMainPanel);
         showReserves();
         dialog.setTitle("foglalások");
-        dialog.setSize(600,800);
+        dialog.setSize(600, 800);
         dialog.setLocationRelativeTo(null);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -36,14 +33,14 @@ dialog.setContentPane(ReserveListMainPanel);
         dialog.pack();
     }
 
-    private void showReserves(){
-        this.reserves=ReservesFromDB.getAllReserves();
+    private void showReserves() {
+        this.reserves = ReservesInDB.getAllReserves();
         ReserveListMainPanel.setVisible(true);
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
-        reserveListTable.setSize(600,500);
-        System.out.println("a méret: "+reserves.size());
-        String[] columnNames = {"id","mettől","meddig"};
+        reserveListTable.setSize(600, 500);
+        System.out.println("a méret: " + reserves.size());
+        String[] columnNames = {"id", "mettől", "meddig"};
         Object[][] tableData = new Object[reserves.size()][3];
         for (int i = 0; i < reserves.size(); i++) {
             tableData[i][0] = reserves.get(i).getId();
@@ -52,7 +49,7 @@ dialog.setContentPane(ReserveListMainPanel);
 
         }
         DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames);
-       // System.out.println(tableModel);
+        // System.out.println(tableModel);
         reserveListTable.setModel(tableModel);
         //System.out.println(reserveListTable);
         reserveListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -61,7 +58,8 @@ dialog.setContentPane(ReserveListMainPanel);
         reserveListTable.setVisible(true);
         scrollPane.setViewportView(reserveListTable);
     }
-    private void addDataToTable(Object[][] tableData){
+
+    private void addDataToTable(Object[][] tableData) {
         for (int i = 0; i < reserves.size(); i++) {
             tableData[i][0] = "users.get(i).getUserName()";
             tableData[i][1] = "users.get(i).getPhone()";

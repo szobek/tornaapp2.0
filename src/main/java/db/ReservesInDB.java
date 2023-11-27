@@ -1,0 +1,74 @@
+package db;
+
+import model.Reserve;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class ReservesInDB {
+    public static ArrayList<Reserve> getAllReserves() {
+        Connection con;
+        try {
+            con = DBHandler.connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        String query;
+        ArrayList<Reserve> reserves = new ArrayList<>();
+        if (con != null) {
+            try {
+                query = "select * from reserve";
+                PreparedStatement stmt = con.prepareStatement(query);
+
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next())
+                    reserves.add(new Reserve(rs.getInt("id"), rs.getInt("user_id"),
+                            rs.getTimestamp("from"), rs.getTimestamp("to")));
+
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return reserves;
+    }
+
+    public static boolean saveReserve(Reserve reserve) {
+        Connection con;
+        String query;
+        boolean success=false;
+        try {
+            con = DBHandler.connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+
+        if (con != null) {
+            try {
+                query = "insert into reserve  values (null,?,?,?)";
+                PreparedStatement stmt = con.prepareStatement(query);
+
+                stmt.setInt(1,reserve.getUserId());
+                stmt.setTimestamp(2,reserve.getFrom());
+                stmt.setTimestamp(3,reserve.getTo());
+                stmt.executeUpdate();
+                con.close();
+                success=true;
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba... con null");
+        }
+        return success;
+    }
+}

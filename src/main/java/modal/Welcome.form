@@ -37,6 +37,12 @@
                       <text value="Lista a foglalásokról"/>
                     </properties>
                   </component>
+                  <component id="2c67a" class="javax.swing.JMenuItem" binding="menuItemCreateReserve">
+                    <constraints/>
+                    <properties>
+                      <text value="Foglalás létrehozása"/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
               <grid id="22073" class="javax.swing.JMenu" binding="secondNenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">

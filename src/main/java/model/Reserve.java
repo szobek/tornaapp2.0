@@ -6,17 +6,20 @@ public class Reserve {
     private final Timestamp from;
     private final Timestamp to;
     private final int id;
+    private final int userId;
 
-    public Reserve(int id,Timestamp from, Timestamp to) {
+    public Reserve(int id,int userId,Timestamp from, Timestamp to) {
         this.from = from;
         this.to = to;
         this.id=id;
+        this.userId=userId;
     }
 
     @Override
     public String toString() {
         return "Reserve{" +
-                "from=" + from +
+                "user_id: "+userId+
+                ", from=" + from +
                 ", to=" + to +
                 '}';
     }
@@ -31,5 +34,9 @@ public class Reserve {
 
     public int getId() {
         return id;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

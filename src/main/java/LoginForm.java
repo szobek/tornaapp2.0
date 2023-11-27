@@ -16,6 +16,10 @@ public class LoginForm extends JFrame {
     public LoginForm() {
         setContentPane(loginPanel);
         setTitle("login");
+
+
+
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         textField1.setText("kunszt.norbert@gmail.com");
@@ -61,4 +65,5 @@ public class LoginForm extends JFrame {
         }
 
     }
+
 }
