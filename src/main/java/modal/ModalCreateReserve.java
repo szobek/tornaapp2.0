@@ -25,12 +25,14 @@ public class ModalCreateReserve {
     private JButton btnSave;
     private JButton btnCancel;
     private JComboBox<User> cbUser;
+    private JPanel toPanel;
     private final ArrayList<String> days = new ArrayList<>();
     private final ArrayList<User> users;
 
 
     ModalCreateReserve(JFrame frame, ArrayList<User> users) {
         this.users = users;
+        toPanel.setVisible(false);
         JDialog dialog = new JDialog(frame, "Felhasználói adatok", true);
         createListeners(dialog);
         dialog.setContentPane(createReserveMainPanel);
@@ -53,22 +55,21 @@ public class ModalCreateReserve {
         cbModel.setSelectedItem(users.get(0));
     }
 
-    private void setDayInCombox(JComboBox<String> box) {
+    private void setDayInCombox(JComboBox<String> boxYear, JComboBox<String> boxMonth, JComboBox<String> boxDay) {
+
         DefaultComboBoxModel<String> cbModel = new DefaultComboBoxModel<>();
-        box.setModel(cbModel);
-        setDayModelInFromCombobox(Objects.requireNonNull(cbFromMonth.getSelectedItem()).toString());
-        setDayModelInFromCombobox(Objects.requireNonNull(cbToDay.getSelectedItem()).toString());
+        boxDay.setModel(cbModel);
         cbModel.removeAllElements();
+        setDays(boxYear, boxMonth);
         cbModel.addAll(days);
-        box.setSelectedIndex(0);
+        boxDay.setSelectedIndex(0);
     }
 
-    private void setDayModelInFromCombobox(String month) {
-
-
+    private void setDays(JComboBox<String> boxYear, JComboBox<String> boxMonth) {
+        String month = Objects.requireNonNull(boxMonth.getSelectedItem()).toString();
         int dayInMonth = switch (month) {
             case "01", "03", "05", "07", "08", "10", "12" -> 31;
-            case "02" -> (leap()) ? 29 : 28;
+            case "02" -> (leap(boxYear)) ? 29 : 28;
             case "04", "06", "09", "11" -> 30;
             default -> 10;
         };
@@ -76,8 +77,6 @@ public class ModalCreateReserve {
         for (int i = 1; i <= dayInMonth; i++) {
             days.add(i + "");
         }
-
-
     }
 
     private void createListeners(JDialog dialog) {
@@ -87,20 +86,27 @@ public class ModalCreateReserve {
 
 
         //set from days
-        cbFromYear.addActionListener(e -> setDayModelInFromCombobox(Objects.requireNonNull(cbFromMonth.getSelectedItem()).toString()));
+        cbFromYear.addActionListener(e -> {
+            setDayInCombox(cbFromYear, cbFromMonth, cbFromDay);
+            toPanel.setVisible(true);
+        });
 
-        cbFromMonth.addActionListener(e -> setDayModelInFromCombobox(Objects.requireNonNull(cbFromMonth.getSelectedItem()).toString()));
+        cbFromMonth.addActionListener(e -> {
+            setDayInCombox(cbFromYear, cbFromMonth, cbFromDay);
+            toPanel.setVisible(true);
+        });
+
 
         // set to days
 
-        cbToYear.addActionListener(e -> setDayModelInFromCombobox(Objects.requireNonNull(cbToMonth.getSelectedItem()).toString()));
+        cbToYear.addActionListener(e -> setDayInCombox(cbToYear, cbToMonth, cbToDay));
 
-        cbToMonth.addActionListener(e -> setDayModelInFromCombobox(Objects.requireNonNull(cbToMonth.getSelectedItem()).toString()));
+        cbToMonth.addActionListener(e -> setDayInCombox(cbToYear, cbToMonth, cbToDay));
     }
 
 
-    private boolean leap() {
-        int year = Integer.parseInt(Objects.requireNonNull(cbFromYear.getSelectedItem()).toString());
+    private boolean leap(JComboBox<String> boxYear) {
+        int year = Integer.parseInt(Objects.requireNonNull(boxYear.getSelectedItem()).toString());
         boolean leap;
         if (year % 4 == 0) {
             if (year % 100 == 0) {
@@ -114,7 +120,6 @@ public class ModalCreateReserve {
     }
 
 
-
     private void createReserve(JDialog dialog) {
 
         String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
@@ -123,24 +128,24 @@ public class ModalCreateReserve {
         String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
         String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
 
-        int userId=users.get(cbUser.getSelectedIndex()).getUserId();
+        int userId = users.get(cbUser.getSelectedIndex()).getUserId();
 
 
-        Timestamp reserveFromDate = Timestamp.valueOf( from);
-        Timestamp reserveToDate = Timestamp.valueOf( to);
+        Timestamp reserveFromDate = Timestamp.valueOf(from);
+        Timestamp reserveToDate = Timestamp.valueOf(to);
         // comapre dates (-1,0,1)
-if(reserveToDate.compareTo(reserveFromDate) > -1){
+        if (reserveToDate.compareTo(reserveFromDate) > -1) {
 
-    Reserve reserve = new Reserve(0,userId,reserveFromDate,reserveToDate);
-    if(ReservesInDB.saveReserve(reserve)){
-        JOptionPane.showMessageDialog(null,"Foglalás mentve","Üzenet", JOptionPane.INFORMATION_MESSAGE);
-        dialog.dispose();
-    } else{
-        JOptionPane.showMessageDialog(null,"Foglalást nem sikerült menteni","Üzenet", JOptionPane.ERROR_MESSAGE);
-    }
-} else{
-    JOptionPane.showMessageDialog(null,"A meddig nem lehet kisebb mint a mettől!","Üzenet", JOptionPane.ERROR_MESSAGE);
-}
+            Reserve reserve = new Reserve(0, userId, reserveFromDate, reserveToDate);
+            if (ReservesInDB.saveReserve(reserve)) {
+                JOptionPane.showMessageDialog(null, "Foglalás mentve", "Üzenet", JOptionPane.INFORMATION_MESSAGE);
+                dialog.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Foglalást nem sikerült menteni", "Üzenet", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "A meddig nem lehet kisebb mint a mettől!", "Üzenet", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }
