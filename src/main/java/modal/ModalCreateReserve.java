@@ -24,7 +24,7 @@ public class ModalCreateReserve {
     private JComboBox<String> cbToMinute;
     private JButton btnSave;
     private JButton btnCancel;
-    private JComboBox cbUser;
+    private JComboBox<User> cbUser;
     private final ArrayList<String> days = new ArrayList<>();
     private final ArrayList<User> users;
 
@@ -119,8 +119,10 @@ public class ModalCreateReserve {
 
         String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
         String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
+
         String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
         String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
+
         int userId=users.get(cbUser.getSelectedIndex()).getUserId();
 
 

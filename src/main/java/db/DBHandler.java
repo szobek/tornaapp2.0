@@ -6,6 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
 import hash.PasswordHash;
+
+import javax.swing.*;
+
 public class DBHandler {
     public static Connection connectToDb() {
         Connection con = null;
@@ -15,6 +18,10 @@ public class DBHandler {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+        if(con==null) {
+            JOptionPane.showMessageDialog(null,"nem sikerült az adatbázishoz csatlakozni", "Csatlakozási hiba",JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         return con;
     }
