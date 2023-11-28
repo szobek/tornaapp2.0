@@ -37,7 +37,7 @@ public class ModalCreateReserve {
         createListeners(dialog);
         dialog.setContentPane(createReserveMainPanel);
         setUserCombobox();
-        dialog.setSize(500, 600);
+        dialog.setSize(500, 490);
 
         dialog.setLocationRelativeTo(null);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

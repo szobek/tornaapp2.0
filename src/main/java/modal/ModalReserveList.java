@@ -12,8 +12,6 @@ public class ModalReserveList {
     private JPanel ReserveListMainPanel;
     private JTable reserveListTable;
     private JScrollPane scrollPane;
-    private JPanel labelPanel;
-    private JLabel lblTest;
     private ArrayList<Reserve> reserves;
 
     ModalReserveList(JFrame frame) {
