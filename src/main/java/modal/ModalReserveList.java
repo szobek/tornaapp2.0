@@ -37,7 +37,7 @@ public class ModalReserveList {
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         reserveListTable.setSize(600, 500);
-        System.out.println("a méret: " + reserves.size());
+//        System.out.println("a méret: " + reserves.size());
         String[] columnNames = {"id", "mettől", "meddig"};
         Object[][] tableData = new Object[reserves.size()][3];
         for (int i = 0; i < reserves.size(); i++) {

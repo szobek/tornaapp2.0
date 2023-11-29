@@ -1,11 +1,14 @@
 package modal;
 
+import db.DBHandler;
+import db.RoomsInDb;
+import model.Room;
+import model.User;
+import model.UserRight;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import model.User;
-import model.UserRight;
-import db.DBHandler;
 import java.util.ArrayList;
 
 public class Welcome {
@@ -23,8 +26,10 @@ public class Welcome {
     private JPanel contentPanel;
     private JMenuItem menuItemReserveList;
     private JMenuItem menuItemCreateReserve;
+    private JMenuItem newRoomMenuItem;
+    private JMenuItem roomListMenuItem;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
-
+    private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
     private final JFrame frame;
@@ -54,7 +59,7 @@ public class Welcome {
 
     }
 
-    private void getDataFromDB(){
+    private void getDataFromDB() {
         this.users = DBHandler.getAllFromDB();
     }
 
@@ -84,7 +89,7 @@ public class Welcome {
                 while (!users.get(i).getEmail().equals(email)) {
                     i++;
                 }
-                User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight( false, false)) : users.get(i);
+                User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(false, false)) : users.get(i);
 
                 createDialog(modifyUser, frame);
 
@@ -98,8 +103,14 @@ public class Welcome {
 
         userList.addActionListener(e -> showUsers());
         newUser.addActionListener(e -> createDialog(null, frame));
-menuItemReserveList.addActionListener(e->createReserveListDialog());
-menuItemCreateReserve.addActionListener(e->createReserveMakeDialog());
+        menuItemReserveList.addActionListener(e -> createReserveListDialog());
+        menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
+        roomListMenuItem.addActionListener(e -> getRoomsFromDb());
+    }
+
+    private void getRoomsFromDb() {
+        rooms = RoomsInDb.getAllRooms();
+        new ModalRoomList(frame, rooms);
     }
 
     private void createDialog(User user, JFrame frame) {
@@ -110,15 +121,17 @@ menuItemCreateReserve.addActionListener(e->createReserveMakeDialog());
         showUsers();
 
     }
+
     private void createReserveListDialog() {
 
         new ModalReserveList(frame);
         showUsers();
 
     }
+
     private void createReserveMakeDialog() {
         getDataFromDB();
-        new ModalCreateReserve(frame,users);
+        new ModalCreateReserve(frame, users);
         //showUsers();
 
     }
