@@ -8,19 +8,24 @@ public class Reserve {
     private final int id;
     private final int userId;
 
-    public Reserve(int id,int userId,Timestamp from, Timestamp to) {
+    private final int roomId;
+
+    public Reserve(int id,int roomId,int userId,Timestamp from, Timestamp to) {
         this.from = from;
         this.to = to;
         this.id=id;
         this.userId=userId;
+        this.roomId=roomId;
     }
 
     @Override
     public String toString() {
         return "Reserve{" +
-                "user_id: "+userId+
-                ", from=" + from +
+                "from=" + from +
                 ", to=" + to +
+                ", id=" + id +
+                ", userId=" + userId +
+                ", roomId=" + roomId +
                 '}';
     }
 
@@ -38,5 +43,9 @@ public class Reserve {
 
     public int getUserId() {
         return userId;
+    }
+
+    public int getRoomId() {
+        return roomId;
     }
 }

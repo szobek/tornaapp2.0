@@ -27,7 +27,7 @@ public class ReservesInDB {
 
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next())
-                    reserves.add(new Reserve(rs.getInt("id"), rs.getInt("user_id"),
+                    reserves.add(new Reserve(rs.getInt("id"),rs.getInt("room_id"), rs.getInt("user_id"),
                             rs.getTimestamp("from"), rs.getTimestamp("to")));
 
                 con.close();
@@ -54,12 +54,13 @@ public class ReservesInDB {
 
         if (con != null) {
             try {
-                query = "insert into reserve  values (null,?,?,?)";
+                query = "insert into reserve  values (null,?,?,?,?)";
                 PreparedStatement stmt = con.prepareStatement(query);
 
                 stmt.setInt(1,reserve.getUserId());
                 stmt.setTimestamp(2,reserve.getFrom());
                 stmt.setTimestamp(3,reserve.getTo());
+                stmt.setInt(4,reserve.getRoomId());
                 stmt.executeUpdate();
                 con.close();
                 success=true;

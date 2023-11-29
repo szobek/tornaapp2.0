@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="WelcomePanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="654" height="665"/>
+      <xy x="20" y="20" width="654" height="690"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -66,14 +66,26 @@
                   </component>
                 </children>
               </grid>
-              <grid id="801c1" class="javax.swing.JMenu" binding="thirdMenu" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="801c1" class="javax.swing.JMenu" binding="thirdMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints/>
                 <properties>
-                  <text value="Harmadik"/>
+                  <text value="Szobák"/>
                 </properties>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="fa620" class="javax.swing.JMenuItem" binding="newRoomMenuItem">
+                    <constraints/>
+                    <properties>
+                      <text value="Új szoba"/>
+                    </properties>
+                  </component>
+                  <component id="38df3" class="javax.swing.JMenuItem" binding="roomListMenuItem">
+                    <constraints/>
+                    <properties>
+                      <text value="Szoba lista"/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
             </children>
           </grid>
