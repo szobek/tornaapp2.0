@@ -8,6 +8,7 @@ import model.User;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -20,13 +21,15 @@ public class Welcome {
     private JMenuItem menuItemCreateReserve;
     private JMenuItem roomListMenuItem;
     private JTextArea txtwelcome;
+    private JEditorPane html;
+    private JScrollPane htmlScrollPane;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
     private final JFrame frame;
 
-    public Welcome() {
+    public Welcome()  {
         frame = new JFrame();
 
         frame.setTitle("Alkalmazás");
@@ -41,6 +44,15 @@ public class Welcome {
         frame.setIconImage(im);
         frame.pack();
         createMenu();
+        htmlScrollPane.setPreferredSize(new Dimension(300,300));
+        // \src\main\resources
+        URL htmlFileUrl = getClass().getClassLoader().getResource("1.html");
+        try {
+            html.setPage(htmlFileUrl);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        htmlScrollPane.setViewportView(html);
 
     }
 
