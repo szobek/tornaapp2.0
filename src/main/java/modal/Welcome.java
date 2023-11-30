@@ -4,28 +4,27 @@ import db.DBHandler;
 import db.RoomsInDb;
 import model.Room;
 import model.User;
-import model.UserRight;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Welcome {
     private JPanel WelcomePanel;
-    private JPanel meuPanel;
     private JMenu firstMenu;
     private JMenu secondNenu;
     private JMenu thirdMenu;
 
-    private JMenuBar menuBar;
     private JMenuItem newUser;
     private JMenuItem userList;
-    private JPanel contentPanel;
     private JMenuItem menuItemReserveList;
     private JMenuItem menuItemCreateReserve;
     private JMenuItem newRoomMenuItem;
     private JMenuItem roomListMenuItem;
+    private JPanel menupanel;
+    private JTextArea txtwelcome;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     private ArrayList<Room> rooms;
 
@@ -34,28 +33,23 @@ public class Welcome {
 
     public Welcome() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 800, 600);
 
-//scrollPane.setVisible(false);
-        contentPanel.setVisible(false);
-
+        frame.setTitle("Alkalmazás");
+        WelcomePanel.setPreferredSize(new Dimension(300,400));
+        frame.setResizable(false);
         frame.setContentPane(WelcomePanel);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setTitle("Alkalmazás");
+        setLabelTextAfterInitApp();
         Image im = Toolkit.getDefaultToolkit().getImage("./src/main/resources/t5.png");
         frame.setIconImage(im);
-        meuPanel.setVisible(true);
-        firstMenu.setVisible(true);
-        secondNenu.setVisible(true);
-        thirdMenu.setVisible(true);
-        menuBar.setVisible(true);
+
         frame.pack();
         createMenu();
 
     }
+
 
     private void getDataFromDB() {
         this.users = DBHandler.getAllFromDB();
@@ -67,12 +61,15 @@ public class Welcome {
 
     private void createMenu() {
 //
+
         userList.addActionListener(e -> showUsers());
         newUser.addActionListener(e -> createDialog(null, frame));
         menuItemReserveList.addActionListener(e -> createReserveListDialog());
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
+
         roomListMenuItem.addActionListener(e -> getRoomsFromDb());
     }
+
 
     private void getRoomsFromDb() {
         rooms = RoomsInDb.getAllRooms();
@@ -91,6 +88,27 @@ public class Welcome {
     private void createReserveMakeDialog() {
         getDataFromDB();
         new ModalCreateReserve(frame, users);
+    }
+
+    private void setLabelTextAfterInitApp() {
+        String fileName = "src/main/resources/welcome.txt";
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(fileName, StandardCharsets.UTF_8))) {
+
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            txtwelcome.setLineWrap(true);
+            txtwelcome.setText(sb.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 
