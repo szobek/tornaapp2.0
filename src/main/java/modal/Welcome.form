@@ -1,124 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="modal.Welcome">
-  <grid id="27dc6" binding="WelcomePanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="WelcomePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="654" height="690"/>
+      <xy x="20" y="20" width="5333" height="241"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="b4249" binding="meuPanel" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="d4635" class="javax.swing.JMenuBar" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
+        <constraints border-constraint="North"/>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="1f7cf" class="javax.swing.JMenuBar" binding="menuBar" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="776d5" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <text value="Foglalás"/>
+            </properties>
             <border type="none"/>
             <children>
-              <grid id="dfc64" class="javax.swing.JMenu" binding="firstMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              <component id="23ece" class="javax.swing.JMenuItem" binding="menuItemReserveList">
                 <constraints/>
                 <properties>
-                  <text value="Foglalás"/>
+                  <text value="Foglalás lista"/>
                 </properties>
-                <border type="none"/>
-                <children>
-                  <component id="84502" class="javax.swing.JMenuItem" binding="menuItemReserveList">
-                    <constraints/>
-                    <properties>
-                      <hideActionText value="false"/>
-                      <text value="Lista a foglalásokról"/>
-                    </properties>
-                  </component>
-                  <component id="2c67a" class="javax.swing.JMenuItem" binding="menuItemCreateReserve">
-                    <constraints/>
-                    <properties>
-                      <text value="Foglalás létrehozása"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="22073" class="javax.swing.JMenu" binding="secondNenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              </component>
+              <component id="8962" class="javax.swing.JMenuItem" binding="menuItemCreateReserve">
                 <constraints/>
                 <properties>
-                  <text value="Felhasználó"/>
+                  <text value="Új foglalűs létrehozás"/>
                 </properties>
-                <border type="none"/>
-                <children>
-                  <component id="bc644" class="javax.swing.JMenuItem" binding="newUser">
-                    <constraints/>
-                    <properties>
-                      <text value="Új felhasználó"/>
-                    </properties>
-                  </component>
-                  <component id="14990" class="javax.swing.JMenuItem" binding="userList">
-                    <constraints/>
-                    <properties>
-                      <text value="Felhasználó lista"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="801c1" class="javax.swing.JMenu" binding="thirdMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              </component>
+            </children>
+          </grid>
+          <hspacer id="1d2fa">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <grid id="41a99" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Felhasználó"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="b9ddf" class="javax.swing.JMenuItem" binding="newUser">
                 <constraints/>
                 <properties>
-                  <text value="Szobák"/>
+                  <text value="Új felhasználó"/>
                 </properties>
-                <border type="none"/>
-                <children>
-                  <component id="fa620" class="javax.swing.JMenuItem" binding="newRoomMenuItem">
-                    <constraints/>
-                    <properties>
-                      <text value="Új szoba"/>
-                    </properties>
-                  </component>
-                  <component id="38df3" class="javax.swing.JMenuItem" binding="roomListMenuItem">
-                    <constraints/>
-                    <properties>
-                      <text value="Szoba lista"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
+              </component>
+              <component id="bdb5f" class="javax.swing.JMenuItem" binding="userList">
+                <constraints/>
+                <properties>
+                  <text value="Lista a felhasználókról"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="4204b" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Terem"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="b4a94" class="javax.swing.JMenuItem" binding="roomListMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Terem lista"/>
+                </properties>
+              </component>
+              <component id="337e3" class="javax.swing.JMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Új terem"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
       </grid>
-      <grid id="4954c" binding="contentPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="true"/>
-        </constraints>
-        <properties>
-          <enabled value="true"/>
-          <visible value="false"/>
-        </properties>
+      <grid id="76f97" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
         <border type="none"/>
-        <children/>
+        <children>
+          <component id="621df" class="javax.swing.JTextArea" binding="txtwelcome">
+            <constraints/>
+            <properties>
+              <columns value="20"/>
+              <editable value="false"/>
+              <enabled value="false"/>
+              <lineWrap value="true"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
       </grid>
-      <hspacer id="18996">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="620" height="-1"/>
-            <maximum-size width="600" height="0"/>
-          </grid>
-        </constraints>
-      </hspacer>
-      <vspacer id="4a0fc">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="600"/>
-            <maximum-size width="400" height="-1"/>
-          </grid>
-        </constraints>
-      </vspacer>
     </children>
   </grid>
 </form>

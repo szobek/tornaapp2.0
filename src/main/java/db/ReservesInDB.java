@@ -28,7 +28,7 @@ public class ReservesInDB {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next())
                     reserves.add(new Reserve(rs.getInt("id"),rs.getInt("room_id"), rs.getInt("user_id"),
-                            rs.getTimestamp("from"), rs.getTimestamp("to")));
+                            rs.getTimestamp("fromTime"), rs.getTimestamp("toTime")));
 
                 con.close();
             } catch (SQLException e) {
