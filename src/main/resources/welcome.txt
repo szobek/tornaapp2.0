@@ -1,10 +1,1 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-Mauris a sem vitae orci congue tristique. Duis ultrices, ex sit amet malesuada maximus, 
-dui augue iaculis purus, eget facilisis tellus turpis non ante. Cras faucibus id quam a fringilla. 
-Duis sagittis ante dui, sed consectetur eros lobortis ut. Vestibulum rutrum viverra iaculis. 
-Maecenas non nisl sapien. In auctor sodales arcu, eu lacinia libero efficitur a. 
-Nam id est nec lacus tempor sollicitudin. Integer blandit lorem sit amet nunc eleifend, 
-a sagittis sapien blandit. Etiam in diam dolor. Vivamus faucibus dolor ut risus aliquet volutpat. 
-Praesent finibus sodales laoreet. Integer pretium feugiat tellus non sagittis. 
-In venenatis, purus in posuere accumsan, sem mi suscipit mauris, eu sagittis eros diam a orci. 
-Curabitur ac nibh a neque mollis consequat vel at mauris. 
+Üdvözöllek az appban!

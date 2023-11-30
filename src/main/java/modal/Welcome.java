@@ -13,17 +13,12 @@ import java.util.ArrayList;
 
 public class Welcome {
     private JPanel WelcomePanel;
-    private JMenu firstMenu;
-    private JMenu secondNenu;
-    private JMenu thirdMenu;
 
     private JMenuItem newUser;
     private JMenuItem userList;
     private JMenuItem menuItemReserveList;
     private JMenuItem menuItemCreateReserve;
-    private JMenuItem newRoomMenuItem;
     private JMenuItem roomListMenuItem;
-    private JPanel menupanel;
     private JTextArea txtwelcome;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     private ArrayList<Room> rooms;
@@ -44,7 +39,6 @@ public class Welcome {
         setLabelTextAfterInitApp();
         Image im = Toolkit.getDefaultToolkit().getImage("./src/main/resources/t5.png");
         frame.setIconImage(im);
-
         frame.pack();
         createMenu();
 
