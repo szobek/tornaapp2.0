@@ -1,3 +1,7 @@
+.main{
+    display: flex;
+justify-content: center;
+}
 .tester{
     width: 200px;
     height: 200px;

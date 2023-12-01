@@ -31,11 +31,11 @@ public class Welcome {
 
     public Welcome()  {
         frame = new JFrame();
-
         frame.setTitle("Alkalmazás");
         WelcomePanel.setPreferredSize(new Dimension(300,400));
-        frame.setResizable(false);
+//        frame.setResizable(false);
         frame.setContentPane(WelcomePanel);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -44,9 +44,11 @@ public class Welcome {
         frame.setIconImage(im);
         frame.pack();
         createMenu();
-        htmlScrollPane.setPreferredSize(new Dimension(300,300));
+        htmlScrollPane.setPreferredSize(new Dimension(600,300));
         // \src\main\resources
         URL htmlFileUrl = getClass().getClassLoader().getResource("1.html");
+
+
         try {
             html.setPage(htmlFileUrl);
         } catch (IOException e) {
