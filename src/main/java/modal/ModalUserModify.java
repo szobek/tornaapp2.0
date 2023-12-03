@@ -72,6 +72,7 @@ public class ModalUserModify {
 getInputDatas();
                 if (DBHandler.updateUserData(user)){
                     Success.UPDATED.setSuc(true);
+                    Success.UPDATEUSER.setSuc(true);
                     if(Success.UPDATED.isSuc()) dialog.dispose();
                 }
             }
