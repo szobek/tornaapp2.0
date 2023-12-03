@@ -1,6 +1,7 @@
 package modal;
 
 import db.DBHandler;
+import enum_pck.Success;
 import model.User;
 import model.UserRight;
 
@@ -16,6 +17,9 @@ public class ModalUserList extends JDialog {
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     private ArrayList<User> users;
     private final JFrame frame;
+
+    private Object[][] tableData;
+    private DefaultTableModel tableModel;
 
     ModalUserList(JFrame frame){
 
@@ -38,10 +42,10 @@ public class ModalUserList extends JDialog {
         getDataFromDB();
 
 
-        Object[][] tableData = new Object[users.size()][3];
+        tableData = new Object[users.size()][3];
         reFreshTableData(tableData);
-        DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames);
-        userListTable.setModel(tableModel);
+        tableModel = new DefaultTableModel(tableData, columnNames);
+
         userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userListTable.setAutoCreateRowSorter(true);
         userListTable.setRowSelectionAllowed(true);
@@ -67,6 +71,7 @@ public class ModalUserList extends JDialog {
     }
 
     private void reFreshTableData(Object[][] tableData) {
+        getDataFromDB();
         DefaultTableModel dm = (DefaultTableModel) userListTable.getModel();
         int rowCount = dm.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -79,6 +84,8 @@ public class ModalUserList extends JDialog {
             tableData[i][2] = users.get(i).getEmail();
 
         }
+        tableModel = new DefaultTableModel(tableData, columnNames);
+        userListTable.setModel(tableModel);
     }
 
     private void getDataFromDB() {
@@ -88,5 +95,10 @@ public class ModalUserList extends JDialog {
     private void createDialog(User user, JFrame frame) {
         if (user == null) new ModalUserModify(frame);
         else new ModalUserModify(user, frame);
+
+        if(Success.UPDATEUSER.isSuc()){
+            reFreshTableData(tableData);
+        }
+
     }
 }
