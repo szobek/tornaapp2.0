@@ -4,6 +4,8 @@ import model.Room;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.UUID;
+import db.DBHandler;
 
 public class RoomsInDb {
 
@@ -73,5 +75,44 @@ public class RoomsInDb {
             System.err.println("hiba...");
         }
         return rooms;
+    }
+
+    public static boolean updateRoomData(Room room){
+        Connection con;
+        try {
+            con = DBHandler.connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        boolean success=false;
+        if (con != null) {
+            try {
+
+                String query = "UPDATE `rooms` " +
+                        "SET  rooms.name=?," +
+                        "  rooms.num=?," +
+                        "  rooms.image_path=?" +
+                        "WHERE rooms.id = ?";
+
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                preparedStmt.setString(1,room.getName());
+                preparedStmt.setString(2,room.getNum());
+                preparedStmt.setString(3,room.getImagePath());
+                preparedStmt.setInt(4,room.getId());
+
+
+                preparedStmt.executeUpdate();
+
+                con.close();
+                success=true;
+                System.out.println("Done");
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;
     }
 }

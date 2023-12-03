@@ -39,4 +39,16 @@ public class Room {
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }
