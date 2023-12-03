@@ -1,7 +1,7 @@
 import db.DBHandler;
 import hash.PasswordHash;
-import model.User;
 import modal.Welcome;
+import model.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,8 +16,6 @@ public class LoginForm extends JFrame {
     public LoginForm() {
         setContentPane(loginPanel);
         setTitle("login");
-
-
 
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
