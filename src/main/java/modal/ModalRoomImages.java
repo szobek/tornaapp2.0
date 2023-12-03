@@ -25,10 +25,9 @@ private Room room;
         setContentPane(mainPanel);
 btnClose.addActionListener(e->dispose());
         btnSave.addActionListener(e -> {
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%");
             updateRoomDatas();
 
-            RoomsInDb.updateRoomData(room);
+            if(RoomsInDb.updateRoomData(room)) dispose();
         });
         textFieldGooglePhotos.setText(room.getImagePath());
         textFieldName.setText(room.getName());

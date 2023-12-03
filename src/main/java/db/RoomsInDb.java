@@ -52,11 +52,6 @@ public class RoomsInDb {
         ArrayList<Room> rooms = new ArrayList<>();
         if (con != null) {
             try {
-                // SELECT * FROM `rooms`WHERE id NOT IN ('2','3');
-                // hibás: SELECT * FROM rooms WHERE id NOT IN (SELECT id FROM reserve WHERE room_id =2);
-                // alakul: SELECT * FROM rooms where id not in (SELECT room_id FROM reserve );
-                // SELECT * FROM rooms where id not in (SELECT room_id FROM reserve WHERE fromTime<>'2023-11-08 06:00:00' and toTime<>'2023-11-06 00:00:00 ');
-                // siker: SELECT * FROM rooms where id not in (SELECT room_id FROM `reserve` WHERE fromTime='2023-11-08 06:00:00' and toTime='2023-11-06 00:00:00');
                 query = "SELECT * FROM rooms where id not in (SELECT room_id FROM `reserve` WHERE fromTime=? and toTime=?)";
                 PreparedStatement stmt = con.prepareStatement(query);
 
@@ -106,7 +101,6 @@ public class RoomsInDb {
 
                 con.close();
                 success=true;
-                System.out.println("Done");
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
