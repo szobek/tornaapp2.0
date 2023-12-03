@@ -1,13 +1,12 @@
 package modal;
 
 import db.RoomsInDb;
+import enum_pck.Success;
 import model.Room;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ModalRoomImages extends JDialog {
+public class ModalRoomUpdateAndDtata extends JDialog {
     private JPanel mainPanel;
 
 private Room room;
@@ -17,7 +16,7 @@ private Room room;
     private JButton btnSave;
     private JButton btnClose;
 
-    ModalRoomImages(JFrame frame, Room room) {
+    ModalRoomUpdateAndDtata(JFrame frame, Room room) {
         super(frame, true);
         this.room=room;
         setSize(500, 500);
@@ -27,7 +26,10 @@ btnClose.addActionListener(e->dispose());
         btnSave.addActionListener(e -> {
             updateRoomDatas();
 
-            if(RoomsInDb.updateRoomData(room)) dispose();
+            if(RoomsInDb.updateRoomData(room)) {
+                Success.UPDATEROOM.setSuc(true);
+                dispose();
+            }
         });
         textFieldGooglePhotos.setText(room.getImagePath());
         textFieldName.setText(room.getName());

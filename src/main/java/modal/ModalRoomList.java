@@ -1,5 +1,7 @@
 package modal;
 
+import db.RoomsInDb;
+import enum_pck.Success;
 import model.Room;
 
 import javax.swing.*;
@@ -8,19 +10,22 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ModalRoomList extends JDialog {
-    private final ArrayList<Room> rooms;
+    private ArrayList<Room> rooms;
     private JPanel ListMainPanel;
     private JTable tblRoomList;
     private JScrollPane scrollPane;
     private final JFrame frame;
 
+    private DefaultTableModel tblModel;
+
+    private final String[] columnNames = {"id", "szoba Neve", "Soba száma"};
     ModalRoomList(JFrame frame, ArrayList<Room> roomsParam) {
         super(frame, true);
         rooms = roomsParam;
         this.frame = frame;
         setLayout(new FlowLayout());
         setContentPane(ListMainPanel);
-        createListeners();
+
         createRoomListTable();
         setLocationRelativeTo(null);
         setTitle("Termek");
@@ -31,26 +36,18 @@ public class ModalRoomList extends JDialog {
         pack();
     }
 
-    private void createListeners(){
-
-    }
-
     private void createRoomListTable() {
 
         ListMainPanel.setVisible(true);
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         tblRoomList.setSize(300, 300);
-        String[] columnNames = {"id", "szoba Neve", "Soba száma"};
+
         Object[][] tableData = new Object[rooms.size()][columnNames.length];
 
-        for (int i = 0; i < rooms.size(); i++) {
-            tableData[i][0] = rooms.get(i).getId();
-            tableData[i][1] = rooms.get(i).getName();
-            tableData[i][2] = rooms.get(i).getNum();
-        }
-        DefaultTableModel tblModel = new DefaultTableModel(tableData, columnNames);
-        tblRoomList.setModel(tblModel);
+        makeRoomList(tableData);
+
+
         tblRoomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblRoomList.setAutoCreateRowSorter(true);
         tblRoomList.setRowSelectionAllowed(true);
@@ -66,37 +63,39 @@ public class ModalRoomList extends JDialog {
                     i++;
                 }
                 Room room = rooms.get(i);
-                new ModalRoomImages(frame, room);
+                new ModalRoomUpdateAndDtata(frame, room);
+                if(Success.UPDATEROOM.isSuc()){
+                    makeRoomList(tableData);
+                }
             }
 
 
 
         });
     }
-    private void Upload () {
 
-        /*JFileChooser fc = new JFileChooser();
-        int result = fc.showOpenDialog(null);
+    private void makeRoomList(Object[][] tableData){
+        removeAllRows();
+        if(Success.UPDATEROOM.isSuc()){
+            this.rooms= RoomsInDb.getAllRooms();
 
-// Make sure that a file was chosen, else exit
-        if (result != JFileChooser.APPROVE_OPTION) {
-            System.exit(0);
         }
-        // Get file path
-        String path = fc.getSelectedFile().getAbsolutePath();
-
-        File folder = new File("src/main/resources/rooms/uuuu");
-        boolean success = folder.mkdir();
-        String destination = folder.getAbsolutePath() + File.separator + "img.jpg";
-
-        try (FileChannel source = new FileInputStream(path).getChannel(); FileChannel dest = new FileOutputStream(destination).getChannel();) {
-            dest.transferFrom(source, 0, source.size());
-            source.close();
-            dest.close();
-
-            System.out.println("Done");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }*/
+        for (int i = 0; i < rooms.size(); i++) {
+            tableData[i][0] = rooms.get(i).getId();
+            tableData[i][1] = rooms.get(i).getName();
+            tableData[i][2] = rooms.get(i).getNum();
+        }
+        tblModel = new DefaultTableModel(tableData, columnNames);
+        tblRoomList.setModel(tblModel);
     }
+
+    public int removeAllRows() {
+        DefaultTableModel dm = (DefaultTableModel) tblRoomList.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+        return dm.getRowCount();
+    }
+
 }
