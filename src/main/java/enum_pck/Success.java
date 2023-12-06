@@ -1,7 +1,7 @@
 package enum_pck;
 
 public enum Success {
-    UPDATED(false),INSERTED(true),DELETED(false),UPDATEROOM(false),UPDATEUSER(false);
+    UPDATED(false),INSERTED(true),DELETED(false),UPDATEROOM(false),UPDATEUSER(false),DELETEDUSER(false);
 
     private  boolean suc;
     Success(boolean data){

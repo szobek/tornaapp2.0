@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ModalCreateReserve {
+public class ModalCreateReserve extends JDialog {
     private JPanel createReserveMainPanel;
     private JComboBox<String> cbToMonth;
     private JComboBox<String> cbFromYear;
@@ -28,29 +28,33 @@ public class ModalCreateReserve {
     private JButton btnCancel;
     private JComboBox<User> cbUser;
     private JPanel toPanel;
-    private JComboBox cbRooms;
+    private JComboBox<Room> cbRooms;
     private JPanel roomPanel;
     private JButton btnShowRooms;
+    private JButton btnNext;
+    private JButton btnNext2;
+    private JPanel btnPanel;
     private final ArrayList<String> days = new ArrayList<>();
     private final ArrayList<User> users;
     private ArrayList<Room> rooms;
 
 
     ModalCreateReserve(JFrame frame, ArrayList<User> users) {
+        super(frame, "Felhasználói adatok", true);
+
         this.users = users;
         hideElements();
-        JDialog dialog = new JDialog(frame, "Felhasználói adatok", true);
-        createListeners(dialog);
-        dialog.setContentPane(createReserveMainPanel);
+        createListeners();
+        setContentPane(createReserveMainPanel);
         setUserCombobox();
-        dialog.setSize(500, 550);
+        setSize(600, 600);
 
-        dialog.setLocationRelativeTo(null);
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
-        dialog.setVisible(true);
-        dialog.setModal(true);
-        dialog.pack();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+        setVisible(true);
+        setModal(true);
+        pack();
 
     }
 
@@ -59,9 +63,11 @@ public class ModalCreateReserve {
         toPanel.setVisible(false);
         btnCancel.setVisible(false);
         btnSave.setVisible(false);
+        btnShowRooms.setVisible(false);
     }
 
     private void setUserCombobox() {
+
         DefaultComboBoxModel<User> cbModel = new DefaultComboBoxModel<>();
         cbUser.setModel(cbModel);
         cbModel.addAll(users);
@@ -92,54 +98,55 @@ public class ModalCreateReserve {
         }
     }
 
-    private void createListeners(JDialog dialog) {
+    private void createListeners() {
         // button events
-        btnSave.addActionListener(e -> createReserve(dialog));
-        btnCancel.addActionListener(e -> dialog.dispose());
+        btnSave.addActionListener(e -> createReserve());
+        btnCancel.addActionListener(e -> dispose());
 
 
         //set from days
         cbFromYear.addActionListener(e -> {
             setDayInCombox(cbFromYear, cbFromMonth, cbFromDay);
-            toPanel.setVisible(true);
         });
 
         cbFromMonth.addActionListener(e -> {
             setDayInCombox(cbFromYear, cbFromMonth, cbFromDay);
-            toPanel.setVisible(true);
         });
 
+        btnNext.addActionListener(e -> toPanel.setVisible(true));
 
         // set to days
 
         cbToYear.addActionListener(e -> {
             setDayInCombox(cbToYear, cbToMonth, cbToDay);
-            roomPanel.setVisible(true);
         });
 
         cbToMonth.addActionListener(e -> {
             setDayInCombox(cbToYear, cbToMonth, cbToDay);
-            roomPanel.setVisible(true);
             //this.rooms= RoomsInDb.getFreeRooms();
         });
+        btnNext2.addActionListener(e -> {
 
-        btnShowRooms.addActionListener(e -> {
+            roomPanel.setVisible(true);
+            getFreeRoomsFromDbByDate();
             btnSave.setVisible(true);
             btnCancel.setVisible(true);
-
-            String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
-            String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
-
-            String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
-            String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
-
-            Timestamp reserveFromDate = Timestamp.valueOf(from);
-            Timestamp reserveToDate = Timestamp.valueOf(to);
-            this.rooms = RoomsInDb.getFreeRooms(reserveFromDate, reserveToDate);
-            fillRoomsCombobox();
         });
 
 
+    }
+
+    private void getFreeRoomsFromDbByDate() {
+        String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
+        String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
+
+        String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
+        String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
+
+        Timestamp reserveFromDate = Timestamp.valueOf(from);
+        Timestamp reserveToDate = Timestamp.valueOf(to);
+        this.rooms = RoomsInDb.getFreeRooms(reserveFromDate, reserveToDate);
+        fillRoomsCombobox();
     }
 
 
@@ -158,7 +165,7 @@ public class ModalCreateReserve {
     }
 
 
-    private void createReserve(JDialog dialog) {
+    private void createReserve() {
 
         String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
         String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
@@ -168,7 +175,7 @@ public class ModalCreateReserve {
 
         Timestamp reserveFromDate = Timestamp.valueOf(from);
         Timestamp reserveToDate = Timestamp.valueOf(to);
-        int userIndex=cbUser.getSelectedIndex();
+        int userIndex = cbUser.getSelectedIndex();
         int roomId = cbRooms.getSelectedIndex();
         // comapre dates (-1,0,1)
         if (reserveToDate.compareTo(reserveFromDate) > -1) {
@@ -178,11 +185,14 @@ public class ModalCreateReserve {
                     rooms.get(roomId).getId(),
                     users.get(userIndex).getUserId(),
                     reserveFromDate,
-                    reserveToDate
+                    reserveToDate,
+                    users.get(userIndex).getUserName(),
+                    rooms.get(roomId).getName(),
+                    rooms.get(roomId).getNum()
             );
             if (ReservesInDB.saveReserve(reserve)) {
                 JOptionPane.showMessageDialog(null, "Foglalás mentve", "Üzenet", JOptionPane.INFORMATION_MESSAGE);
-                dialog.dispose();
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Foglalást nem sikerült menteni", "Üzenet", JOptionPane.ERROR_MESSAGE);
             }
@@ -195,10 +205,14 @@ public class ModalCreateReserve {
 
 
     private void fillRoomsCombobox() {
-
         DefaultComboBoxModel<Room> cbModel = new DefaultComboBoxModel<>();
         cbRooms.setModel(cbModel);
-        cbModel.addAll(rooms);
-        cbModel.setSelectedItem(rooms.get(0));
+        if (!rooms.isEmpty()) {
+            cbModel.addAll(rooms);
+            cbModel.setSelectedItem(rooms.get(0));
+        } else {
+            btnPanel.setVisible(false);
+        }
+
     }
 }

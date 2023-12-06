@@ -52,7 +52,7 @@ public class RoomsInDb {
         ArrayList<Room> rooms = new ArrayList<>();
         if (con != null) {
             try {
-                query = "SELECT * FROM rooms where id not in (SELECT room_id FROM `reserve` WHERE fromTime=? and toTime=?)";
+                query = "SELECT * FROM rooms where id not in (SELECT room_id FROM `reserve` WHERE fromTime>=? and toTime<=?)";
                 PreparedStatement stmt = con.prepareStatement(query);
 
                 stmt.setTimestamp(1,fromDate);

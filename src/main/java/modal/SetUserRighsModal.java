@@ -1,19 +1,16 @@
 package modal;
 
 
-
-
+import db.DBHandler;
+import model.User;
+import model.UserRight;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import model.User;
-import db.DBHandler;
-import model.UserRight;
-
-public class SetUserRighsModal {
+public class SetUserRighsModal extends JDialog {
     private JPanel userRightsMainPanel;
     private JCheckBox cbCreateNewUser;
     private JCheckBox cbReserveList;
@@ -23,20 +20,21 @@ public class SetUserRighsModal {
     private User user;
 
     SetUserRighsModal(User user, JFrame frame) {
-        createDialogBase(user, frame);
+        super(frame, "Felhasználói jogok", true);
+        createDialogBase(user);
     }
 
-    private void createDialogBase(User mUser, JFrame frame) {
+    private void createDialogBase(User mUser) {
+
         this.user = mUser;
-        JDialog dialog = new JDialog(frame, "Felhasználói jogok", true);
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 
         JPanel s = userRightsMainPanel;
-        dialog.setContentPane(s);
-        dialog.setSize(480, 250);
-        dialog.setLocationRelativeTo(null);
-        dialog.addWindowListener(new WindowAdapter() {
+        setContentPane(s);
+        setSize(480, 250);
+        setLocationRelativeTo(null);
+        addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
                 System.out.println("jdialog window closed");
 
@@ -46,16 +44,15 @@ public class SetUserRighsModal {
         });
 
         btnSaveRights.addActionListener(e -> {
-            System.out.println("save!!!");
             getInputDatas();
-           if( DBHandler.saveUserRightsInDB(user)) dialog.dispose();
+            if (DBHandler.saveUserRightsInDB(user)) dispose();
         });
-        btnCancel.addActionListener(e -> dialog.dispose());
+        btnCancel.addActionListener(e -> dispose());
         setInputData();
-buttonPanel.setSize(400,200);
+        buttonPanel.setSize(400, 200);
 
-        dialog.setVisible(true);
-        dialog.pack();
+        setVisible(true);
+        pack();
     }
 
     private void setInputData() {
@@ -65,6 +62,6 @@ buttonPanel.setSize(400,200);
     }
 
     private void getInputDatas() {
-        this.user.setUserRight(new UserRight( cbReserveList.isSelected(), cbCreateNewUser.isSelected()));
+        this.user.setUserRight(new UserRight(cbReserveList.isSelected(), cbCreateNewUser.isSelected()));
     }
 }

@@ -8,14 +8,20 @@ public class Reserve {
     private final int id;
     private final int userId;
 
+    private final String userName;
     private final int roomId;
+    private final String roomName;
+    private final String roomNum;
 
-    public Reserve(int id,int roomId,int userId,Timestamp from, Timestamp to) {
+    public Reserve(int id, int roomId, int userId, Timestamp from, Timestamp to, String userName, String roomName, String roomNum) {
         this.from = from;
         this.to = to;
-        this.id=id;
-        this.userId=userId;
-        this.roomId=roomId;
+        this.id = id;
+        this.userId = userId;
+        this.roomId = roomId;
+        this.userName = userName;
+        this.roomName = roomName;
+        this.roomNum = roomNum;
     }
 
     @Override
@@ -47,5 +53,17 @@ public class Reserve {
 
     public int getRoomId() {
         return roomId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public String getRoomNum() {
+        return roomNum;
     }
 }

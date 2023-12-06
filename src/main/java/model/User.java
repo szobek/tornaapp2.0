@@ -21,7 +21,14 @@ public class User {
 
     @Override
     public String toString() {
-        return lastName + " " + firstName + ", e-mail: " + email;
+        return "User{" +
+                "phone='" + phone + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", userId=" + userId +
+                ", userRight=" + userRight +
+                '}';
     }
 
     public String getUserName() {

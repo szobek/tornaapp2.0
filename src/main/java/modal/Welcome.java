@@ -21,7 +21,6 @@ public class Welcome {
     private JMenuItem menuItemCreateReserve;
     private JMenuItem roomListMenuItem;
     private JTextArea txtwelcome;
-    private JEditorPane html;
     private JScrollPane htmlScrollPane;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     private ArrayList<Room> rooms;
@@ -44,17 +43,7 @@ public class Welcome {
         frame.setIconImage(im);
         frame.pack();
         createMenu();
-        htmlScrollPane.setPreferredSize(new Dimension(600,300));
-        // \src\main\resources
-        URL htmlFileUrl = getClass().getClassLoader().getResource("1.html");
 
-
-        try {
-            html.setPage(htmlFileUrl);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        htmlScrollPane.setViewportView(html);
 
     }
 

@@ -8,6 +8,7 @@ import model.UserRight;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ModalUserList extends JDialog {
 
@@ -21,12 +22,12 @@ public class ModalUserList extends JDialog {
     private Object[][] tableData;
     private DefaultTableModel tableModel;
 
-    ModalUserList(JFrame frame){
+    ModalUserList(JFrame frame) {
 
-        super(frame,true);
-        this.frame=frame;
+        super(frame, true);
+        this.frame = frame;
         setTitle("Felhasználók");
-        setSize(300,400);
+        setSize(300, 400);
         setLocationRelativeTo(frame);
         setContentPane(ContentMainPanel);
         showUsersListInTable();
@@ -35,15 +36,15 @@ public class ModalUserList extends JDialog {
         setVisible(true);
         pack();
     }
-    private void showUsersListInTable(){
+
+    private void showUsersListInTable() {
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         userListTable.setSize(600, 500);
         getDataFromDB();
 
 
-        tableData = new Object[users.size()][3];
-        reFreshTableData(tableData);
+        reFreshTableData();
         tableModel = new DefaultTableModel(tableData, columnNames);
 
         userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -70,35 +71,49 @@ public class ModalUserList extends JDialog {
         scrollPane.setViewportView(userListTable);
     }
 
-    private void reFreshTableData(Object[][] tableData) {
-        getDataFromDB();
-        DefaultTableModel dm = (DefaultTableModel) userListTable.getModel();
-        int rowCount = dm.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            dm.removeRow(i);
-        }
+    private void reFreshTableData() {
+        if (tableModel != null) removeAllRowFromTable();
 
+        tableData = new Object[users.size()][columnNames.length];
         for (int i = 0; i < users.size(); i++) {
             tableData[i][0] = users.get(i).getUserName();
             tableData[i][1] = users.get(i).getPhone();
             tableData[i][2] = users.get(i).getEmail();
 
         }
+
         tableModel = new DefaultTableModel(tableData, columnNames);
+
         userListTable.setModel(tableModel);
+
+
     }
 
     private void getDataFromDB() {
+        if (users != null) users.clear();
         this.users = DBHandler.getAllFromDB();
+    }
+
+    private void removeAllRowFromTable() {
+
+        DefaultTableModel dm = (DefaultTableModel) userListTable.getModel();
+        int rowCount = dm.getRowCount();
+
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
     }
 
     private void createDialog(User user, JFrame frame) {
         if (user == null) new ModalUserModify(frame);
         else new ModalUserModify(user, frame);
 
-        if(Success.UPDATEUSER.isSuc()){
-            reFreshTableData(tableData);
+
+        if (Success.UPDATEUSER.isSuc()|Success.DELETEDUSER.isSuc()) {
+            getDataFromDB();
+            reFreshTableData();
         }
+
 
     }
 }

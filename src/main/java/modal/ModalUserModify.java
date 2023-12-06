@@ -27,10 +27,7 @@ public class ModalUserModify {
     private User user;
 
     ModalUserModify(User user, JFrame frame) {
-
         createDialogBase(user, frame,true);
-
-
     }
 
     ModalUserModify(JFrame frame) {
@@ -86,13 +83,11 @@ getInputDatas();
         }
 
         btnDeleteUser.addActionListener(e -> {
-            Success.DELETED.setSuc(true);
-            if (JOptionPane.showConfirmDialog(frame, "Valóban törli?", "Törlés", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
-                if (Success.DELETED.isSuc()) {
-                    if(DBHandler.deleteUser(user)){
-                        dialog.dispose();
-                    }
+            if (JOptionPane.showConfirmDialog(frame, "Valóban törli?", "Törlés", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Success.DELETEDUSER.setSuc(true);
+                if(DBHandler.deleteUser(user)){
+                    dialog.dispose();
                 }
             }
 
@@ -119,8 +114,8 @@ getInputDatas();
     }
 
     private void getInputDatas() {
-        this.user.setFirstName(txtKereszt.getText());
-        this.user.setLastName(txtVezetek.getText());
+        this.user.setFirstName(txtVezetek.getText());
+        this.user.setLastName(txtKereszt.getText());
         this.user.setPhone(txtPhone.getText());
         this.user.setEmail(txtEmail.getText());
     }
@@ -132,8 +127,6 @@ getInputDatas();
 
     private void createRightsDialog(User user, JFrame frame) {
         new SetUserRighsModal(user,frame);
-        System.out.println("open dialog");
-     //   showUsers();
 
     }
 

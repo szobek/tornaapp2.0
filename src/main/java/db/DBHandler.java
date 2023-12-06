@@ -73,13 +73,26 @@ public class DBHandler {
         ArrayList<User> users = new ArrayList<>();
         if (con != null) {
             try {
-                String query = "select users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves from user_data inner join users on users.id=user_data.user_id inner join user_rights on user_rights.user_id=users.id where users.deleted=0";
+                String query = "select " +
+                        "users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves " +
+                        "from user_data " +
+                        "inner join users " +
+                        "on users.id=user_data.user_id " +
+                        "inner join user_rights " +
+                        "on user_rights.user_id=users.id " +
+                        "where users.deleted=0";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
-                    users.add(new User(rs.getString("phone"), rs.getString("first_name"),
-                            rs.getString("last_name"), rs.getString("email"),rs.getInt("id"),
-                            new UserRight(rs.getBoolean("listreserves"),rs.getBoolean("newuser"))));
+                    // public User(String phone, String firstName, String lastName,String email,int userId,UserRight userRight) {
+                    users.add(new User(rs.getString("phone"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("email"),
+                            rs.getInt("id"),
+                            new UserRight(
+                                    rs.getBoolean("listreserves"),
+                                    rs.getBoolean("newuser"))));
                 }
 
 
@@ -94,7 +107,6 @@ public class DBHandler {
     }
 
     public static boolean updateUserData(User user) {
-        System.out.println("módosított: "+user);
         Connection con;
         boolean success = false;
         try {
@@ -106,8 +118,15 @@ public class DBHandler {
         if (con != null) {
             try {
 
-                String query = "UPDATE `user_data` inner join users on users.id=user_data.user_id SET `first_name` = ?, `last_name`=?,`phone`=? WHERE users.email = ?";
-
+// public User(String phone, String firstName, String lastName,String email,int userId,UserRight userRight) {
+                String query = "UPDATE " +
+                        "`user_data` " +
+                        "inner join users " +
+                        "on users.id=user_data.user_id SET " +
+                        "`first_name` = ?, " +
+                        "`last_name`=?," +
+                        "`phone`=? " +
+                        "WHERE users.email = ?";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 preparedStmt.setString(1, user.getFirstName());
                 preparedStmt.setString(2, user.getLastName());

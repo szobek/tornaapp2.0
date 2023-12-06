@@ -22,13 +22,15 @@ public class ReservesInDB {
         ArrayList<Reserve> reserves = new ArrayList<>();
         if (con != null) {
             try {
-                query = "select * from reserve";
+                query = "select * from reserve inner join user_data on user_data.user_id=reserve.user_id inner join rooms on reserve.room_id=rooms.id";
                 PreparedStatement stmt = con.prepareStatement(query);
 
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next())
                     reserves.add(new Reserve(rs.getInt("id"),rs.getInt("room_id"), rs.getInt("user_id"),
-                            rs.getTimestamp("fromTime"), rs.getTimestamp("toTime")));
+                            rs.getTimestamp("fromTime"), rs.getTimestamp("toTime"),
+                            rs.getString("first_name")+" "+rs.getString("last_name") ,
+                            rs.getString("name"), rs.getString("num") ));
 
                 con.close();
             } catch (SQLException e) {

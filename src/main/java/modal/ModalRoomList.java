@@ -18,7 +18,7 @@ public class ModalRoomList extends JDialog {
 
     private DefaultTableModel tblModel;
 
-    private final String[] columnNames = {"id", "szoba Neve", "Soba száma"};
+    private final String[] columnNames = {"id", "szoba Neve", "Szoba száma"};
     ModalRoomList(JFrame frame, ArrayList<Room> roomsParam) {
         super(frame, true);
         rooms = roomsParam;

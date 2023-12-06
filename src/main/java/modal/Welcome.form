@@ -31,7 +31,7 @@
               <component id="8962" class="javax.swing.JMenuItem" binding="menuItemCreateReserve">
                 <constraints/>
                 <properties>
-                  <text value="Új foglalűs létrehozás"/>
+                  <text value="Új foglalás létrehozás"/>
                 </properties>
               </component>
             </children>
@@ -104,19 +104,6 @@
               <text value=""/>
             </properties>
           </component>
-          <scrollpane id="56396" binding="htmlScrollPane">
-            <constraints/>
-            <properties>
-              <horizontalScrollBarPolicy value="32"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <component id="822b1" class="javax.swing.JEditorPane" binding="html">
-                <constraints/>
-                <properties/>
-              </component>
-            </children>
-          </scrollpane>
         </children>
       </grid>
     </children>
