@@ -109,4 +109,37 @@ public class RoomsInDb {
         }
         return success;
     }
+
+    public static boolean createRoom(Room room){
+        Connection con;
+        try {
+            con = DBHandler.connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        boolean success=false;
+        if (con != null) {
+            try {
+
+                String query = "INSERT INTO `rooms` (`id`, `num`, `name`, `image_path`) VALUES (NULL, ?, ?, ?)";
+
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                preparedStmt.setString(1,room.getName());
+                preparedStmt.setString(2,room.getNum());
+                preparedStmt.setString(3,room.getImagePath());
+
+
+                preparedStmt.executeUpdate();
+
+                con.close();
+                success=true;
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;
+    }
 }

@@ -79,7 +79,7 @@
                   <text value="Terem lista"/>
                 </properties>
               </component>
-              <component id="337e3" class="javax.swing.JMenuItem">
+              <component id="337e3" class="javax.swing.JMenuItem" binding="createRoomMenuItem">
                 <constraints/>
                 <properties>
                   <text value="Új terem"/>
