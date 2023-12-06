@@ -21,6 +21,7 @@ public class Welcome {
     private JMenuItem menuItemCreateReserve;
     private JMenuItem roomListMenuItem;
     private JTextArea txtwelcome;
+    private JMenuItem createRoomMenuItem;
     private JScrollPane htmlScrollPane;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     private ArrayList<Room> rooms;
@@ -65,6 +66,11 @@ public class Welcome {
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
         roomListMenuItem.addActionListener(e -> getRoomsFromDb());
+        createRoomMenuItem.addActionListener(e -> createRoomModal());
+    }
+
+    private void createRoomModal() {
+        new ModalRoomUpdateAndDtata(frame, null);
     }
 
 

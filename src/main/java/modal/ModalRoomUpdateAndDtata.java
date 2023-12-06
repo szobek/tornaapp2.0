@@ -9,8 +9,8 @@ import javax.swing.*;
 public class ModalRoomUpdateAndDtata extends JDialog {
     private JPanel mainPanel;
 
-private Room room;
-    private  JTextField textFieldGooglePhotos;
+    private Room roomField;
+    private JTextField textFieldGooglePhotos;
     private JTextField textFieldName;
     private JTextField textFieldNum;
     private JButton btnSave;
@@ -18,23 +18,42 @@ private Room room;
 
     ModalRoomUpdateAndDtata(JFrame frame, Room room) {
         super(frame, true);
-        this.room=room;
+        if (room == null) {
+            textFieldName.setHorizontalAlignment(JTextField.CENTER);
+            textFieldNum.setHorizontalAlignment(JTextField.CENTER);
+            textFieldGooglePhotos.setHorizontalAlignment(JTextField.CENTER);
+
+            textFieldGooglePhotos.setMinimumSize(textFieldGooglePhotos.getPreferredSize());
+        }
+        this.roomField = room;
         setSize(500, 500);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
-btnClose.addActionListener(e->dispose());
+        btnClose.addActionListener(e -> dispose());
         btnSave.addActionListener(e -> {
+
             updateRoomDatas();
 
-            if(RoomsInDb.updateRoomData(room)) {
-                Success.UPDATEROOM.setSuc(true);
-                dispose();
+            if (roomField.getId() == -1) {
+                if (RoomsInDb.createRoom(roomField)) {
+                    JOptionPane.showMessageDialog( null,"terem mentve","visszajelzés",JOptionPane.PLAIN_MESSAGE);
+                    Success.INSERTEDROOM.setSuc(true);
+                    dispose();
+                }
+            } else {
+                if (RoomsInDb.updateRoomData(room)) {
+                    Success.UPDATEROOM.setSuc(true);
+                    dispose();
+                }
             }
         });
-        textFieldGooglePhotos.setText(room.getImagePath());
-        textFieldName.setText(room.getName());
-        textFieldNum.setText(room.getNum());
-        setSize(400,200);
+        if (room != null) {
+            textFieldGooglePhotos.setText(room.getImagePath());
+            textFieldName.setText(room.getName());
+            textFieldNum.setText(room.getNum());
+
+        }
+        setSize(400, 200);
         setLocationRelativeTo(frame);
         setModalityType(ModalityType.APPLICATION_MODAL);
         setVisible(true);
@@ -43,10 +62,12 @@ btnClose.addActionListener(e->dispose());
 
     }
 
-    private void updateRoomDatas(){
-        this.room.setName(textFieldName.getText());
-        this.room.setNum(textFieldNum.getText());
-        this.room.setImagePath(textFieldGooglePhotos.getText());
+    private void updateRoomDatas() {
+        this.roomField = new Room(-1, "", "", "");
+        this.roomField.setName(textFieldName.getText());
+        this.roomField.setNum(textFieldNum.getText());
+        this.roomField.setImagePath(textFieldGooglePhotos.getText());
     }
+
 
 }
