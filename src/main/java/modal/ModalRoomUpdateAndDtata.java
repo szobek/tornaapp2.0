@@ -33,7 +33,6 @@ public class ModalRoomUpdateAndDtata extends JDialog {
         btnSave.addActionListener(e -> {
 
             updateRoomDatas();
-
             if (roomField.getId() == -1) {
                 if (RoomsInDb.createRoom(roomField)) {
                     JOptionPane.showMessageDialog( null,"terem mentve","visszajelzés",JOptionPane.PLAIN_MESSAGE);
@@ -63,7 +62,8 @@ public class ModalRoomUpdateAndDtata extends JDialog {
     }
 
     private void updateRoomDatas() {
-        this.roomField = new Room(-1, "", "", "");
+
+        if(roomField==null)this.roomField = new Room(-1, "", "", "");
         this.roomField.setName(textFieldName.getText());
         this.roomField.setNum(textFieldNum.getText());
         this.roomField.setImagePath(textFieldGooglePhotos.getText());

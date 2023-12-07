@@ -15,9 +15,7 @@ public class ModalRoomList extends JDialog {
     private JTable tblRoomList;
     private JScrollPane scrollPane;
     private final JFrame frame;
-
-    private DefaultTableModel tblModel;
-
+private Object[][] tableData;
     private final String[] columnNames = {"id", "szoba Neve", "Szoba száma"};
     ModalRoomList(JFrame frame, ArrayList<Room> roomsParam) {
         super(frame, true);
@@ -43,9 +41,9 @@ public class ModalRoomList extends JDialog {
         scrollPane.getViewport().setSize(600, 500);
         tblRoomList.setSize(300, 300);
 
-        Object[][] tableData = new Object[rooms.size()][columnNames.length];
+        tableData = new Object[rooms.size()][columnNames.length];
 
-        makeRoomList(tableData);
+        makeRoomList();
 
 
         tblRoomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -64,9 +62,7 @@ public class ModalRoomList extends JDialog {
                 }
                 Room room = rooms.get(i);
                 new ModalRoomUpdateAndDtata(frame, room);
-                if(Success.UPDATEROOM.isSuc()){
-                    makeRoomList(tableData);
-                }
+                if(Success.UPDATEROOM.isSuc()|Success.INSERTEDROOM.isSuc())   makeRoomList();
             }
 
 
@@ -74,18 +70,19 @@ public class ModalRoomList extends JDialog {
         });
     }
 
-    private void makeRoomList(Object[][] tableData){
+    private void makeRoomList(){
         removeAllRows();
         if(Success.UPDATEROOM.isSuc()){
             this.rooms= RoomsInDb.getAllRooms();
 
         }
+        tableData = new Object[rooms.size()][columnNames.length];
         for (int i = 0; i < rooms.size(); i++) {
             tableData[i][0] = rooms.get(i).getId();
             tableData[i][1] = rooms.get(i).getName();
             tableData[i][2] = rooms.get(i).getNum();
         }
-        tblModel = new DefaultTableModel(tableData, columnNames);
+        DefaultTableModel tblModel = new DefaultTableModel(tableData, columnNames);
         tblRoomList.setModel(tblModel);
     }
 

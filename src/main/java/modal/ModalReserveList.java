@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ModalReserveList {
+public class ModalReserveList extends JDialog{
     private JPanel ReserveListMainPanel;
     private JTable reserveListTable;
     private JScrollPane scrollPane;
@@ -17,20 +17,20 @@ public class ModalReserveList {
     private Object[][] tableData;
 
     ModalReserveList(JFrame frame) {
-        JDialog dialog = new JDialog(frame, "Felhasználói adatok", true);
-        dialog.setLayout(new FlowLayout());
-        dialog.setContentPane(ReserveListMainPanel);
+        super(frame, "Felhasználói adatok", true);
+        setLayout(new FlowLayout());
+        setContentPane(ReserveListMainPanel);
         showReserves();
-        dialog.setTitle("foglalások");
-        dialog.setSize(600, 800);
-        dialog.setLocationRelativeTo(null);
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setTitle("foglalások");
+        setSize(600, 800);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        dialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
-        dialog.setVisible(true);
+        setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+        setVisible(true);
 
 
-        dialog.pack();
+        pack();
     }
 
     private void showReserves() {
@@ -39,14 +39,11 @@ public class ModalReserveList {
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         reserveListTable.setSize(600, 500);
-//        System.out.println("a méret: " + reserves.size());
         String[] columnNames = {"id", "mettől", "meddig","szobaszám","felhasználó"};
         tableData = new Object[reserves.size()][columnNames.length];
         addDataToTable();
         DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames);
-        // System.out.println(tableModel);
         reserveListTable.setModel(tableModel);
-        //System.out.println(reserveListTable);
         reserveListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         reserveListTable.setAutoCreateRowSorter(true);
         reserveListTable.setRowSelectionAllowed(true);
