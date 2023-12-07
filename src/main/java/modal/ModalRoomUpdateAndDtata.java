@@ -15,6 +15,7 @@ public class ModalRoomUpdateAndDtata extends JDialog {
     private JTextField textFieldNum;
     private JButton btnSave;
     private JButton btnClose;
+    private JButton btnDelete;
 
     ModalRoomUpdateAndDtata(JFrame frame, Room room) {
         super(frame, true);
@@ -44,6 +45,12 @@ public class ModalRoomUpdateAndDtata extends JDialog {
                     Success.UPDATEROOM.setSuc(true);
                     dispose();
                 }
+            }
+        });
+        btnDelete.addActionListener(e->{
+            if(RoomsInDb.deleteRoomById(roomField)){
+Success.DELETEDROOM.setSuc(true);
+                dispose();
             }
         });
         if (room != null) {

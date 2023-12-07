@@ -62,7 +62,7 @@ private Object[][] tableData;
                 }
                 Room room = rooms.get(i);
                 new ModalRoomUpdateAndDtata(frame, room);
-                if(Success.UPDATEROOM.isSuc()|Success.INSERTEDROOM.isSuc())   makeRoomList();
+                if(Success.UPDATEROOM.isSuc()|Success.INSERTEDROOM.isSuc()|Success.DELETEDROOM.isSuc())   makeRoomList();
             }
 
 
@@ -72,9 +72,8 @@ private Object[][] tableData;
 
     private void makeRoomList(){
         removeAllRows();
-        if(Success.UPDATEROOM.isSuc()){
+        if(Success.UPDATEROOM.isSuc()|Success.DELETEDROOM.isSuc()|Success.INSERTEDROOM.isSuc()){
             this.rooms= RoomsInDb.getAllRooms();
-
         }
         tableData = new Object[rooms.size()][columnNames.length];
         for (int i = 0; i < rooms.size(); i++) {

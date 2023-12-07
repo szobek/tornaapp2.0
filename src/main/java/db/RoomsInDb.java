@@ -23,7 +23,7 @@ public class RoomsInDb {
         ArrayList<Room> rooms = new ArrayList<>();
         if (con != null) {
             try {
-                query = "select * from rooms";
+                query = "select * from rooms where deleted=0";
                 PreparedStatement stmt = con.prepareStatement(query);
 
                 ResultSet rs = stmt.executeQuery();
@@ -52,7 +52,7 @@ public class RoomsInDb {
         ArrayList<Room> rooms = new ArrayList<>();
         if (con != null) {
             try {
-                query = "SELECT * FROM rooms where id not in (SELECT room_id FROM `reserve` WHERE fromTime>=? and toTime<=?)";
+                query = "SELECT * FROM rooms where id not in (SELECT room_id FROM `reserve` WHERE fromTime>=? and toTime<=?)and deleted=0";
                 PreparedStatement stmt = con.prepareStatement(query);
 
                 stmt.setTimestamp(1,fromDate);
@@ -128,6 +128,37 @@ public class RoomsInDb {
                 preparedStmt.setString(1,room.getName());
                 preparedStmt.setString(2,room.getNum());
                 preparedStmt.setString(3,room.getImagePath());
+
+
+                preparedStmt.executeUpdate();
+
+                con.close();
+                success=true;
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;
+    }
+
+    public static boolean deleteRoomById(Room room){
+        Connection con;
+        try {
+            con = DBHandler.connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        boolean success=false;
+        if (con != null) {
+            try {
+
+                String query = "UPDATE `rooms` SET deleted=1 where id = ?";
+
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                preparedStmt.setInt(1,room.getId());
 
 
                 preparedStmt.executeUpdate();

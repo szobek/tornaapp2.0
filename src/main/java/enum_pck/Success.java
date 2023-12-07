@@ -7,7 +7,8 @@ public enum Success {
     UPDATEROOM(false),
     UPDATEUSER(false),
     DELETEDUSER(false),
-    INSERTEDROOM(false);
+    INSERTEDROOM(false),
+    DELETEDROOM(false);
 
     private  boolean suc;
     Success(boolean data){
