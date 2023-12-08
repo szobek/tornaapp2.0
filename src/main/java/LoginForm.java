@@ -5,6 +5,11 @@ import model.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
 
 
 public class LoginForm extends JFrame {
@@ -33,8 +38,8 @@ public class LoginForm extends JFrame {
         passwordField1.addActionListener(action);
         btnLogin.addActionListener(e -> checkLogin());
 
-
     }
+
 
     public static void main(String[] args) {
         new LoginForm();

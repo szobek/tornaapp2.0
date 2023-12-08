@@ -5,14 +5,15 @@ import db.RoomsInDb;
 import model.Room;
 import model.User;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Welcome {
+public class Welcome extends JFrame {
     private JPanel WelcomePanel;
 
     private JMenuItem newUser;
@@ -27,22 +28,26 @@ public class Welcome {
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
-    private final JFrame frame;
 
     public Welcome()  {
-        frame = new JFrame();
-        frame.setTitle("Alkalmazás");
+        super();
+        setTitle("Alkalmazás");
         WelcomePanel.setPreferredSize(new Dimension(300,400));
 //        frame.setResizable(false);
-        frame.setContentPane(WelcomePanel);
+        setContentPane(WelcomePanel);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
         setLabelTextAfterInitApp();
-        Image im = Toolkit.getDefaultToolkit().getImage("./src/main/resources/t5.png");
-        frame.setIconImage(im);
-        frame.pack();
+
+        try {
+            Image image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("t5.png")));
+            setIconImage(image);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        pack();
         createMenu();
 
 
@@ -54,14 +59,14 @@ public class Welcome {
     }
 
     public void showUsers() {
-        new ModalUserList(frame);
+        new ModalUserList(this);
     }
 
     private void createMenu() {
 //
 
         userList.addActionListener(e -> showUsers());
-        newUser.addActionListener(e -> createDialog(null, frame));
+        newUser.addActionListener(e -> createDialog(null, this));
         menuItemReserveList.addActionListener(e -> createReserveListDialog());
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
@@ -70,13 +75,13 @@ public class Welcome {
     }
 
     private void createRoomModal() {
-        new ModalRoomUpdateAndDtata(frame, null);
+        new ModalRoomUpdateAndDtata(this, null);
     }
 
 
     private void getRoomsFromDb() {
         rooms = RoomsInDb.getAllRooms();
-        new ModalRoomList(frame, rooms);
+        new ModalRoomList(this, rooms);
     }
 
     private void createDialog(User user, JFrame frame) {
@@ -85,30 +90,32 @@ public class Welcome {
     }
 
     private void createReserveListDialog() {
-        new ModalReserveList(frame);
+        new ModalReserveList(this);
     }
 
     private void createReserveMakeDialog() {
         getDataFromDB();
-        new ModalCreateReserve(frame, users);
+        new ModalCreateReserve(this, users);
     }
 
     private void setLabelTextAfterInitApp() {
-        String fileName = "src/main/resources/welcome.txt";
+        String fileName = "welcome.txt";
 
-        try (BufferedReader br = new BufferedReader(
-                new FileReader(fileName, StandardCharsets.UTF_8))) {
+        ClassLoader classLoader = getClass().getClassLoader();
 
-            StringBuilder sb = new StringBuilder();
+        try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
+            assert inputStream != null;
+            try (InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                 BufferedReader reader = new BufferedReader(streamReader)) {
 
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    txtwelcome.setText(line);
+                }
+
             }
-            txtwelcome.setLineWrap(true);
-            txtwelcome.setText(sb.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
 

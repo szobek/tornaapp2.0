@@ -1,33 +1,50 @@
 package db;
 
-import model.UserRight;
-import model.User;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.UUID;
+import Helpers.ReadConfig;
 import hash.PasswordHash;
+import model.User;
+import model.UserRight;
 
 import javax.swing.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.UUID;
 
 public class DBHandler {
     public static Connection connectToDb() {
+        Properties properties = ReadConfig.readConfig();
         Connection con = null;
         try {
+            // r0^WuTd4$eBp szobekwe_tornaapp
+
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tornaapp", "root", "");
+            String[] local = {
+                    properties.getProperty("localDbUrl"),
+                    properties.getProperty("localDbUser"),
+                    properties.getProperty("localDbpaaword", "")
+            };
+
+            String[] domain = {
+                    properties.getProperty("remoteDbUrl"),
+                    properties.getProperty("remoteDbUser"),
+                    properties.getProperty("remoteDbPassword")
+            };
+
+            con = (Boolean.parseBoolean(properties.getProperty("prod"))) ? DriverManager.getConnection(domain[0], domain[1], domain[2]) : DriverManager.getConnection(local[0], local[1], "");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        if(con==null) {
-            JOptionPane.showMessageDialog(null,"nem sikerült az adatbázishoz csatlakozni", "Csatlakozási hiba",JOptionPane.ERROR_MESSAGE);
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "nem sikerült az adatbázishoz csatlakozni", "Csatlakozási hiba", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         return con;
     }
 
     public static User checkLogin(String email, String password) {
-        User user=null;
+        User user = null;
         Connection con;
         try {
             con = connectToDb();
@@ -36,7 +53,7 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
 
-        String query ;
+        String query;
         if (con != null) {
             try {
                 query = "select users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves from users inner join user_data on users.id=user_data.user_id inner join user_rights on user_rights.user_id=users.id where email=? and password=?";
@@ -47,7 +64,7 @@ public class DBHandler {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
 
-                    user = new User(rs.getString("phone"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getInt("id"), new UserRight(rs.getBoolean("listreserves"),rs.getBoolean("newuser")));
+                    user = new User(rs.getString("phone"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getInt("id"), new UserRight(rs.getBoolean("listreserves"), rs.getBoolean("newuser")));
                 } else {
                     System.err.println("hiba a loginnal");
                 }
@@ -137,19 +154,19 @@ public class DBHandler {
                 preparedStmt.executeUpdate();
 
                 con.close();
-success=true;
+                success = true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
-return success;
+        return success;
     }
 
     public static boolean saveNewUserInDb(User newUser) {
         Connection con;
-        boolean success=false;
+        boolean success = false;
         try {
             con = connectToDb();
         } catch (Exception e) {
@@ -161,7 +178,7 @@ return success;
         if (con != null) {
             try {
                 String psw = PasswordHash.hashing("CTf23");
-                String query = "INSERT INTO `users` VALUES (NULL, '"+newUser.getEmail()+"', '"+psw+"', NULL, NULL, NULL, '0');";
+                String query = "INSERT INTO `users` VALUES (NULL, '" + newUser.getEmail() + "', '" + psw + "', NULL, NULL, NULL, '0');";
                 Statement stmt = con.createStatement();
 
                 stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -180,14 +197,14 @@ return success;
                 stmt.executeUpdate(query);
 
                 con.close();
-                success=true;
+                success = true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
-return success;
+        return success;
 
     }
 
@@ -202,7 +219,7 @@ return success;
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-        boolean success=false;
+        boolean success = false;
         if (con != null) {
             try {
                 UUID uuid = UUID.randomUUID();
@@ -212,32 +229,33 @@ return success;
 
 
                 String query = "UPDATE `users` " +
-                "inner join user_data on users.id=user_data.user_id " +
+                        "inner join user_data on users.id=user_data.user_id " +
                         "inner join user_rights on user_rights.user_id=users.id " +
                         "SET  user_rights.newuser=0," +
                         "user_rights.listreserves=0 ," +
                         "user_data.first_name = ''," +
-                        "users.email='"+uuidAsString+"'," +
+                        "users.email='" + uuidAsString + "'," +
                         "user_data.last_name='', " +
                         "users.deleted=1 ," +
                         "phone='' " +
                         "WHERE users.email = ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
-preparedStmt.setString(1,email);
+                preparedStmt.setString(1, email);
 
 
                 preparedStmt.executeUpdate();
 
                 con.close();
-                success=true;
+                success = true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
-        return success;	}
+        return success;
+    }
 
     public static boolean saveUserRightsInDB(User user) {
         Connection con;
@@ -247,23 +265,22 @@ preparedStmt.setString(1,email);
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-        boolean success=false;
+        boolean success = false;
         if (con != null) {
             try {
 
                 String query = "UPDATE `user_rights` set newuser=?, listreserves=? WHERE user_id= ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
-                preparedStmt.setBoolean(1,user.getUserRight().isCreateUser() );
+                preparedStmt.setBoolean(1, user.getUserRight().isCreateUser());
                 preparedStmt.setBoolean(2, user.getUserRight().isReserveList());
                 preparedStmt.setInt(3, user.getUserId());
-
 
 
                 preparedStmt.executeUpdate();
 
                 con.close();
-                success=true;
+                success = true;
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }

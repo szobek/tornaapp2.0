@@ -32,12 +32,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", num='" + num + '\'' +
-                ", name='" + name + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
+        return num + '\'' + name;
     }
 
     public void setNum(String num) {

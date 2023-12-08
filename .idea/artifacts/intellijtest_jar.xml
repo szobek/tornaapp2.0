@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="intellijtest:jar">
+    <output-path>$PROJECT_DIR$/../../jar_files/artifacts/intellijtest_jar</output-path>
+    <root id="archive" name="intellijtest.jar">
+      <element id="module-output" name="intellijtest" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/9.4.46.v20220331/jetty-http-9.4.46.v20220331.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/9.4.46.v20220331/jetty-server-9.4.46.v20220331.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-util/9.4.46.v20220331/jetty-util-9.4.46.v20220331.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-io/9.4.46.v20220331/jetty-io-9.4.46.v20220331.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mysql-connector-j-8.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-security/9.4.46.v20220331/jetty-security-9.4.46.v20220331.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
