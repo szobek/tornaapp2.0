@@ -8,6 +8,7 @@ import model.UserRight;
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -30,8 +31,8 @@ public class DBHandler {
                     properties.getProperty("remoteDbUser"),
                     properties.getProperty("remoteDbPassword")
             };
-
-            con = (Boolean.parseBoolean(properties.getProperty("prod"))) ? DriverManager.getConnection(domain[0], domain[1], domain[2]) : DriverManager.getConnection(local[0], local[1], "");
+            System.out.println(ReadConfig.isProd());
+            con = DriverManager.getConnection(domain[0], domain[1], domain[2]);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -119,7 +120,8 @@ public class DBHandler {
         } else {
             System.err.println("hiba...");
         }
-
+        System.out.println(users);
+        System.out.println(con);
         return users;
     }
 

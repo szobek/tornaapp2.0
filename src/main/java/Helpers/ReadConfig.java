@@ -20,4 +20,9 @@ public class ReadConfig {
         return prop;
 
     }
+    public static boolean isProd(){
+        Properties properties = readConfig();
+        int prod = Integer.parseInt(properties.getProperty("prod"));
+        return (prod>0);
+    }
 }
