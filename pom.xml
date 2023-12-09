@@ -8,6 +8,11 @@
     <artifactId>intellijtest</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+
+
+    </dependencies>
+
     <properties>
 
         <maven.compiler.source>21</maven.compiler.source>
