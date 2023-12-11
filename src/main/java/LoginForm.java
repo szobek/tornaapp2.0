@@ -6,16 +6,10 @@ import model.User;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 
 public class LoginForm extends JFrame {
@@ -27,7 +21,7 @@ public class LoginForm extends JFrame {
     public LoginForm() {
         setContentPane(loginPanel);
         setTitle("login");
-        createHttpCall("http://127.0.0.1:8000/tt");
+        createHttpCall("http://127.0.0.1:8000/checklogin");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -76,25 +70,7 @@ public class LoginForm extends JFrame {
     }
 
     private void createHttpCall(String remoteUrl){
-        try {
-            URL url = new URL(remoteUrl);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Content-Type", "application/json");
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            System.out.println("a válasz: "+content);
-            in.close();
-            con.disconnect();
-        } catch (IOException  e) {
-            System.out.println("hiba van");
-            throw new RuntimeException(e);
-        }
+       DBHandler.makeHttpCall(remoteUrl);
 
 
     }

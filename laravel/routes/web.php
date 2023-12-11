@@ -16,4 +16,6 @@ use App\Http\Controllers\DbController;
 Route::any('/', function () {
     return "éééééééééééééééééé";
 });
-Route::get('/tt', [DbController::class,'getAllRoom']);
+Route::get('/rooms', [DbController::class,'getAllRoom']);
+Route::get('/users', [DbController::class,'getAllUsers']);
+Route::any('/checklogin', [DbController::class,'checkLogin']);
