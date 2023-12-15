@@ -6,37 +6,13 @@ import model.User;
 import model.UserRight;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Properties;
 import java.util.UUID;
 
 public class DBHandler {
-    public static void makeHttpCall(String remoteUrl){
-        // kunszt.norbert@gmail.com 72239e8b21c5b0d1435b672ce16340acb3d9672bcfa890a1517a495853c61366
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(remoteUrl))
-                    .POST(HttpRequest.BodyPublishers.ofString("{'email':'kunszt.norbert@gmail.com','password':'72239e8b21c5b0d1435b672ce16340acb3d9672bcfa890a1517a495853c61366'}"))
-                    .header("Authorization", "Basic " +
-                            Base64.getEncoder().encodeToString(("baeldung:123456").getBytes()))
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-        } catch (IOException e) {
-            System.out.println("hiba van");
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public static Connection connectToDb() {
         Properties properties = ReadConfig.readConfig();
         Connection con = null;
@@ -55,14 +31,16 @@ public class DBHandler {
                     properties.getProperty("remoteDbUser"),
                     properties.getProperty("remoteDbPassword")
             };
-            System.out.println(ReadConfig.isProd());
             con = DriverManager.getConnection(domain[0], domain[1], domain[2]);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         if (con == null) {
-            JOptionPane.showMessageDialog(null, "nem sikerült az adatbázishoz csatlakozni", "Csatlakozási hiba", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "nem sikerült az adatbázishoz csatlakozni",
+                    "Csatlakozási hiba",
+                    JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         return con;
