@@ -33,7 +33,6 @@ public class Welcome extends JFrame {
     public Welcome()  {
         super();
         setTitle("Alkalmazás");
-        WelcomePanel.setPreferredSize(new Dimension(300,400));
 //        frame.setResizable(false);
         setContentPane(WelcomePanel);
 
@@ -48,6 +47,7 @@ public class Welcome extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        WelcomePanel.setPreferredSize(new Dimension(300,300));
         pack();
         createMenu();
 

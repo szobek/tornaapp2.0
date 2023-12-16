@@ -53,7 +53,6 @@ public class LoginForm extends JFrame {
         if (email.isEmpty()) JOptionPane.showMessageDialog(null, "Email nem lehet üres");
 
         if (psw.isEmpty()) JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres");
-
         User user = CheckLogin.checkLogin(email, psw);
 
         if (user != null) {
