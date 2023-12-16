@@ -2,6 +2,7 @@ package modal;
 
 
 import db.DBHandler;
+import db.UserRightsInDb;
 import model.User;
 import model.UserRight;
 
@@ -45,7 +46,7 @@ public class SetUserRighsModal extends JDialog {
 
         btnSaveRights.addActionListener(e -> {
             getInputDatas();
-            if (DBHandler.saveUserRightsInDB(user)) dispose();
+            if (UserRightsInDb.saveUserRightsInDB(user)) dispose();
         });
         btnCancel.addActionListener(e -> dispose());
         setInputData();
