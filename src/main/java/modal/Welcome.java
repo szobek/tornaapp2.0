@@ -2,6 +2,7 @@ package modal;
 
 import db.DBHandler;
 import db.RoomsInDb;
+import db.UsersInDb;
 import model.Room;
 import model.User;
 
@@ -55,7 +56,7 @@ public class Welcome extends JFrame {
 
 
     private void getDataFromDB() {
-        this.users = DBHandler.getAllFromDB();
+        this.users = UsersInDb.getAllFromDB();
     }
 
     public void showUsers() {

@@ -1,6 +1,7 @@
 package modal;
 
 import db.DBHandler;
+import db.UsersInDb;
 import enum_pck.Success;
 import model.User;
 import model.UserRight;
@@ -91,7 +92,7 @@ public class ModalUserList extends JDialog {
 
     private void getDataFromDB() {
         if (users != null) users.clear();
-        this.users = DBHandler.getAllFromDB();
+        this.users = UsersInDb.getAllFromDB();
     }
 
     private void removeAllRowFromTable() {

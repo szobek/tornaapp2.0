@@ -3,6 +3,8 @@ package modal;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import db.UsersInDb;
 import model.User;
 
 import db.DBHandler;
@@ -60,14 +62,14 @@ public class ModalUserModify {
             user=(user==null)?new User("","","","",0, new UserRight(false,false)):user;
             if(user.getEmail().isEmpty()){
                 getInputDatas();
-               if( DBHandler.saveNewUserInDb(user)) {
+               if( UsersInDb.saveNewUserInDb(user)) {
                    Success.INSERTED.setSuc(true);
                    if(Success.INSERTED.isSuc()) dialog.dispose();
                }
 
             } else {
 getInputDatas();
-                if (DBHandler.updateUserData(user)){
+                if (UsersInDb.updateUserData(user)){
                     Success.UPDATED.setSuc(true);
                     Success.UPDATEUSER.setSuc(true);
                     if(Success.UPDATED.isSuc()) dialog.dispose();
@@ -86,7 +88,7 @@ getInputDatas();
 
             if (JOptionPane.showConfirmDialog(frame, "Valóban törli?", "Törlés", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 Success.DELETEDUSER.setSuc(true);
-                if(DBHandler.deleteUser(user)){
+                if(UsersInDb.deleteUser(user)){
                     dialog.dispose();
                 }
             }
