@@ -1,4 +1,4 @@
-package tests.dbtest;
+package tests;
 
 import Helpers.ReadConfig;
 import modal.Welcome;

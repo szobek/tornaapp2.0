@@ -1,5 +1,6 @@
+package login;
+
 import db.CheckLogin;
-import db.DBHandler;
 import hash.PasswordHash;
 import modal.Welcome;
 import model.User;
