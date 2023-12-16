@@ -1,8 +1,6 @@
 package db;
 
 import Helpers.ReadConfig;
-import model.User;
-import model.UserRight;
 
 import javax.swing.*;
 import java.sql.*;
