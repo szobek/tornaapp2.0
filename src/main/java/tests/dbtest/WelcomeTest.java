@@ -6,12 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +33,54 @@ public class WelcomeTest {
 
     @Test
     void tesztConfigFileAvailable() {
-        ClassLoader classLoader = ReadConfig.class.getClassLoader();
-        assertNotNull(classLoader.getResource("app.config"));
+        assertNotNull(ReadConfig.class.getClassLoader().getResource("app.config"));
     }
+    @Test
+    void tesztClose(){
+        Welcome welcome = new Welcome();
+        assertEquals(JFrame.EXIT_ON_CLOSE,welcome.getDefaultCloseOperation());
+    }
+    @Test
+    void tesztWelcomeFileAvailable() {
+        assertNotNull(ReadConfig.class.getClassLoader().getResource("welcome.txt"));
+    }
+    @Test
+    void tesztReadFile(){
+        String fileName = "welcome.txt";
+        StringBuilder txt = new StringBuilder();
+
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
+            assert inputStream != null;
+            try (InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                 BufferedReader reader = new BufferedReader(streamReader)) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    txt.append(line);
+                }
+
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        assertNotNull(txt);
+    }
+
+    @Test
+    void tesztUserLength(){
+        Welcome welcome = new Welcome();
+        assertTrue(welcome.getUsersSize()>0);
+    }
+
+    @Test
+    void tesztRoomLength(){
+        Welcome welcome = new Welcome();
+        assertTrue(welcome.getRoomsSize()>0);
+    }
+
+
+
+
 }

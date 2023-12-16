@@ -1,6 +1,5 @@
 package modal;
 
-import db.DBHandler;
 import db.RoomsInDb;
 import db.UsersInDb;
 import model.Room;
@@ -24,8 +23,7 @@ public class Welcome extends JFrame {
     private JMenuItem roomListMenuItem;
     private JTextArea txtwelcome;
     private JMenuItem createRoomMenuItem;
-    private JScrollPane htmlScrollPane;
-    private final String[] columnNames = {"Név", "Telefon", "E-mail"};
+
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
@@ -57,6 +55,7 @@ public class Welcome extends JFrame {
 
     private void getDataFromDB() {
         this.users = UsersInDb.getAllFromDB();
+        this.rooms = RoomsInDb.getAllRooms();
     }
 
     public void showUsers() {
@@ -67,7 +66,7 @@ public class Welcome extends JFrame {
 //
 
         userList.addActionListener(e -> showUsers());
-        newUser.addActionListener(e -> createDialog(null, this));
+        newUser.addActionListener(e -> createDialog( this));
         menuItemReserveList.addActionListener(e -> createReserveListDialog());
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
@@ -85,9 +84,8 @@ public class Welcome extends JFrame {
         new ModalRoomList(this, rooms);
     }
 
-    private void createDialog(User user, JFrame frame) {
-        if (user == null) new ModalUserModify(frame);
-        else new ModalUserModify(user, frame);
+    private void createDialog(JFrame frame) {
+        new ModalUserModify(frame);
     }
 
     private void createReserveListDialog() {
@@ -116,12 +114,21 @@ public class Welcome extends JFrame {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
 
     }
 
 
+    public int getUsersSize(){
+        getDataFromDB();
+        return users.size();
+    }
+
+    public int getRoomsSize(){
+        getDataFromDB();
+        return rooms.size();
+    }
 
 }
