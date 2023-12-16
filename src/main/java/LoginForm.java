@@ -1,3 +1,4 @@
+import db.CheckLogin;
 import db.DBHandler;
 import hash.PasswordHash;
 import modal.Welcome;
@@ -53,7 +54,7 @@ public class LoginForm extends JFrame {
 
         if (psw.isEmpty()) JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres");
 
-        User user = DBHandler.checkLogin(email, psw);
+        User user = CheckLogin.checkLogin(email, psw);
 
         if (user != null) {
             openAnother();
