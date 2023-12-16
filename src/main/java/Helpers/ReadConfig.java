@@ -1,7 +1,6 @@
 package Helpers;
 
 import javax.swing.*;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,20 +12,13 @@ public class ReadConfig {
 
         String fileName = "app.config";
         ClassLoader classLoader = ReadConfig.class.getClassLoader();
-
-
-
-
         try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
             prop.load(inputStream);
         } catch (FileNotFoundException ex) {
-            // FileNotFoundException catch is optional and can be ollapsed
             String hiba = "Nem találja a fájlt";
-            System.out.println(hiba);
             JOptionPane.showMessageDialog(null,hiba,"",JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
             String hiba = "I/O hiba";
-            System.out.println(hiba);
             JOptionPane.showMessageDialog(null,hiba,"",JOptionPane.ERROR_MESSAGE);
         }
         return prop;

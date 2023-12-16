@@ -31,7 +31,7 @@ public class DBHandler {
                     properties.getProperty("remoteDbUser"),
                     properties.getProperty("remoteDbPassword")
             };
-            con = DriverManager.getConnection(domain[0], domain[1], domain[2]);
+            con = (ReadConfig.isProd())? DriverManager.getConnection(domain[0], domain[1], domain[2]):DriverManager.getConnection(local[0],local[1],local[2]);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
