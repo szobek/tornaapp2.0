@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 class LoginTest {
 private ArrayList<Component> components = new ArrayList<>();
+
+
     @Test
     void tesztTextfieldAvailable() {
         boolean textFieldAvailable = false;
