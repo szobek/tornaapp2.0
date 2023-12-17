@@ -37,7 +37,8 @@ public class ModalCreateReserve extends JDialog {
     private final ArrayList<String> days = new ArrayList<>();
     private final ArrayList<User> users;
     private ArrayList<Room> rooms;
-
+private Timestamp reserveFromDate;
+    private Timestamp reserveToDate;
 
     ModalCreateReserve(JFrame frame, ArrayList<User> users) {
         super(frame, "Felhasználói adatok", true);
@@ -63,7 +64,6 @@ public class ModalCreateReserve extends JDialog {
         toPanel.setVisible(false);
         btnCancel.setVisible(false);
         btnSave.setVisible(false);
-        btnShowRooms.setVisible(false);
     }
 
     private void setUserCombobox() {
@@ -131,20 +131,14 @@ public class ModalCreateReserve extends JDialog {
             getFreeRoomsFromDbByDate();
             btnSave.setVisible(true);
             btnCancel.setVisible(true);
+            btnNext.setVisible(false);
         });
 
 
     }
 
     private void getFreeRoomsFromDbByDate() {
-        String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
-        String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
-
-        String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
-        String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
-
-        Timestamp reserveFromDate = Timestamp.valueOf(from);
-        Timestamp reserveToDate = Timestamp.valueOf(to);
+        setReserveDates();
         this.rooms = RoomsInDb.getFreeRooms(reserveFromDate, reserveToDate);
         fillRoomsCombobox();
     }
@@ -167,14 +161,7 @@ public class ModalCreateReserve extends JDialog {
 
     private void createReserve() {
 
-        String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
-        String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
-
-        String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
-        String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
-
-        Timestamp reserveFromDate = Timestamp.valueOf(from);
-        Timestamp reserveToDate = Timestamp.valueOf(to);
+       setReserveDates();
         int userIndex = cbUser.getSelectedIndex();
         int roomId = cbRooms.getSelectedIndex();
         // comapre dates (-1,0,1)
@@ -215,5 +202,16 @@ public class ModalCreateReserve extends JDialog {
             btnPanel.setVisible(false);
         }
 
+    }
+
+    private void setReserveDates(){
+        String fromDay = (Integer.parseInt(Objects.requireNonNull(cbFromDay.getSelectedItem()).toString()) < 10) ? "0" + cbFromDay.getSelectedItem() : cbFromDay.getSelectedItem().toString();
+        String toDay = (Integer.parseInt(Objects.requireNonNull(cbToDay.getSelectedItem()).toString()) < 10) ? "0" + cbToDay.getSelectedItem() : cbToDay.getSelectedItem().toString();
+
+        String from = cbFromYear.getSelectedItem() + "-" + cbFromMonth.getSelectedItem() + "-" + fromDay + " " + cbFromHour.getSelectedItem() + ":" + cbFromMinute.getSelectedItem() + ":00";
+        String to = cbToYear.getSelectedItem() + "-" + cbToMonth.getSelectedItem() + "-" + toDay + " " + cbToHour.getSelectedItem() + ":" + cbToMinute.getSelectedItem() + ":00";
+
+        reserveFromDate = Timestamp.valueOf(from);
+        reserveToDate = Timestamp.valueOf(to);
     }
 }

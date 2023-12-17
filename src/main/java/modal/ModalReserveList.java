@@ -39,7 +39,7 @@ public class ModalReserveList extends JDialog{
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         reserveListTable.setSize(600, 500);
-        String[] columnNames = {"id", "mettől", "meddig","szobaszám","felhasználó"};
+        String[] columnNames = { "mettől", "meddig","szobaszám","felhasználó"};
         tableData = new Object[reserves.size()][columnNames.length];
         addDataToTable();
         DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames);
@@ -53,11 +53,10 @@ public class ModalReserveList extends JDialog{
 
     private void addDataToTable() {
         for (int i = 0; i < reserves.size(); i++) {
-            tableData[i][0] = reserves.get(i).id();
-            tableData[i][1] = reserves.get(i).from().toString().substring(0,16);
-            tableData[i][2] = reserves.get(i).to().toString().substring(0,16);
-            tableData[i][3] = reserves.get(i).roomNum();
-            tableData[i][4] = reserves.get(i).userName();
+            tableData[i][0] = reserves.get(i).from().toString().substring(0,16);
+            tableData[i][1] = reserves.get(i).to().toString().substring(0,16);
+            tableData[i][2] = reserves.get(i).roomNum();
+            tableData[i][3] = reserves.get(i).userName();
 
         }
     }
