@@ -53,11 +53,11 @@ public class ModalReserveList extends JDialog{
 
     private void addDataToTable() {
         for (int i = 0; i < reserves.size(); i++) {
-            tableData[i][0] = reserves.get(i).getId();
-            tableData[i][1] = reserves.get(i).getFrom();
-            tableData[i][2] = reserves.get(i).getTo();
-            tableData[i][3] = reserves.get(i).getRoomNum();
-            tableData[i][4] = reserves.get(i).getUserName();
+            tableData[i][0] = reserves.get(i).id();
+            tableData[i][1] = reserves.get(i).from();
+            tableData[i][2] = reserves.get(i).to();
+            tableData[i][3] = reserves.get(i).roomNum();
+            tableData[i][4] = reserves.get(i).userName();
 
         }
     }

@@ -59,10 +59,10 @@ public class ReservesInDB {
                 query = "insert into reserve  values (null,?,?,?,?)";
                 PreparedStatement stmt = con.prepareStatement(query);
 
-                stmt.setInt(1,reserve.getUserId());
-                stmt.setTimestamp(2,reserve.getFrom());
-                stmt.setTimestamp(3,reserve.getTo());
-                stmt.setInt(4,reserve.getRoomId());
+                stmt.setInt(1,reserve.userId());
+                stmt.setTimestamp(2,reserve.from());
+                stmt.setTimestamp(3,reserve.to());
+                stmt.setInt(4,reserve.roomId());
                 stmt.executeUpdate();
                 con.close();
                 success=true;
