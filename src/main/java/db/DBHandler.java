@@ -28,7 +28,6 @@ public class DBHandler {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = (ReadConfig.isProd())? DriverManager.getConnection(domain[0], domain[1], domain[2]):DriverManager.getConnection(local[0],local[1],local[2]);
-            System.out.println(con);
 
         } catch (Exception e) {
             System.out.println("Kapcsolat hiba");

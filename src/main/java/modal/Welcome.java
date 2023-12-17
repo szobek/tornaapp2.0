@@ -3,6 +3,7 @@ package modal;
 import db.RoomsInDb;
 import db.UsersInDb;
 import model.Room;
+import model.TestModel;
 import model.User;
 
 import javax.imageio.ImageIO;
@@ -30,6 +31,8 @@ public class Welcome extends JFrame {
 
     public Welcome()  {
         super();
+
+
         setTitle("Alkalmazás");
 //        frame.setResizable(false);
         setContentPane(WelcomePanel);

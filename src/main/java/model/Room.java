@@ -1,7 +1,7 @@
 package model;
 
 public class Room {
-    private int id;
+    private final int id;
     private String num;
     private String name;
 

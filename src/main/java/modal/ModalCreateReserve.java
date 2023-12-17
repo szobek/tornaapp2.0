@@ -210,6 +210,7 @@ public class ModalCreateReserve extends JDialog {
         if (!rooms.isEmpty()) {
             cbModel.addAll(rooms);
             cbModel.setSelectedItem(rooms.get(0));
+            btnPanel.setVisible(true);
         } else {
             btnPanel.setVisible(false);
         }

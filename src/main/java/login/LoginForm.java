@@ -35,7 +35,6 @@ btnLogin.setName("btnLogin");
         };
         passwordField1.addActionListener(action);
         btnLogin.addActionListener(e -> checkLogin());
-
     }
 
 
@@ -43,7 +42,7 @@ btnLogin.setName("btnLogin");
         new LoginForm();
     }
 
-    private void openAnother() {
+    private void openWelcome() {
         new Welcome();
         dispose();
 
@@ -53,13 +52,16 @@ btnLogin.setName("btnLogin");
         String email = textField1.getText();
         String psw = PasswordHash.hashing(String.valueOf(passwordField1.getPassword()));
 
-        if (email.isEmpty()) JOptionPane.showMessageDialog(null, "Email nem lehet üres");
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Email nem lehet üres");
+            return;
+        }
 
-        if (psw.isEmpty()) JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres");
+        if (String.valueOf(passwordField1.getPassword()).isEmpty()){ JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres"); return;}
         User user = CheckLogin.checkLogin(email, psw);
 
         if (user != null) {
-            openAnother();
+            openWelcome();
         } else {
             JOptionPane.showMessageDialog(null, "Hibás adatok");
         }
