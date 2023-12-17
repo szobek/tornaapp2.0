@@ -25,6 +25,12 @@ private ArrayList<Component> components = new ArrayList<>();
     }
 
     @Test
+    void tesztSize() {
+        LoginForm loginForm = new LoginForm();
+        assertEquals(new Dimension(600,400),loginForm.getSize());
+    }
+
+    @Test
     void tesztPasswordfieldAvailable() {
         boolean passwordFieldAvailable = false;
         listComponents();
@@ -36,6 +42,20 @@ private ArrayList<Component> components = new ArrayList<>();
         }
 
         assertTrue(passwordFieldAvailable);
+    }
+
+    @Test
+    void tesztBtnLoginAvailable() {
+        boolean btnLoginAvailable = false;
+        listComponents();
+        int i=0;
+        while(i<components.size()){
+            if (components.get(i) instanceof JButton && components.get(i).getName().equals("btnLogin")) {
+                btnLoginAvailable = true;
+            }
+            i++;
+        }
+        assertTrue(btnLoginAvailable);
     }
     private void listComponents(){
         LoginForm loginForm = new LoginForm();

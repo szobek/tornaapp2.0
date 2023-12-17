@@ -6,6 +6,7 @@ import modal.Welcome;
 import model.User;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
@@ -18,7 +19,8 @@ public class LoginForm extends JFrame {
     public LoginForm() {
         setContentPane(loginPanel);
         setTitle("login");
-
+        setPreferredSize(new Dimension(600,400));
+btnLogin.setName("btnLogin");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         textField1.setText("kunszt.norbert@gmail.com");
