@@ -37,12 +37,16 @@ public class ModalReserveList extends JDialog{
         this.reserves = ReservesInDB.getAllReserves();
         ReserveListMainPanel.setVisible(true);
         scrollPane.setVisible(true);
+
         scrollPane.getViewport().setSize(600, 500);
         reserveListTable.setSize(600, 500);
+
         String[] columnNames = { "mettől", "meddig","szobaszám","felhasználó"};
+
         tableData = new Object[reserves.size()][columnNames.length];
         addDataToTable();
         DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames);
+
         reserveListTable.setModel(tableModel);
         reserveListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         reserveListTable.setAutoCreateRowSorter(true);

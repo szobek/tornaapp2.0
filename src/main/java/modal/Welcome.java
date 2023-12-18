@@ -1,13 +1,16 @@
 package modal;
 
+import db.InformationInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
+import model.Information;
 import model.Room;
 import model.TestModel;
 import model.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -22,8 +25,9 @@ public class Welcome extends JFrame {
     private JMenuItem menuItemReserveList;
     private JMenuItem menuItemCreateReserve;
     private JMenuItem roomListMenuItem;
-    private JTextArea txtwelcome;
     private JMenuItem createRoomMenuItem;
+    private JPanel infoPanel;
+    private JMenuItem infoListMenuItem;
 
     private ArrayList<Room> rooms;
 
@@ -40,8 +44,7 @@ public class Welcome extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        setLabelTextAfterInitApp();
-
+setInfosInWelcome();
         try {
             Image image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("t5.png")));
             setIconImage(image);
@@ -51,6 +54,20 @@ public class Welcome extends JFrame {
         WelcomePanel.setPreferredSize(new Dimension(300,300));
         pack();
         createMenu();
+
+
+    }
+
+    private void setInfosInWelcome() {
+        ArrayList<Information> infos = InformationInDb.getAllInformation();
+        for (Information information : infos) {
+            JTextArea info = new JTextArea(information.getMessage());
+            info.setLineWrap(true);
+            info.setFont(new Font("Serif", Font.ITALIC, 17));
+            info.setPreferredSize(new Dimension(280, 50));
+            info.setMargin(new Insets(5, 5, 5, 5));
+            if (information.isVisible()) infoPanel.add(info);
+        }
 
 
     }
@@ -75,6 +92,13 @@ public class Welcome extends JFrame {
 
         roomListMenuItem.addActionListener(e -> getRoomsFromDb());
         createRoomMenuItem.addActionListener(e -> createRoomModal());
+
+        infoListMenuItem.addActionListener(e -> listInformationsInModal());
+    }
+
+    private void listInformationsInModal() {
+        new ModalInformationList(this);
+
     }
 
     private void createRoomModal() {
@@ -99,30 +123,6 @@ public class Welcome extends JFrame {
         getDataFromDB();
         new ModalCreateReserve(this, users);
     }
-
-    private void setLabelTextAfterInitApp() {
-        String fileName = "welcome.txt";
-
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
-            assert inputStream != null;
-            try (InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-                 BufferedReader reader = new BufferedReader(streamReader)) {
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    txtwelcome.setText(line);
-                }
-
-            }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-
-
-    }
-
 
     public int getUsersSize(){
         getDataFromDB();
