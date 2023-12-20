@@ -102,6 +102,12 @@
                   <text value="Lista"/>
                 </properties>
               </component>
+              <component id="76165" class="javax.swing.JMenuItem" binding="infoCreateMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Információ létrozása"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

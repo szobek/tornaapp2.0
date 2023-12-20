@@ -3,6 +3,7 @@ package modal;
 import db.InformationInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
+import enum_pck.Success;
 import model.Information;
 import model.Room;
 import model.TestModel;
@@ -28,6 +29,7 @@ public class Welcome extends JFrame {
     private JMenuItem createRoomMenuItem;
     private JPanel infoPanel;
     private JMenuItem infoListMenuItem;
+    private JMenuItem infoCreateMenuItem;
 
     private ArrayList<Room> rooms;
 
@@ -60,6 +62,7 @@ setInfosInWelcome();
 
     private void setInfosInWelcome() {
         ArrayList<Information> infos = InformationInDb.getAllInformation();
+        infoPanel.removeAll();
         for (Information information : infos) {
             JTextArea info = new JTextArea(information.getMessage());
             info.setLineWrap(true);
@@ -94,11 +97,17 @@ setInfosInWelcome();
         createRoomMenuItem.addActionListener(e -> createRoomModal());
 
         infoListMenuItem.addActionListener(e -> listInformationsInModal());
+
+        infoCreateMenuItem.addActionListener(e -> MakeAndUpdateInfoModal());
+    }
+
+    private void MakeAndUpdateInfoModal() {
+        new ModalCreateAndUpdateInformation(this,null);
     }
 
     private void listInformationsInModal() {
         new ModalInformationList(this);
-
+//if(Success.UPDATEINFORMATION.isSuc()) setInfosInWelcome();
     }
 
     private void createRoomModal() {

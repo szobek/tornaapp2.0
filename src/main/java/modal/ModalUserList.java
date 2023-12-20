@@ -1,6 +1,5 @@
 package modal;
 
-import db.DBHandler;
 import db.UsersInDb;
 import enum_pck.Success;
 import model.User;
@@ -9,7 +8,6 @@ import model.UserRight;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ModalUserList extends JDialog {
 
@@ -51,11 +49,10 @@ public class ModalUserList extends JDialog {
         userListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userListTable.setAutoCreateRowSorter(true);
         userListTable.setRowSelectionAllowed(true);
-
+//        userListTable.setUpdateSelectionOnSort(true);
         userListTable.getSelectionModel().addListSelectionListener(e -> {
-
             if (!e.getValueIsAdjusting() && userListTable.getSelectedRow() != -1) {
-                int a = userListTable.convertRowIndexToModel(userListTable.getSelectedRow());
+            int a = userListTable.convertRowIndexToModel(userListTable.getSelectedRow());
                 String email = userListTable.getModel().getValueAt(a, 2).toString();
 
                 int i = 0;

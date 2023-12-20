@@ -1,14 +1,13 @@
 package modal;
 
 import db.InformationInDb;
-import db.ReservesInDB;
+import enum_pck.Success;
 import model.Information;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ModalInformationList extends JDialog {
     private JTable infoTable;
@@ -16,9 +15,13 @@ public class ModalInformationList extends JDialog {
     private JPanel mainPanel;
 
     private ArrayList<Information> infos;
-
+    private final JFrame jFrame;
+    private Information information;
+    private DefaultTableModel tableModel;
+private String[] columnNames = {"Azonosító", "Üzenet", "Látható"};
     public ModalInformationList(JFrame frame) {
         super(frame, "Információk", true);
+        this.jFrame = frame;
         setContentPane(mainPanel);
         createTable();
         setSize(new Dimension(300, 400));
@@ -29,15 +32,15 @@ public class ModalInformationList extends JDialog {
     }
 
     private void createTable() {
-getDataFromDb();
+        getDataFromDb();
         mainPanel.setVisible(true);
         scrollPane.setVisible(true);
         scrollPane.getViewport().setSize(600, 500);
         infoTable.setSize(600, 500);
-        String[] columnNames = {"Üzenet", "Látható"};
+
         Object[][] data = new Object[infos.size()][columnNames.length];
         addDataToTable(data);
-        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new DefaultTableModel(data, columnNames);
         infoTable.setModel(tableModel);
         infoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         infoTable.setAutoCreateRowSorter(true);
@@ -46,17 +49,51 @@ getDataFromDb();
         scrollPane.setViewportView(infoTable);
 
 
+        infoTable.getSelectionModel().addListSelectionListener(e -> {
+
+            if (!e.getValueIsAdjusting() && infoTable.getSelectedRow() != -1) {
+                int rowNum = infoTable.convertRowIndexToModel(infoTable.getSelectedRow());
+                int id = Integer.parseInt(infoTable.getModel().getValueAt(rowNum, 0).toString());
+                int i = 0;
+                while (id != infos.get(i).getId() && i < infos.size()) i++;
+                Information informationModify = infos.get(i);
+                new ModalCreateAndUpdateInformation(jFrame, informationModify);
+                if(Success.UPDATEINFORMATION.isSuc()){
+                    addDataToTable(new Object[infos.size()][columnNames.length]);
+
+                }
+            }
+
+        });
+
+
+
     }
 
     private void addDataToTable(Object[][] data) {
+        getDataFromDb();
+        removeAllRowFromTable();
         for (int i = 0; i < infos.size(); i++) {
-            data[i][0] = infos.get(i).getMessage();
-            data[i][1] = (infos.get(i).isVisible())?"Igen":"Nem";
+            data[i][0] = infos.get(i).getId();
+            data[i][1] = infos.get(i).getMessage();
+            data[i][2] = (infos.get(i).isVisible()) ? "Igen" : "Nem";
 
+        }
+        if(Success.UPDATEINFORMATION.isSuc()) {
+            tableModel = new DefaultTableModel(data, columnNames);
+            infoTable.setModel(tableModel);
         }
     }
 
     private void getDataFromDb() {
         infos = InformationInDb.getAllInformation();
+    }
+
+    private void removeAllRowFromTable() {
+        DefaultTableModel dm = (DefaultTableModel) infoTable.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
     }
 }

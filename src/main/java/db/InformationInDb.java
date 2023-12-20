@@ -1,6 +1,7 @@
 package db;
 
 
+import enum_pck.Success;
 import model.Information;
 
 import java.sql.Connection;
@@ -51,29 +52,24 @@ public class InformationInDb {
         boolean success=false;
         if (con != null) {
             try {
-
-                String query = "UPDATE informations " +
-                        "SET  " +
-                        "  informations.message=?," +
-                        "  informations.visible=?" +
-                        "WHERE informations.id = ?";
+                String query = "UPDATE informations SET message=?, visible=? WHERE id = ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 preparedStmt.setString(1,information.getMessage());
                 preparedStmt.setBoolean(2,information.isVisible());
                 preparedStmt.setInt(3,information.getId());
-
-
                 preparedStmt.executeUpdate();
 
                 con.close();
                 success=true;
+                Success.UPDATEINFORMATION.setSuc(true);
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             System.err.println("hiba...");
         }
+        System.out.println("az update: "+success);
         return success;
     }
 
