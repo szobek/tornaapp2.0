@@ -3,19 +3,14 @@ package modal;
 import db.InformationInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
-import enum_pck.Success;
 import model.Information;
 import model.Room;
-import model.TestModel;
 import model.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicBorders;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -38,7 +33,7 @@ public class Welcome extends JFrame {
     private ArrayList<User> users;
 
 
-    public Welcome()  {
+    public Welcome() {
         super();
 
 
@@ -49,14 +44,15 @@ public class Welcome extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-setInfosInWelcome();
+        setInfosInWelcome();
+        setResizable(false);
         try {
             Image image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("t5.png")));
             setIconImage(image);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        WelcomePanel.setPreferredSize(new Dimension(300,300));
+        WelcomePanel.setPreferredSize(new Dimension(300, 300));
         pack();
         createMenu();
 
@@ -92,7 +88,7 @@ setInfosInWelcome();
 //
 
         userList.addActionListener(e -> showUsers());
-        newUser.addActionListener(e -> createDialog( this));
+        newUser.addActionListener(e -> createDialog(this));
         menuItemReserveList.addActionListener(e -> createReserveListDialog());
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
@@ -102,15 +98,10 @@ setInfosInWelcome();
         infoListMenuItem.addActionListener(e -> listInformationsInModal());
 
         infoCreateMenuItem.addActionListener(e -> MakeAndUpdateInfoModal());
-        TesztMenuItem.addActionListener(e -> makeTestTable());
     }
-
-    private void makeTestTable() {
-    }
-
 
     private void MakeAndUpdateInfoModal() {
-        new ModalCreateAndUpdateInformation(this,null);
+        new ModalCreateAndUpdateInformation(this, null);
     }
 
     private void listInformationsInModal() {
@@ -141,12 +132,12 @@ setInfosInWelcome();
         new ModalCreateReserve(this, users);
     }
 
-    public int getUsersSize(){
+    public int getUsersSize() {
         getDataFromDB();
         return users.size();
     }
 
-    public int getRoomsSize(){
+    public int getRoomsSize() {
         getDataFromDB();
         return rooms.size();
     }
