@@ -12,6 +12,7 @@ import model.User;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicBorders;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -30,10 +31,12 @@ public class Welcome extends JFrame {
     private JPanel infoPanel;
     private JMenuItem infoListMenuItem;
     private JMenuItem infoCreateMenuItem;
+    private JMenuItem TesztMenuItem;
 
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
+
 
     public Welcome()  {
         super();
@@ -99,7 +102,12 @@ setInfosInWelcome();
         infoListMenuItem.addActionListener(e -> listInformationsInModal());
 
         infoCreateMenuItem.addActionListener(e -> MakeAndUpdateInfoModal());
+        TesztMenuItem.addActionListener(e -> makeTestTable());
     }
+
+    private void makeTestTable() {
+    }
+
 
     private void MakeAndUpdateInfoModal() {
         new ModalCreateAndUpdateInformation(this,null);
