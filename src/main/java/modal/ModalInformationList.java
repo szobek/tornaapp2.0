@@ -46,6 +46,7 @@ private String[] columnNames = {"Azonosító", "Üzenet", "Látható"};
         infoTable.setAutoCreateRowSorter(true);
         infoTable.setRowSelectionAllowed(true);
         infoTable.setVisible(true);
+        infoTable.setUpdateSelectionOnSort(false);
         scrollPane.setViewportView(infoTable);
 
 

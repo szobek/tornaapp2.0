@@ -26,12 +26,10 @@ public class Welcome extends JFrame {
     private JPanel infoPanel;
     private JMenuItem infoListMenuItem;
     private JMenuItem infoCreateMenuItem;
-    private JMenuItem TesztMenuItem;
 
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
-
 
     public Welcome() {
         super();
@@ -65,12 +63,14 @@ public class Welcome extends JFrame {
         for (Information information : infos) {
             JTextArea info = new JTextArea(information.getMessage());
             info.setLineWrap(true);
+            info.setEditable(false);
             info.setFont(new Font("Serif", Font.ITALIC, 17));
             info.setPreferredSize(new Dimension(280, 50));
             info.setMargin(new Insets(5, 5, 5, 5));
             if (information.isVisible()) infoPanel.add(info);
         }
-
+        infoPanel.revalidate();
+        infoPanel.repaint();
 
     }
 
@@ -106,6 +106,7 @@ public class Welcome extends JFrame {
 
     private void listInformationsInModal() {
         new ModalInformationList(this);
+        setInfosInWelcome();
 //if(Success.UPDATEINFORMATION.isSuc()) setInfosInWelcome();
     }
 

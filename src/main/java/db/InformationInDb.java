@@ -85,10 +85,7 @@ public class InformationInDb {
         if (con != null) {
             try {
 
-                String query = "UPDATE informations " +
-                        "SET  " +
-                        "  informations.visible=?" +
-                        "WHERE informations.id = ?";
+                String query = "UPDATE informations SET  visible=? WHERE id = ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 preparedStmt.setBoolean(1,false);
