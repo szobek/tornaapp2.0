@@ -2,6 +2,7 @@ package modal;
 
 import db.ReservesInDB;
 import db.RoomsInDb;
+import model.People;
 import model.Reserve;
 import model.Room;
 import model.User;
@@ -26,7 +27,7 @@ public class ModalCreateReserve extends JDialog {
     private JComboBox<String> cbToMinute;
     private JButton btnSave;
     private JButton btnCancel;
-    private JComboBox<User> cbUser;
+    private JComboBox<People> cbUser;
     private JPanel toPanel;
     private JComboBox<Room> cbRooms;
     private JPanel roomPanel;
@@ -35,12 +36,12 @@ public class ModalCreateReserve extends JDialog {
     private JButton btnNext2;
     private JPanel btnPanel;
     private final ArrayList<String> days = new ArrayList<>();
-    private final ArrayList<User> users;
+    private final ArrayList<People> users;
     private ArrayList<Room> rooms;
 private Timestamp reserveFromDate;
     private Timestamp reserveToDate;
 
-    ModalCreateReserve(JFrame frame, ArrayList<User> users) {
+    ModalCreateReserve(JFrame frame, ArrayList<People> users) {
         super(frame, "Felhasználói adatok", true);
 
         this.users = users;
@@ -68,7 +69,7 @@ private Timestamp reserveFromDate;
 
     private void setUserCombobox() {
 
-        DefaultComboBoxModel<User> cbModel = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<People> cbModel = new DefaultComboBoxModel<>();
         cbUser.setModel(cbModel);
         cbModel.addAll(users);
         cbModel.setSelectedItem(users.get(0));

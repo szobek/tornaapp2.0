@@ -1,11 +1,10 @@
 package modal;
 
 import db.InformationInDb;
+import db.PartnerInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
-import model.Information;
-import model.Room;
-import model.User;
+import model.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,10 +25,12 @@ public class Welcome extends JFrame {
     private JPanel infoPanel;
     private JMenuItem infoListMenuItem;
     private JMenuItem infoCreateMenuItem;
+    private JMenuItem listPartnersMenuItem;
 
     private ArrayList<Room> rooms;
 
-    private ArrayList<User> users;
+    private ArrayList<People> users;
+
 
     public Welcome() {
         super();
@@ -50,7 +51,7 @@ public class Welcome extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        WelcomePanel.setPreferredSize(new Dimension(300, 300));
+        WelcomePanel.setPreferredSize(new Dimension(400, 300));
         pack();
         createMenu();
 
@@ -98,6 +99,11 @@ public class Welcome extends JFrame {
         infoListMenuItem.addActionListener(e -> listInformationsInModal());
 
         infoCreateMenuItem.addActionListener(e -> MakeAndUpdateInfoModal());
+        listPartnersMenuItem.addActionListener(e -> listParners());
+    }
+
+    private void listParners() {
+        new ModalPartnerList(this);
     }
 
     private void MakeAndUpdateInfoModal() {

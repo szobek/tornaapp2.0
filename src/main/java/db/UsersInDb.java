@@ -1,6 +1,7 @@
 package db;
 
 import hash.PasswordHash;
+import model.People;
 import model.User;
 import model.UserRight;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 
 public class UsersInDb {
 
-    public static ArrayList<User> getAllFromDB() {
+    public static ArrayList<People> getAllFromDB() {
 
         Connection con;
         try {
@@ -18,7 +19,7 @@ public class UsersInDb {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<People> users = new ArrayList<>();
         if (con != null) {
             try {
                 String query = "select " +
@@ -28,20 +29,22 @@ public class UsersInDb {
                         "on users.id=user_data.user_id " +
                         "inner join user_rights " +
                         "on user_rights.user_id=users.id " +
-                        "where users.deleted=0";
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    // public User(String phone, String firstName, String lastName,String email,int userId,UserRight userRight) {
-                    users.add(new User(rs.getString("phone"),
-                            rs.getString("first_name"),
-                            rs.getString("last_name"),
-                            rs.getString("email"),
-                            rs.getInt("id"),
-                            new UserRight(
-                                    rs.getBoolean("listreserves"),
-                                    rs.getBoolean("newuser"))));
-                }
+                        "where users.deleted=0 and user_or_partner=0";
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                ResultSet rs = preparedStmt.executeQuery(query);
+                    while (rs.next()) {
+                            // public User(String phone, String firstName, String lastName,String email,int userId,UserRight userRight) {
+                        users.add(new User(rs.getString("phone"),
+                                rs.getString("first_name"),
+                                rs.getString("last_name"),
+                                rs.getString("email"),
+                                rs.getInt("id"),
+                                new UserRight(
+                                        rs.getBoolean("listreserves"),
+                                        rs.getBoolean("newuser"))));
+                    }
+
+
 
 
             } catch (SQLException e) {

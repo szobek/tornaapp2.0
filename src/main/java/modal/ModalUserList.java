@@ -2,6 +2,7 @@ package modal;
 
 import db.UsersInDb;
 import enum_pck.Success;
+import model.People;
 import model.User;
 import model.UserRight;
 
@@ -17,7 +18,7 @@ public class ModalUserList extends JDialog {
     private JTable userListTable;
     private JScrollPane scrollPane;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
-    private ArrayList<User> users;
+    private ArrayList<People> users;
     private final JFrame frame;
 
     private Object[][] tableData;
@@ -61,7 +62,7 @@ public class ModalUserList extends JDialog {
             while (!users.get(i).getEmail().equals(email)) {
                 i++;
             }
-            User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(false, false)) : users.get(i);
+            User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(false, false)) : (User) users.get(i);
 
             createDialog(modifyUser, frame);
         }

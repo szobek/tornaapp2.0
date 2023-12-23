@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import db.UsersInDb;
+import model.People;
 import model.User;
 
 import db.DBHandler;
@@ -26,7 +27,7 @@ public class ModalUserModify {
     private JButton cancelButton;
     private JButton btnDeleteUser;
     private JButton btnUserRights;
-    private User user;
+    private People user;
 
     ModalUserModify(User user, JFrame frame) {
         createDialogBase(user, frame,true);
@@ -62,14 +63,14 @@ public class ModalUserModify {
             user=(user==null)?new User("","","","",0, new UserRight(false,false)):user;
             if(user.getEmail().isEmpty()){
                 getInputDatas();
-               if( UsersInDb.saveNewUserInDb(user)) {
+               if( UsersInDb.saveNewUserInDb((User) user)) {
                    Success.INSERTED.setSuc(true);
                    if(Success.INSERTED.isSuc()) dialog.dispose();
                }
 
             } else {
 getInputDatas();
-                if (UsersInDb.updateUserData(user)){
+                if (UsersInDb.updateUserData((User) user)){
                     Success.UPDATED.setSuc(true);
                     Success.UPDATEUSER.setSuc(true);
                     if(Success.UPDATED.isSuc()) dialog.dispose();
@@ -88,14 +89,14 @@ getInputDatas();
 
             if (JOptionPane.showConfirmDialog(frame, "Valóban törli?", "Törlés", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 Success.DELETEDUSER.setSuc(true);
-                if(UsersInDb.deleteUser(user)){
+                if(UsersInDb.deleteUser((User) user)){
                     dialog.dispose();
                 }
             }
 
             dialog.dispose();
         });
-        btnUserRights.addActionListener(e ->   createRightsDialog(user,frame));
+        btnUserRights.addActionListener(e ->   createRightsDialog((User) user,frame));
 
         dialog.setVisible(true);
         lblEmail.setForeground(Color.BLACK);
