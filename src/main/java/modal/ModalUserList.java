@@ -18,7 +18,7 @@ public class ModalUserList extends JDialog {
     private JTable userListTable;
     private JScrollPane scrollPane;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
-    private ArrayList<People> users;
+    private ArrayList<User> users;
     private final JFrame frame;
 
     private Object[][] tableData;

@@ -36,12 +36,12 @@ public class ModalCreateReserve extends JDialog {
     private JButton btnNext2;
     private JPanel btnPanel;
     private final ArrayList<String> days = new ArrayList<>();
-    private final ArrayList<People> users;
+    private final ArrayList<User> users;
     private ArrayList<Room> rooms;
 private Timestamp reserveFromDate;
     private Timestamp reserveToDate;
 
-    ModalCreateReserve(JFrame frame, ArrayList<People> users) {
+    ModalCreateReserve(JFrame frame, ArrayList<User> users) {
         super(frame, "Felhasználói adatok", true);
 
         this.users = users;

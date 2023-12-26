@@ -59,6 +59,7 @@ private final JFrame frame;
                 }
                 Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("", "", "", "", 0, new UserRight(false, false)) :  partners.get(i);
 new ModalCreateAndUpdateParner(frame,modifyPartner);
+tblPartnerList.setModel(new PartnerTableModel());
             }
         });
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);

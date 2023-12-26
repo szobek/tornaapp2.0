@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class UsersInDb {
 
-    public static ArrayList<People> getAllFromDB() {
+    public static ArrayList<User> getAllFromDB() {
 
         Connection con;
         try {
@@ -19,7 +19,7 @@ public class UsersInDb {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        ArrayList<People> users = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<>();
         if (con != null) {
             try {
                 String query = "select " +

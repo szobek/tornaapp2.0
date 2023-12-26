@@ -29,7 +29,7 @@ public class Welcome extends JFrame {
 
     private ArrayList<Room> rooms;
 
-    private ArrayList<People> users;
+    private ArrayList<User> users;
 
 
     public Welcome() {
