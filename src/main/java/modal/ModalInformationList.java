@@ -18,7 +18,7 @@ public class ModalInformationList extends JDialog {
     private final JFrame jFrame;
     private Information information;
     private DefaultTableModel tableModel;
-private String[] columnNames = {"Azonosító", "Üzenet", "Látható"};
+private String[] columnNames = {"Azonosító", "Üzenet", "Látható","Archivált"};
     public ModalInformationList(JFrame frame) {
         super(frame, "Információk", true);
         this.jFrame = frame;
@@ -78,6 +78,7 @@ private String[] columnNames = {"Azonosító", "Üzenet", "Látható"};
             data[i][0] = infos.get(i).getId();
             data[i][1] = infos.get(i).getMessage();
             data[i][2] = (infos.get(i).isVisible()) ? "Igen" : "Nem";
+            data[i][3] = (infos.get(i).isArchived()) ? "Igen" : "Nem";
 
         }
         if(Success.UPDATEINFORMATION.isSuc()) {

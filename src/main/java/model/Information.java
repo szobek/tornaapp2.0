@@ -5,11 +5,13 @@ public class Information {
     private String message;
     private boolean visible;
     private int id;
+    private boolean archived;
 
-    public Information(int id,String message, boolean visible) {
+    public Information(int id,String message, boolean visible,boolean archived) {
         this.message = message;
         this.visible = visible;
         this.id = id;
+        this.archived=archived;
     }
 
     public String getMessage() {
@@ -34,5 +36,9 @@ public class Information {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isArchived() {
+        return archived;
     }
 }

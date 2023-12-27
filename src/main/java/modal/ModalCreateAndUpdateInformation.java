@@ -53,6 +53,11 @@ public class ModalCreateAndUpdateInformation extends JDialog {
         if (information != null) {
             textFieldInfoMessage.setText(information.getMessage());
             checkBoxInfoVisible.setSelected(information.isVisible());
+            if(information.isArchived()) {
+               textFieldInfoMessage.setEditable(false);
+               checkBoxInfoVisible.setVisible(false);
+            }
+
         }
     }
 }
