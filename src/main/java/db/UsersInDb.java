@@ -22,15 +22,15 @@ public class UsersInDb {
         if (con != null) {
             try {
                 String query = "select " +
-                        "users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves " +
+                        "users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves, user_rights.createpartner " +
                         "from user_data " +
                         "inner join users " +
                         "on users.id=user_data.user_id " +
                         "inner join user_rights " +
                         "on user_rights.user_id=users.id " +
-                        "where users.deleted=0";
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                        "where users.deleted=0 and user_or_partner=0";
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                ResultSet rs = preparedStmt.executeQuery(query);
                 while (rs.next()) {
                     // public User(String phone, String firstName, String lastName,String email,int userId,UserRight userRight) {
                     users.add(new User(rs.getString("phone"),
@@ -40,7 +40,11 @@ public class UsersInDb {
                             rs.getInt("id"),
                             new UserRight(
                                     rs.getBoolean("listreserves"),
-                                    rs.getBoolean("newuser"))));
+                                    rs.getBoolean("newuser"),
+                                    rs.getBoolean("createpartner")
+                            )
+                    )
+                    );
                 }
 
 

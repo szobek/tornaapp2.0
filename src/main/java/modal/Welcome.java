@@ -3,9 +3,7 @@ package modal;
 import db.InformationInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
-import model.Information;
-import model.Room;
-import model.User;
+import model.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +15,7 @@ import java.util.Objects;
 public class Welcome extends JFrame {
     private JPanel WelcomePanel;
 
-    private JMenuItem newUser;
+    private JMenuItem newUserMenuItem;
     private JMenuItem userList;
     private JMenuItem menuItemReserveList;
     private JMenuItem menuItemCreateReserve;
@@ -26,12 +24,15 @@ public class Welcome extends JFrame {
     private JPanel infoPanel;
     private JMenuItem infoListMenuItem;
     private JMenuItem infoCreateMenuItem;
+    private JMenuItem listPartnersMenuItem;
+    private JMenuItem createPartnerMenuItem;
 
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
 
-    public Welcome() {
+
+    public Welcome(User user) {
         super();
 
 
@@ -50,12 +51,19 @@ public class Welcome extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        WelcomePanel.setPreferredSize(new Dimension(300, 300));
+        WelcomePanel.setPreferredSize(new Dimension(400, 300));
         pack();
         createMenu();
+        hideIfHaventRignt(user);
 
 
     }
+
+    private void hideIfHaventRignt(User user) {
+        menuItemReserveList.setVisible(user.getUserRight().isReserveList());
+        newUserMenuItem.setVisible(user.getUserRight().isCreateUser());
+    }
+
 
     private void setInfosInWelcome() {
         ArrayList<Information> infos = InformationInDb.getAllInformation();
@@ -88,7 +96,7 @@ public class Welcome extends JFrame {
 //
 
         userList.addActionListener(e -> showUsers());
-        newUser.addActionListener(e -> createDialog(this));
+        newUserMenuItem.addActionListener(e -> createDialog(this));
         menuItemReserveList.addActionListener(e -> createReserveListDialog());
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
@@ -98,6 +106,16 @@ public class Welcome extends JFrame {
         infoListMenuItem.addActionListener(e -> listInformationsInModal());
 
         infoCreateMenuItem.addActionListener(e -> MakeAndUpdateInfoModal());
+        listPartnersMenuItem.addActionListener(e -> listParners());
+        createPartnerMenuItem.addActionListener(e -> createPartnerModal());
+    }
+
+    private void createPartnerModal() {
+        new ModalCreateAndUpdateParner(this, new Partner("", "", "", "", -1,new UserRight(false, false,false)) );
+    }
+
+    private void listParners() {
+        new ModalPartnerList(this);
     }
 
     private void MakeAndUpdateInfoModal() {

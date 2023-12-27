@@ -1,28 +1,35 @@
 package model;
 
 public class UserRight {
-	private final boolean listreserves ;
-	private final boolean newuser;
-	
-	
+    private final boolean listreserves;
+    private final boolean newuser;
 
-	public UserRight( boolean listreserves, boolean newuser) {
-		super();
-		this.listreserves  = listreserves;
-		this.newuser = newuser;
-	}
+    private final boolean createPartner;
 
-	public boolean isReserveList() {
-		return listreserves ;
-	}
-	public boolean isCreateUser() {
-		return newuser;
-	}
-	@Override
-	public String toString() {
-		return "model.UserRight  reserveList=" + listreserves  + ", createUser=" + newuser + "]";
-	}
-	
-	
+
+    public UserRight(boolean listreserves, boolean newuser, boolean createPartner) {
+        super();
+        this.listreserves = listreserves;
+        this.newuser = newuser;
+        this.createPartner = createPartner;
+    }
+
+    public boolean isReserveList() {
+        return listreserves;
+    }
+
+    public boolean isCreateUser() {
+        return newuser;
+    }
+
+    public boolean isCreatePartner() {
+        return createPartner;
+    }
+
+    @Override
+    public String toString() {
+        return "model.UserRight  reserveList=" + listreserves + ", createUser=" + newuser + "]";
+    }
+
 
 }
