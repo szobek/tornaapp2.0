@@ -57,7 +57,7 @@ private final JFrame frame;
                 while (i<partners.size()&&!partners.get(i).getEmail().equals(email)) {
                     i++;
                 }
-                Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("", "", "", "", 0, new UserRight(false, false)) :  partners.get(i);
+                Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("", "", "", "", -1,new UserRight(false, false)) :  partners.get(i);
 new ModalCreateAndUpdateParner(frame,modifyPartner);
 tblPartnerList.setModel(new PartnerTableModel());
             }

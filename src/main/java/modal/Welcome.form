@@ -120,6 +120,12 @@
                   <text value="Partner lista"/>
                 </properties>
               </component>
+              <component id="77193" class="javax.swing.JMenuItem" binding="createPartnerMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Új partner"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

@@ -1,13 +1,11 @@
 package db;
 
+import hash.PasswordHash;
 import model.Partner;
 import model.User;
 import model.UserRight;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class PartnerInDb {
@@ -96,4 +94,50 @@ public class PartnerInDb {
         }
         return success;
     }
+
+    public static boolean saveNewPartnerInDb(Partner partner) {
+        Connection con;
+        boolean success = false;
+        try {
+            con = DBHandler.connectToDb();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        ResultSet rs;
+        long id = 0;
+        if (con != null) {
+            try {
+                String psw = PasswordHash.hashing("CTf23");
+                String query = "INSERT INTO `users` VALUES (NULL, '" + partner.getEmail() + "', '" + psw + "', NULL, NULL, NULL, '0');";
+                Statement stmt = con.createStatement();
+
+                stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+                rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+
+                query = "insert into user_data  values (null," + id + ",'"
+                        + partner.getFirstName() + "','" + partner.getLastName() + "','" + partner.getPhone() + "','1')";
+                stmt = con.createStatement();
+                stmt.executeUpdate(query);
+
+                query = "insert into user_rights (id,user_id,newuser,listreserves) values(null," + id + ",0,0)";
+                stmt = con.createStatement();
+                stmt.executeUpdate(query);
+
+                con.close();
+                success = true;
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } else {
+            System.err.println("hiba...");
+        }
+        return success;
+
+    }
+
+
 }

@@ -28,18 +28,21 @@ public class ModalCreateAndUpdateParner extends JDialog {
         pack();
     }
     private void setDataToShow(){
-        if (partner!=null){
+        if (partner.getUserId()!=-1){
             txtFFirstName.setText(partner.getFirstName());
             txtFLastName.setText(partner.getLastName());
             txtFEmail.setText(partner.getEmail());
             txtFEmail.setEditable(false);
             txtFPhone.setText(partner.getPhone());
+        } else {
+            setTitle("Új partner");
         }
     }
 
     private void createListeners(){
         btnCanel.addActionListener(e -> dispose());
         btnSave.addActionListener(e -> updatePartnerData());
+
     }
 
     private void updatePartnerData() {
@@ -47,9 +50,17 @@ public class ModalCreateAndUpdateParner extends JDialog {
         partner.setFirstName(txtFFirstName.getText());
         partner.setLastName(txtFLastName.getText());
         partner.setPhone(txtFPhone.getText());
-        if(PartnerInDb.updatePartnerData(partner)){
-            Success.UPDATEPARTNER.setSuc(true);
-            dispose();
+        if (partner.getUserId()==-1){
+            if(PartnerInDb.saveNewPartnerInDb(partner)){
+                Success.UPDATEPARTNER.setSuc(true);
+                dispose();
+            }
+        } else {
+            if(PartnerInDb.updatePartnerData(partner)){
+                Success.UPDATEPARTNER.setSuc(true);
+                dispose();
+            }
         }
+
     }
 }

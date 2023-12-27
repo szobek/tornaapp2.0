@@ -26,6 +26,7 @@ public class Welcome extends JFrame {
     private JMenuItem infoListMenuItem;
     private JMenuItem infoCreateMenuItem;
     private JMenuItem listPartnersMenuItem;
+    private JMenuItem createPartnerMenuItem;
 
     private ArrayList<Room> rooms;
 
@@ -100,6 +101,11 @@ public class Welcome extends JFrame {
 
         infoCreateMenuItem.addActionListener(e -> MakeAndUpdateInfoModal());
         listPartnersMenuItem.addActionListener(e -> listParners());
+        createPartnerMenuItem.addActionListener(e -> createPartnerModal());
+    }
+
+    private void createPartnerModal() {
+        new ModalCreateAndUpdateParner(this, new Partner("", "", "", "", -1,new UserRight(false, false)) );
     }
 
     private void listParners() {
