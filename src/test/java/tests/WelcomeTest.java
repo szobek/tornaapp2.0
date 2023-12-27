@@ -2,6 +2,7 @@ package tests;
 
 import Helpers.ReadConfig;
 import modal.Welcome;
+import model.User;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -12,22 +13,22 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WelcomeTest {
-
+private final User user = null;
     @Test
     void tesztTitle() {
-        Welcome welcome = new Welcome();
+        Welcome welcome = new Welcome(user);
         assertEquals("Alkalmazás", welcome.getTitle());
 
     }
     @Test
     void tesztSize(){
-        Welcome welcome = new Welcome();
+        Welcome welcome = new Welcome(user);
         assertEquals(new Dimension(316,339),welcome.getSize());
     }
 
     @Test
     void tesztAvailableMenu(){
-        Welcome welcome = new Welcome();
+        Welcome welcome = new Welcome(user);
         assertTrue(welcome.getContentPane().getComponent(0) instanceof  javax.swing.JMenuBar);
     }
 
@@ -37,7 +38,7 @@ public class WelcomeTest {
     }
     @Test
     void tesztClose(){
-        Welcome welcome = new Welcome();
+        Welcome welcome = new Welcome(user);
         assertEquals(JFrame.EXIT_ON_CLOSE,welcome.getDefaultCloseOperation());
     }
     @Test
@@ -70,13 +71,13 @@ public class WelcomeTest {
 
     @Test
     void tesztUserLength(){
-        Welcome welcome = new Welcome();
+        Welcome welcome = new Welcome(user);
         assertTrue(welcome.getUsersSize()>0);
     }
 
     @Test
     void tesztRoomLength(){
-        Welcome welcome = new Welcome();
+        Welcome welcome = new Welcome(user);
         assertTrue(welcome.getRoomsSize()>0);
     }
 

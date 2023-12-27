@@ -60,7 +60,7 @@ public class ModalUserModify {
 
         });
         saveButton.addActionListener(e -> {
-            user=(user==null)?new User("","","","",0, new UserRight(false,false)):user;
+            user=(user==null)?new User("","","","",0, new UserRight(false,false,false)):user;
             if(user.getEmail().isEmpty()){
                 getInputDatas();
                if( UsersInDb.saveNewUserInDb((User) user)) {

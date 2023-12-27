@@ -14,12 +14,12 @@ public class ModalPartnerList extends JDialog {
     private JPanel mainPanel;
     private JTable tblPartnerList;
     private JScrollPane scrollPane;
-private final JFrame frame;
+    private final JFrame frame;
     private final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 
     public ModalPartnerList(JFrame frame) {
         super(frame, "Partnerek listája", true);
-        this.frame=frame;
+        this.frame = frame;
         setSize(new Dimension(300, 300));
         createPartnerListTable();
         setContentPane(mainPanel);
@@ -54,12 +54,14 @@ private final JFrame frame;
                 int a = tblPartnerList.convertRowIndexToModel(tblPartnerList.getSelectedRow());
                 String email = tblPartnerList.getModel().getValueAt(a, 2).toString();
                 int i = 0;
-                while (i<partners.size()&&!partners.get(i).getEmail().equals(email)) {
+                while (i < partners.size() && !partners.get(i).getEmail().equals(email)) {
                     i++;
                 }
-                Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("", "", "", "", -1,new UserRight(false, false)) :  partners.get(i);
-new ModalCreateAndUpdateParner(frame,modifyPartner);
-tblPartnerList.setModel(new PartnerTableModel());
+                Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("", "", "", "", -1, new UserRight(false, false, false)) : partners.get(i);
+                new ModalCreateAndUpdateParner(frame, modifyPartner);
+                tblPartnerList.setModel(new PartnerTableModel());
+                centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+                tblPartnerList.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
             }
         });
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);

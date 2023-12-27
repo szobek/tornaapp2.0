@@ -1,7 +1,6 @@
 package modal;
 
 
-import db.DBHandler;
 import db.UserRightsInDb;
 import model.User;
 import model.UserRight;
@@ -18,6 +17,7 @@ public class SetUserRighsModal extends JDialog {
     private JButton btnSaveRights;
     private JButton btnCancel;
     private JPanel buttonPanel;
+    private JCheckBox cbCreatePartner;
     private User user;
 
     SetUserRighsModal(User user, JFrame frame) {
@@ -63,6 +63,12 @@ public class SetUserRighsModal extends JDialog {
     }
 
     private void getInputDatas() {
-        this.user.setUserRight(new UserRight(cbReserveList.isSelected(), cbCreateNewUser.isSelected()));
+        this.user.setUserRight(
+                new UserRight(
+                        cbReserveList.isSelected(),
+                        cbCreateNewUser.isSelected(),
+                        cbCreatePartner.isSelected()
+                )
+        );
     }
 }

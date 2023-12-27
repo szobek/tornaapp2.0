@@ -1,7 +1,6 @@
 package modal;
 
 import db.InformationInDb;
-import db.PartnerInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
 import model.*;
@@ -16,7 +15,7 @@ import java.util.Objects;
 public class Welcome extends JFrame {
     private JPanel WelcomePanel;
 
-    private JMenuItem newUser;
+    private JMenuItem newUserMenuItem;
     private JMenuItem userList;
     private JMenuItem menuItemReserveList;
     private JMenuItem menuItemCreateReserve;
@@ -33,7 +32,7 @@ public class Welcome extends JFrame {
     private ArrayList<User> users;
 
 
-    public Welcome() {
+    public Welcome(User user) {
         super();
 
 
@@ -55,9 +54,16 @@ public class Welcome extends JFrame {
         WelcomePanel.setPreferredSize(new Dimension(400, 300));
         pack();
         createMenu();
+        hideIfHaventRignt(user);
 
 
     }
+
+    private void hideIfHaventRignt(User user) {
+        menuItemReserveList.setVisible(user.getUserRight().isReserveList());
+        newUserMenuItem.setVisible(user.getUserRight().isCreateUser());
+    }
+
 
     private void setInfosInWelcome() {
         ArrayList<Information> infos = InformationInDb.getAllInformation();
@@ -90,7 +96,7 @@ public class Welcome extends JFrame {
 //
 
         userList.addActionListener(e -> showUsers());
-        newUser.addActionListener(e -> createDialog(this));
+        newUserMenuItem.addActionListener(e -> createDialog(this));
         menuItemReserveList.addActionListener(e -> createReserveListDialog());
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
@@ -105,7 +111,7 @@ public class Welcome extends JFrame {
     }
 
     private void createPartnerModal() {
-        new ModalCreateAndUpdateParner(this, new Partner("", "", "", "", -1,new UserRight(false, false)) );
+        new ModalCreateAndUpdateParner(this, new Partner("", "", "", "", -1,new UserRight(false, false,false)) );
     }
 
     private void listParners() {

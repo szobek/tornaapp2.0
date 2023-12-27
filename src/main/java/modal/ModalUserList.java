@@ -62,7 +62,7 @@ public class ModalUserList extends JDialog {
             while (!users.get(i).getEmail().equals(email)) {
                 i++;
             }
-            User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(false, false)) : (User) users.get(i);
+            User modifyUser = (i > users.size() || i < 0) ? new User("", "", "", "", 0, new UserRight(false, false,false)) : (User) users.get(i);
 
             createDialog(modifyUser, frame);
         }

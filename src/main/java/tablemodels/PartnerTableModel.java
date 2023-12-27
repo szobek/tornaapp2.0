@@ -12,10 +12,6 @@ private final ArrayList<Partner> partners;
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     public PartnerTableModel() {
         this.partners=PartnerInDb.getAllFromDB();
-partners.add(new Partner("","","","",0,new UserRight(false,false)));
-        partners.add(new Partner("","kis","","",0,new UserRight(false,false)));
-        partners.add(new Partner("","nagy","","",0,new UserRight(false,false)));
-        partners.add(new Partner("","kovács","","",0,new UserRight(false,false)));
     }
 
     @Override

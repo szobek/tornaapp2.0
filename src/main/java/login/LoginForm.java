@@ -42,8 +42,9 @@ btnLogin.setName("btnLogin");
         new LoginForm();
     }
 
-    private void openWelcome() {
-        new Welcome();
+    private void openWelcome(User user) {
+
+        new Welcome(user);
         dispose();
 
     }
@@ -57,11 +58,15 @@ btnLogin.setName("btnLogin");
             return;
         }
 
-        if (String.valueOf(passwordField1.getPassword()).isEmpty()){ JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres"); return;}
+        if (String.valueOf(passwordField1.getPassword()).isEmpty()){
+            JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres");
+            return;
+        }
+
         User user = CheckLogin.checkLogin(email, psw);
 
         if (user != null) {
-            openWelcome();
+            openWelcome(user);
         } else {
             JOptionPane.showMessageDialog(null, "Hibás adatok");
         }

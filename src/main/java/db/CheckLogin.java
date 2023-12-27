@@ -23,7 +23,7 @@ public class CheckLogin {
         String query;
         if (con != null) {
             try {
-                query = "select users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves from users inner join user_data on users.id=user_data.user_id inner join user_rights on user_rights.user_id=users.id where email=? and password=?";
+                query = "select user_rights.createpartner, users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves from users inner join user_data on users.id=user_data.user_id inner join user_rights on user_rights.user_id=users.id where email=? and password=?";
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.setString(1, email);
                 stmt.setString(2, password);
@@ -31,7 +31,18 @@ public class CheckLogin {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
 
-                    user = new User(rs.getString("phone"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getInt("id"), new UserRight(rs.getBoolean("listreserves"), rs.getBoolean("newuser")));
+                    user = new User(
+                            rs.getString("phone"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("email"),
+                            rs.getInt("id"),
+                                new UserRight(
+                                        rs.getBoolean("listreserves"),
+                                        rs.getBoolean("newuser"),
+                                        rs.getBoolean("createpartner")
+                                )
+                    );
                 } else {
                     System.err.println("hiba a loginnal");
                 }

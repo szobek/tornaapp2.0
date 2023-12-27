@@ -45,7 +45,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="b9ddf" class="javax.swing.JMenuItem" binding="newUser">
+              <component id="b9ddf" class="javax.swing.JMenuItem" binding="newUserMenuItem">
                 <constraints/>
                 <properties>
                   <text value="Új felhasználó"/>
