@@ -8,6 +8,10 @@ import model.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class LoginForm extends JFrame {
@@ -17,6 +21,7 @@ public class LoginForm extends JFrame {
     private JButton btnLogin;
 
     public LoginForm() {
+        testTable();
         setContentPane(loginPanel);
         setTitle("login");
         setPreferredSize(new Dimension(600,400));
@@ -35,6 +40,10 @@ btnLogin.setName("btnLogin");
         };
         passwordField1.addActionListener(action);
         btnLogin.addActionListener(e -> checkLogin());
+    }
+
+    private void testTable() {
+
     }
 
 
