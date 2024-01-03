@@ -7,16 +7,20 @@ public class Information {
     private String message;
     private boolean visible;
     private int id;
+
     private final boolean archived;
 
     private final Date archived_at;
 
     public Information(int id,String message, boolean visible,boolean archived,Date archived_at) {
+
         this.message = message;
         this.visible = visible;
         this.id = id;
         this.archived=archived;
+
         this.archived_at=archived_at;
+
     }
 
     public String getMessage() {
@@ -50,4 +54,5 @@ public class Information {
     public Date getArchived_at() {
         return archived_at;
     }
+
 }

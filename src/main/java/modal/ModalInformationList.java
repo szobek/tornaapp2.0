@@ -18,6 +18,7 @@ public class ModalInformationList extends JDialog {
 
     private ArrayList<Information> infos;
     private final JFrame jFrame;
+
     private final InformationTableModel informationTableModel;
 
     public ModalInformationList(JFrame frame) {
@@ -68,6 +69,7 @@ public class ModalInformationList extends JDialog {
             }
 
         });
+
 
 
     }
