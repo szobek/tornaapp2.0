@@ -4,10 +4,8 @@ package db;
 import enum_pck.Success;
 import model.Information;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class InformationInDb {
@@ -34,7 +32,8 @@ public class InformationInDb {
                                     rs.getInt("id"),
                                     rs.getString("message"),
                                     rs.getBoolean("visible"),
-                                    rs.getBoolean("archived")
+                               rs.getBoolean("archived"),
+                                    rs.getDate("archived_at")
                             )
                     );
 
@@ -92,10 +91,12 @@ public class InformationInDb {
         if (con != null) {
             try {
 
-                String query = "UPDATE informations SET  archived=? WHERE id = ?";
+
+                String query = "UPDATE informations SET visible=0,  archived=1,archived_at=? WHERE id = ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
-                preparedStmt.setBoolean(1,true);
+                preparedStmt.setDate(1, Date.valueOf(LocalDate.now()));
+
                 preparedStmt.setInt(2,information.getId());
 
 

@@ -1,17 +1,26 @@
 package model;
 
+import java.util.Date;
+
 public class Information {
 
     private String message;
     private boolean visible;
     private int id;
-    private boolean archived;
 
-    public Information(int id,String message, boolean visible,boolean archived) {
+    private final boolean archived;
+
+    private final Date archived_at;
+
+    public Information(int id,String message, boolean visible,boolean archived,Date archived_at) {
+
         this.message = message;
         this.visible = visible;
         this.id = id;
         this.archived=archived;
+
+        this.archived_at=archived_at;
+
     }
 
     public String getMessage() {
@@ -41,4 +50,9 @@ public class Information {
     public boolean isArchived() {
         return archived;
     }
+
+    public Date getArchived_at() {
+        return archived_at;
+    }
+
 }
