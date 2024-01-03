@@ -8,10 +8,6 @@ import model.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class LoginForm extends JFrame {
@@ -21,11 +17,10 @@ public class LoginForm extends JFrame {
     private JButton btnLogin;
 
     public LoginForm() {
-        testTable();
         setContentPane(loginPanel);
         setTitle("login");
-        setPreferredSize(new Dimension(600,400));
-btnLogin.setName("btnLogin");
+        setPreferredSize(new Dimension(600, 400));
+        btnLogin.setName("btnLogin");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         textField1.setText("kunszt.norbert@gmail.com");
@@ -42,20 +37,14 @@ btnLogin.setName("btnLogin");
         btnLogin.addActionListener(e -> checkLogin());
     }
 
-    private void testTable() {
-
-    }
-
 
     public static void main(String[] args) {
         new LoginForm();
     }
 
     private void openWelcome(User user) {
-
         new Welcome(user);
         dispose();
-
     }
 
     private void checkLogin() {
@@ -67,7 +56,7 @@ btnLogin.setName("btnLogin");
             return;
         }
 
-        if (String.valueOf(passwordField1.getPassword()).isEmpty()){
+        if (String.valueOf(passwordField1.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(null, "Jelszó nem lehet üres");
             return;
         }
@@ -81,8 +70,6 @@ btnLogin.setName("btnLogin");
         }
 
     }
-
-
 
 
 }
