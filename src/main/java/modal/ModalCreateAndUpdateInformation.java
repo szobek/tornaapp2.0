@@ -1,6 +1,7 @@
 package modal;
 
 import db.InformationInDb;
+import enum_pck.Success;
 import model.Information;
 
 import javax.swing.*;
@@ -43,6 +44,7 @@ public class ModalCreateAndUpdateInformation extends JDialog {
         if (JOptionPane.showConfirmDialog(null, "Valóban törli?", "Törlés", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
             if (InformationInDb.delete(information)) {
+                Success.UPDATEINFORMATION.setSuc(true);
                 JOptionPane.showMessageDialog(null, "Információ törölve", "Üzenet", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }
@@ -53,6 +55,14 @@ public class ModalCreateAndUpdateInformation extends JDialog {
         if (information != null) {
             textFieldInfoMessage.setText(information.getMessage());
             checkBoxInfoVisible.setSelected(information.isVisible());
+            if(information.isArchived()) {
+                btnDelete.setVisible(false);
+                btnSave.setVisible(false);
+                btnCancel.setText("Bezár");
+               textFieldInfoMessage.setEditable(false);
+               checkBoxInfoVisible.setVisible(false);
+            }
+
         }
     }
 }

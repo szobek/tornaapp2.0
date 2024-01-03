@@ -50,7 +50,6 @@ public class ModalPartnerList extends JDialog {
         tblPartnerList.getSelectionModel().addListSelectionListener(e -> {
             ArrayList<Partner> partners = PartnerInDb.getAllFromDB();
             if (!e.getValueIsAdjusting() && tblPartnerList.getSelectedRow() != -1) {
-                System.out.println(partners.size());
                 int a = tblPartnerList.convertRowIndexToModel(tblPartnerList.getSelectedRow());
                 String email = tblPartnerList.getModel().getValueAt(a, 2).toString();
                 int i = 0;
