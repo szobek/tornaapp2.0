@@ -72,9 +72,12 @@ public class Welcome extends JFrame {
             JTextArea info = new JTextArea(information.getMessage());
             info.setLineWrap(true);
             info.setEditable(false);
+            info.setEnabled(false);
             info.setFont(new Font("Serif", Font.ITALIC, 17));
-            info.setPreferredSize(new Dimension(280, 50));
+            info.setPreferredSize(new Dimension(380, 50));
             info.setMargin(new Insets(5, 5, 5, 5));
+            info.setBackground(Color.cyan);
+            info.setDisabledTextColor(Color.BLACK);
             if (information.isVisible()) infoPanel.add(info);
         }
         infoPanel.revalidate();
