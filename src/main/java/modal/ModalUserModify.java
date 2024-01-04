@@ -9,7 +9,7 @@ import model.People;
 import model.User;
 
 import model.UserRight;
-import enum_pck.Success;
+import enums.Success;
 
 public class ModalUserModify {
     private JButton saveButton;

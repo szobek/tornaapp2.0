@@ -1,4 +1,4 @@
-package enum_pck;
+package enums;
 
 public enum Success {
     UPDATED(false),

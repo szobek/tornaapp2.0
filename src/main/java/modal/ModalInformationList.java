@@ -1,7 +1,7 @@
 package modal;
 
 import db.InformationInDb;
-import enum_pck.Success;
+import enums.Success;
 import model.Information;
 import tableRenderers.InformationTableRenderer;
 import tablemodels.InformationTableModel;

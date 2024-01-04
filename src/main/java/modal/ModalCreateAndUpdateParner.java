@@ -1,7 +1,7 @@
 package modal;
 
 import db.PartnerInDb;
-import enum_pck.Success;
+import enums.Success;
 import model.Partner;
 
 import javax.swing.*;

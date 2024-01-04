@@ -1,14 +1,10 @@
 package modal;
 
 import db.UsersInDb;
-import enum_pck.Success;
-import model.People;
+import enums.Success;
 import model.User;
-import model.UserRight;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 

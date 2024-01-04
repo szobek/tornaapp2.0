@@ -1,7 +1,7 @@
 package db;
 
 
-import enum_pck.Success;
+import enums.Success;
 import model.Information;
 
 import java.sql.*;

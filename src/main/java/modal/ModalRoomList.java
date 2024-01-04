@@ -1,7 +1,7 @@
 package modal;
 
 import db.RoomsInDb;
-import enum_pck.Success;
+import enums.Success;
 import model.Room;
 import model.User;
 

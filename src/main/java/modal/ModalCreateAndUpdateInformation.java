@@ -1,11 +1,10 @@
 package modal;
 
 import db.InformationInDb;
-import enum_pck.Success;
+import enums.Success;
 import model.Information;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ModalCreateAndUpdateInformation extends JDialog {
     private JPanel mainPanel;
