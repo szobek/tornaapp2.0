@@ -35,7 +35,7 @@ private final User user;
     public Welcome(User user) {
         super();
 this.user=user;
-
+        setMenuByRights();
         setTitle("Alkalmazás");
 //        frame.setResizable(false);
         setContentPane(WelcomePanel);
@@ -104,6 +104,7 @@ this.user=user;
         menuItemCreateReserve.addActionListener(e -> createReserveMakeDialog());
 
         roomListMenuItem.addActionListener(e -> getRoomsFromDb());
+
         createRoomMenuItem.addActionListener(e -> createRoomModal());
 
         infoListMenuItem.addActionListener(e -> listInformationsInModal());
@@ -132,7 +133,8 @@ this.user=user;
     }
 
     private void createRoomModal() {
-        new ModalRoomUpdateAndDtata(this, null,null);
+
+        new ModalRoomUpdateAndDtata(this, null,user);
     }
 
 
@@ -162,6 +164,11 @@ this.user=user;
     public int getRoomsSize() {
         getDataFromDB();
         return rooms.size();
+    }
+
+    private void setMenuByRights(){
+        if(!user.getUserRight().isCreateRoom()) createRoomMenuItem.setVisible(false);
+        if(!user.getUserRight().isCreatePartner()) createPartnerMenuItem.setVisible(false);
     }
 
 }
