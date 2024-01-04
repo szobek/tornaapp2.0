@@ -47,7 +47,7 @@ public class InformationInDb {
         return informations;
     }
 
-    public static boolean update(Information information){
+    public static void update(Information information){
         Connection con;
         try {
             con = DBHandler.connectToDb();
@@ -76,7 +76,6 @@ public class InformationInDb {
             System.err.println("hiba...");
         }
         System.out.println("az update: "+success);
-        return success;
     }
 
     public static boolean delete(Information information){
@@ -113,7 +112,7 @@ public class InformationInDb {
         return success;
     }
 
-    public static boolean create(Information information){
+    public static void create(Information information){
         Connection con;
         try {
             con = DBHandler.connectToDb();
@@ -124,13 +123,14 @@ public class InformationInDb {
         boolean success=false;
         if (con != null) {
             try {
-
+//  id 	message 	visible 	archived 	archived_at
                 String query = "insert into informations " +
                         "values(  " +
-                        "null,?,1)";
+                        "null,?,?,0,null)";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 preparedStmt.setString(1, information.getMessage());
+                preparedStmt.setBoolean(2, information.isVisible());
 
 
                 preparedStmt.executeUpdate();
@@ -143,6 +143,5 @@ public class InformationInDb {
         } else {
             System.err.println("hiba...");
         }
-        return success;
     }
 }

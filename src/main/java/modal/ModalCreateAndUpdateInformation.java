@@ -15,7 +15,7 @@ public class ModalCreateAndUpdateInformation extends JDialog {
     private JButton btnDelete;
 
     public ModalCreateAndUpdateInformation(JFrame frame, Information information) {
-        super(frame, "Infó", true);
+        super(frame, "Infó adat", true);
         setListeners(information);
 
         setContentPane(mainPanel);
@@ -30,13 +30,27 @@ public class ModalCreateAndUpdateInformation extends JDialog {
 
     private void setListeners(Information information) {
         btnCancel.addActionListener(e -> dispose());
-        if (information != null) btnSave.addActionListener(e -> {
-            information.setVisible(checkBoxInfoVisible.isSelected());
-            information.setMessage(textFieldInfoMessage.getText());
-            InformationInDb.update(information);
-            dispose();
-        });
-        btnDelete.addActionListener(e -> deleteInformation(information));
+
+        if (information != null){
+            btnSave.addActionListener(e -> {
+                information.setVisible(checkBoxInfoVisible.isSelected());
+                information.setMessage(textFieldInfoMessage.getText());
+                InformationInDb.update(information);
+                dispose();
+            });
+        }
+        else {
+            btnSave.addActionListener(e -> {
+                Information information1 = new Information(0,"",false,false,null);
+                information1.setVisible(checkBoxInfoVisible.isSelected());
+                information1.setMessage(textFieldInfoMessage.getText());
+                InformationInDb.create(information1);
+                dispose();
+            });
+
+        }
+       if(information != null) btnDelete.addActionListener(e -> deleteInformation(information));
+       else btnDelete.setVisible(false);
     }
 
     private void deleteInformation(Information information) {

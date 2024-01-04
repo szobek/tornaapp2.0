@@ -124,6 +124,7 @@ this.user=user;
 
     private void MakeAndUpdateInfoModal() {
         new ModalCreateAndUpdateInformation(this, null);
+        setInfosInWelcome();
     }
 
     private void listInformationsInModal() {

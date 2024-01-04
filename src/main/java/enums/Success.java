@@ -3,7 +3,7 @@ package enums;
 public enum Success {
     UPDATED(false),
     INSERTED(true),
-    DELETED(false),
+
     UPDATEROOM(false),
     UPDATEUSER(false),
     DELETEDUSER(false),
