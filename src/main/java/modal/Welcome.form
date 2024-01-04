@@ -45,23 +45,23 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="b9ddf" class="javax.swing.JMenuItem" binding="newUserMenuItem">
-                <constraints/>
-                <properties>
-                  <text value="Új felhasználó"/>
-                </properties>
-              </component>
               <component id="bdb5f" class="javax.swing.JMenuItem" binding="userList">
                 <constraints/>
                 <properties>
                   <text value="Lista a felhasználókról"/>
                 </properties>
               </component>
+              <component id="b9ddf" class="javax.swing.JMenuItem" binding="newUserMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Új felhasználó"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="4204b" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Terem"/>
@@ -84,7 +84,7 @@
           </grid>
           <grid id="26dda" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Információ"/>
@@ -107,7 +107,7 @@
           </grid>
           <grid id="46387" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Partnerek"/>
