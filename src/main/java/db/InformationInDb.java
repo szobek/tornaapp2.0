@@ -112,7 +112,7 @@ public class InformationInDb {
         return success;
     }
 
-    public static void create(Information information){
+    public static boolean create(Information information){
         Connection con;
         try {
             con = DBHandler.connectToDb();
@@ -143,5 +143,6 @@ public class InformationInDb {
         } else {
             System.err.println("hiba...");
         }
+        return success;
     }
 }

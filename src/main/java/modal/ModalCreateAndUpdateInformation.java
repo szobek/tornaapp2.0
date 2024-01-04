@@ -44,8 +44,11 @@ public class ModalCreateAndUpdateInformation extends JDialog {
                 Information information1 = new Information(0,"",false,false,null);
                 information1.setVisible(checkBoxInfoVisible.isSelected());
                 information1.setMessage(textFieldInfoMessage.getText());
-                InformationInDb.create(information1);
-                dispose();
+                if(InformationInDb.create(information1)){
+
+                    JOptionPane.showMessageDialog(null, "Információ létrehozva", "Üzenet", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                }
             });
 
         }
