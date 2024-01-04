@@ -5,13 +5,22 @@ public class UserRight {
     private final boolean newuser;
 
     private final boolean createPartner;
+//////////////////////////////////////////////////////////////////////////
+    private final boolean changeRoomName;
+    private final boolean changeRoomImages;
+    private final boolean changeRoomNum;
+    private final boolean createRoom;
+    ////////////////////////////////////////////////////////////////////////////
 
 
-    public UserRight(boolean listreserves, boolean newuser, boolean createPartner) {
-        super();
+    public UserRight(boolean listreserves, boolean newuser, boolean createPartner, boolean changeRoomName, boolean changeRoomImages, boolean changeRoomNum, boolean createRoom) {
         this.listreserves = listreserves;
         this.newuser = newuser;
         this.createPartner = createPartner;
+        this.changeRoomName = changeRoomName;
+        this.changeRoomImages = changeRoomImages;
+        this.changeRoomNum = changeRoomNum;
+        this.createRoom = createRoom;
     }
 
     public boolean isReserveList() {
@@ -26,10 +35,19 @@ public class UserRight {
         return createPartner;
     }
 
-    @Override
-    public String toString() {
-        return "model.UserRight  reserveList=" + listreserves + ", createUser=" + newuser + "]";
+    public boolean isChangeRoomName() {
+        return changeRoomName;
     }
 
+    public boolean isChangeRoomImages() {
+        return changeRoomImages;
+    }
 
+    public boolean isChangeRoomNum() {
+        return changeRoomNum;
+    }
+
+    public boolean isCreateRoom() {
+        return createRoom;
+    }
 }

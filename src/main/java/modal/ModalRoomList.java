@@ -3,6 +3,7 @@ package modal;
 import db.RoomsInDb;
 import enum_pck.Success;
 import model.Room;
+import model.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,8 +18,11 @@ public class ModalRoomList extends JDialog {
     private final JFrame frame;
 private Object[][] tableData;
     private final String[] columnNames = {"id", "szoba Neve", "Szoba száma"};
-    ModalRoomList(JFrame frame, ArrayList<Room> roomsParam) {
+
+    private final User user;
+    ModalRoomList(JFrame frame, ArrayList<Room> roomsParam, User user) {
         super(frame, true);
+        this.user=user;
         rooms = roomsParam;
         this.frame = frame;
         setLayout(new FlowLayout());
@@ -61,7 +65,7 @@ private Object[][] tableData;
                     i++;
                 }
                 Room room = rooms.get(i);
-                new ModalRoomUpdateAndDtata(frame, room);
+                new ModalRoomUpdateAndDtata(frame, room,user);
                 if(Success.UPDATEROOM.isSuc()|Success.INSERTEDROOM.isSuc()|Success.DELETEDROOM.isSuc())   makeRoomList();
             }
 

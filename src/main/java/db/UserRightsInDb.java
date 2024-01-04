@@ -20,13 +20,30 @@ public class UserRightsInDb {
         boolean success = false;
         if (con != null) {
             try {
-
-                String query = "UPDATE `user_rights` set newuser=?, listreserves=? WHERE user_id= ?";
+/*
+ newuser 	listreserves 	createpartner 	changeRoomName 	changeRoomImages 	changeRoomNum 	createRoom
+ */
+                String query = "UPDATE `user_rights` " +
+                        "set " +
+                        "newUser=?, " +
+                        "listReserves=?, " +
+                        "createPartner=?, " +
+                        "changeRoomName=?, " +
+                        "changeRoomImages=?, " +
+                        "changeRoomNum=?, " +
+                        "createRoom=? " +
+                        "WHERE " +
+                        "user_id= ?";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 preparedStmt.setBoolean(1, user.getUserRight().isCreateUser());
                 preparedStmt.setBoolean(2, user.getUserRight().isReserveList());
-                preparedStmt.setInt(3, user.getUserId());
+                preparedStmt.setBoolean(3, user.getUserRight().isCreatePartner());
+                preparedStmt.setBoolean(4, user.getUserRight().isChangeRoomName());
+                preparedStmt.setBoolean(5, user.getUserRight().isChangeRoomImages());
+                preparedStmt.setBoolean(6, user.getUserRight().isChangeRoomNum());
+                preparedStmt.setBoolean(7, user.getUserRight().isCreateRoom());
+                preparedStmt.setInt(8,user.getUserId());
 
 
                 preparedStmt.executeUpdate();

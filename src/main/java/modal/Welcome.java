@@ -30,11 +30,11 @@ public class Welcome extends JFrame {
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
-
+private final User user;
 
     public Welcome(User user) {
         super();
-
+this.user=user;
 
         setTitle("Alkalmazás");
 //        frame.setResizable(false);
@@ -54,7 +54,7 @@ public class Welcome extends JFrame {
         WelcomePanel.setPreferredSize(new Dimension(400, 300));
         pack();
         createMenu();
-        hideIfHaventRignt(user);
+        hideIfHaventRignt(this.user);
 
 
     }
@@ -114,7 +114,7 @@ public class Welcome extends JFrame {
     }
 
     private void createPartnerModal() {
-        new ModalCreateAndUpdateParner(this, new Partner("", "", "", "", -1,new UserRight(false, false,false)) );
+        new ModalCreateAndUpdateParner(this, Partner.createEmptyPartner() );
     }
 
     private void listParners() {
@@ -132,13 +132,13 @@ public class Welcome extends JFrame {
     }
 
     private void createRoomModal() {
-        new ModalRoomUpdateAndDtata(this, null);
+        new ModalRoomUpdateAndDtata(this, null,null);
     }
 
 
     private void getRoomsFromDb() {
         rooms = RoomsInDb.getAllRooms();
-        new ModalRoomList(this, rooms);
+        new ModalRoomList(this, rooms, user);
     }
 
     private void createDialog(JFrame frame) {

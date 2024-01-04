@@ -21,11 +21,17 @@ public class PartnerInDb {
         if (con != null) {
             try {
                 String query = "select " +
-                        "users.id,users.email,phone,first_name,last_name " +
+                        "users.id," +
+                        "users.email,phone," +
+                        "first_name," +
+                        "last_name " +
                         "from user_data " +
                         "inner join users " +
                         "on users.id=user_data.user_id " +
-                        "where users.deleted=0 and user_or_partner=1";
+                        "where " +
+                        "users.deleted=0 " +
+                        "and " +
+                        "user_or_partner=1";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 ResultSet rs = preparedStmt.executeQuery(query);
                 while (rs.next()) {
@@ -34,13 +40,20 @@ public class PartnerInDb {
                             rs.getString("first_name"),
                             rs.getString("last_name"),
                             rs.getString("email"),
-                            rs.getInt("id"),new UserRight(false,false,false)
+                            rs.getInt("id"),
+                            new UserRight(false,
+                                    false,
+                                    false,
+                                    false,
+                                    false,
+                                    false,
+                                    false)
                         ));
                 }
 
 
 
-
+                con.close();
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }

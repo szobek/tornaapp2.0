@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class SetUserRighsModal extends JDialog {
+public class ModalSetUserRights extends JDialog {
     private JPanel userRightsMainPanel;
     private JCheckBox cbCreateNewUser;
     private JCheckBox cbReserveList;
@@ -18,9 +18,13 @@ public class SetUserRighsModal extends JDialog {
     private JButton btnCancel;
     private JPanel buttonPanel;
     private JCheckBox cbCreatePartner;
+    private JCheckBox cbChangeRoomName;
+    private JCheckBox cbChangeRoomImages;
+    private JCheckBox cbChangeRoomNum;
+    private JCheckBox cbCreateRoom;
     private User user;
 
-    SetUserRighsModal(User user, JFrame frame) {
+    ModalSetUserRights(User user, JFrame frame) {
         super(frame, "Felhasználói jogok", true);
         createDialogBase(user);
     }
@@ -33,7 +37,7 @@ public class SetUserRighsModal extends JDialog {
 
         JPanel s = userRightsMainPanel;
         setContentPane(s);
-        setSize(480, 250);
+        setSize(550, 320);
         setLocationRelativeTo(null);
         addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
@@ -60,6 +64,12 @@ public class SetUserRighsModal extends JDialog {
 
         cbCreateNewUser.setSelected(user.getUserRight().isCreateUser());
         cbReserveList.setSelected(user.getUserRight().isReserveList());
+        cbCreatePartner.setSelected(user.getUserRight().isCreatePartner());
+
+        cbChangeRoomImages.setSelected(user.getUserRight().isChangeRoomImages());
+        cbChangeRoomNum.setSelected(user.getUserRight().isChangeRoomNum());
+        cbCreateRoom.setSelected(user.getUserRight().isCreateRoom());
+        cbChangeRoomName.setSelected(user.getUserRight().isChangeRoomName());
     }
 
     private void getInputDatas() {
@@ -67,7 +77,11 @@ public class SetUserRighsModal extends JDialog {
                 new UserRight(
                         cbReserveList.isSelected(),
                         cbCreateNewUser.isSelected(),
-                        cbCreatePartner.isSelected()
+                        cbCreatePartner.isSelected(),
+                        cbChangeRoomName.isSelected(),
+                        cbChangeRoomImages.isSelected(),
+                        cbChangeRoomNum.isSelected(),
+                        cbCreateRoom.isSelected()
                 )
         );
     }

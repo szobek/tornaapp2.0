@@ -56,7 +56,20 @@ public class ModalPartnerList extends JDialog {
                 while (i < partners.size() && !partners.get(i).getEmail().equals(email)) {
                     i++;
                 }
-                Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("", "", "", "", -1, new UserRight(false, false, false)) : partners.get(i);
+                Partner modifyPartner = (i >= partners.size() || i < 0) ? new Partner("",
+                        "",
+                        "",
+                        "",
+                        -1,
+                        new UserRight(
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false
+                        )) : partners.get(i);
                 new ModalCreateAndUpdateParner(frame, modifyPartner);
                 tblPartnerList.setModel(new PartnerTableModel());
                 centerRenderer.setHorizontalAlignment(JLabel.CENTER);

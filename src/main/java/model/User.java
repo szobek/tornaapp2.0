@@ -5,4 +5,21 @@ public class User extends People {
         super(phone, firstName, lastName, email, userId, userRight);
     }
 
+    public static User createEmptyUser(){
+        return new User("",
+                "",
+                "",
+                "",
+                -1,
+                new UserRight(
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                ));
+    }
+
 }

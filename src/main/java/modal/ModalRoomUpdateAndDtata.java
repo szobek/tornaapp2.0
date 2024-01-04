@@ -3,6 +3,7 @@ package modal;
 import db.RoomsInDb;
 import enum_pck.Success;
 import model.Room;
+import model.User;
 
 import javax.swing.*;
 
@@ -17,14 +18,19 @@ public class ModalRoomUpdateAndDtata extends JDialog {
     private JButton btnClose;
     private JButton btnDelete;
 
-    ModalRoomUpdateAndDtata(JFrame frame, Room room) {
+    private final User user;
+
+    ModalRoomUpdateAndDtata(JFrame frame, Room room, User user) {
         super(frame, true);
+        this.user = user;
+        setComponentsByRigts();
         if (room == null) {
             textFieldName.setHorizontalAlignment(JTextField.CENTER);
             textFieldNum.setHorizontalAlignment(JTextField.CENTER);
             textFieldGooglePhotos.setHorizontalAlignment(JTextField.CENTER);
 
             textFieldGooglePhotos.setMinimumSize(textFieldGooglePhotos.getPreferredSize());
+
         }
         this.roomField = room;
         setSize(500, 500);
@@ -74,6 +80,18 @@ Success.DELETEDROOM.setSuc(true);
         this.roomField.setName(textFieldName.getText());
         this.roomField.setNum(textFieldNum.getText());
         this.roomField.setImagePath(textFieldGooglePhotos.getText());
+    }
+
+    private void setComponentsByRigts(){
+        if(!user.getUserRight().isChangeRoomImages()){
+            textFieldGooglePhotos.setEditable(false);
+        }
+        if(!user.getUserRight().isChangeRoomName()){
+            textFieldName.setEditable(false);
+        }
+        if(!user.getUserRight().isChangeRoomNum()){
+            textFieldNum.setEditable(false);
+        }
     }
 
 

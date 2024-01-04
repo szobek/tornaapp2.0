@@ -8,7 +8,6 @@ import db.UsersInDb;
 import model.People;
 import model.User;
 
-import db.DBHandler;
 import model.UserRight;
 import enum_pck.Success;
 
@@ -60,7 +59,20 @@ public class ModalUserModify {
 
         });
         saveButton.addActionListener(e -> {
-            user=(user==null)?new User("","","","",0, new UserRight(false,false,false)):user;
+            user=(user==null)?new User("",
+                    "",
+                    "",
+                    "",
+                    0,
+                        new UserRight(
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false
+                        )):user;
             if(user.getEmail().isEmpty()){
                 getInputDatas();
                if( UsersInDb.saveNewUserInDb((User) user)) {
@@ -129,7 +141,7 @@ getInputDatas();
     }
 
     private void createRightsDialog(User user, JFrame frame) {
-        new SetUserRighsModal(user,frame);
+        new ModalSetUserRights(user,frame);
 
     }
 

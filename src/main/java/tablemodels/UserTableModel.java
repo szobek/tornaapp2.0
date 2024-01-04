@@ -12,7 +12,7 @@ public class UserTableModel extends AbstractTableModel {
     private final String[] columnNames = {"Név", "Telefon", "E-mail"};
     public UserTableModel() {
         this.users= UsersInDb.getAllFromDB();
-        users.add(new User("","","","",0,new UserRight(false,false,false)));
+        users.add(User.createEmptyUser());
     }
 
     @Override

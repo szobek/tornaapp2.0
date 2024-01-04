@@ -22,13 +22,26 @@ public class UsersInDb {
         if (con != null) {
             try {
                 String query = "select " +
-                        "users.id,users.email,phone,first_name,last_name,user_rights.newuser,user_rights.listreserves, user_rights.createpartner " +
+                        "users.id," +
+                        "users.email," +
+                        "phone," +
+                        "first_name," +
+                        "last_name," +
+                        "user_rights.newuser," +
+                        "user_rights.listreserves, " +
+                        "user_rights.createpartner, " +
+                        "user_rights.changeRoomName, " +
+                        "user_rights.changeRoomImages, " +
+                        "user_rights.changeRoomNum, " +
+                        "user_rights.createRoom "+
                         "from user_data " +
                         "inner join users " +
                         "on users.id=user_data.user_id " +
                         "inner join user_rights " +
                         "on user_rights.user_id=users.id " +
-                        "where users.deleted=0 and user_or_partner=0";
+                        "where users.deleted=0 " +
+                        "and " +
+                        "user_or_partner=0";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 ResultSet rs = preparedStmt.executeQuery(query);
                 while (rs.next()) {
@@ -41,12 +54,16 @@ public class UsersInDb {
                             new UserRight(
                                     rs.getBoolean("listreserves"),
                                     rs.getBoolean("newuser"),
-                                    rs.getBoolean("createpartner")
+                                    rs.getBoolean("createpartner"),
+                                    rs.getBoolean("changeRoomName"),
+                                    rs.getBoolean("changeRoomImages"),
+                                    rs.getBoolean("changeRoomNum"),
+                                    rs.getBoolean("createRoom")
                             )
                     )
                     );
                 }
-
+con.close();
 
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
