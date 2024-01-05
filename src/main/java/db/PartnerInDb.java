@@ -2,7 +2,6 @@ package db;
 
 import hash.PasswordHash;
 import model.Partner;
-import model.User;
 import model.UserRight;
 
 import java.sql.*;

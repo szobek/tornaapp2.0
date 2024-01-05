@@ -4,7 +4,6 @@ import Helpers.ReadConfig;
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.Arrays;
 import java.util.Properties;
 
 public class DBHandler {
