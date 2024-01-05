@@ -5,6 +5,11 @@ public class User extends People {
         super(phone, firstName, lastName, email, userId, userRight);
     }
 
+    @Override
+    public String toString() {
+        return super.getUserName()+", "+super.getEmail();
+    }
+
     public static User createEmptyUser(){
         return new User("",
                 "",

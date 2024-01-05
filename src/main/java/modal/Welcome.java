@@ -1,6 +1,7 @@
 package modal;
 
 import db.InformationInDb;
+import db.PartnerInDb;
 import db.RoomsInDb;
 import db.UsersInDb;
 import model.*;
@@ -30,6 +31,7 @@ public class Welcome extends JFrame {
     private ArrayList<Room> rooms;
 
     private ArrayList<User> users;
+    private ArrayList<Partner> partners;
 private final User user;
 
 public static User staticUser;
@@ -91,6 +93,8 @@ staticUser=User.createEmptyUser();
     private void getDataFromDB() {
         this.users = UsersInDb.getAllFromDB();
         this.rooms = RoomsInDb.getAllRooms();
+// TODO Ide kell a pertner lekérdezés
+this.partners= PartnerInDb.getAllFromDB();
     }
 
     public void showUsers() {
@@ -156,7 +160,7 @@ staticUser=User.createEmptyUser();
 
     private void createReserveMakeDialog() {
         getDataFromDB();
-        new ModalCreateReserve(this, users);
+        new ModalCreateReserve(this, partners);
     }
 
     public int getUsersSize() {

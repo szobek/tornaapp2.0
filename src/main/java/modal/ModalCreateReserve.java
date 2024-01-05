@@ -2,10 +2,7 @@ package modal;
 
 import db.ReservesInDB;
 import db.RoomsInDb;
-import model.People;
-import model.Reserve;
-import model.Room;
-import model.User;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,12 +33,12 @@ public class ModalCreateReserve extends JDialog {
     private JButton btnNext2;
     private JPanel btnPanel;
     private final ArrayList<String> days = new ArrayList<>();
-    private final ArrayList<User> users;
+    private final ArrayList<Partner> users;
     private ArrayList<Room> rooms;
 private Timestamp reserveFromDate;
     private Timestamp reserveToDate;
 
-    ModalCreateReserve(JFrame frame, ArrayList<User> users) {
+    ModalCreateReserve(JFrame frame, ArrayList<Partner> users) {
         super(frame, "Felhasználói adatok", true);
 
         this.users = users;

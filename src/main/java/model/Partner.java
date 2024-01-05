@@ -5,6 +5,11 @@ public class Partner extends People{
         super(phone, firstName, lastName, email, userId, userRight);
     }
 
+    @Override
+    public String toString() {
+        return super.getUserName()+", "+super.getEmail();
+    }
+
     public static Partner createEmptyPartner(){
         return new Partner("",
                 "",
