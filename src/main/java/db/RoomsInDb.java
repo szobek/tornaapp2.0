@@ -28,7 +28,10 @@ public class RoomsInDb {
 
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next())
-                    rooms.add(new Room(rs.getInt("id"),rs.getString("num"), rs.getString("name"), rs.getString("image_path") ));
+                    rooms.add(new Room(rs.getInt("id"),
+                            rs.getString("num"),
+                            rs.getString("name"),
+                            rs.getString("image_path") ));
                 con.close();
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
@@ -125,8 +128,8 @@ public class RoomsInDb {
                 String query = "INSERT INTO `rooms` (`id`, `num`, `name`, `image_path`) VALUES (NULL, ?, ?, ?)";
 
                 PreparedStatement preparedStmt = con.prepareStatement(query);
-                preparedStmt.setString(1,room.getName());
-                preparedStmt.setString(2,room.getNum());
+                preparedStmt.setString(1,room.getNum());
+                preparedStmt.setString(2,room.getName());
                 preparedStmt.setString(3,room.getImagePath());
 
 

@@ -24,6 +24,7 @@ public class ModalUserList extends JDialog {
 
         super(frame, true);
         this.frame = frame;
+        Welcome.staticUser.setEmail("ll");
         setTitle("Felhasználók");
         setSize(300, 400);
         setLocationRelativeTo(frame);

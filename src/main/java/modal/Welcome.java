@@ -32,6 +32,8 @@ public class Welcome extends JFrame {
     private ArrayList<User> users;
 private final User user;
 
+public static User staticUser;
+
     public Welcome(User user) {
         super();
 this.user=user;
@@ -55,7 +57,7 @@ this.user=user;
         pack();
         createMenu();
         hideIfHaventRignt(this.user);
-
+staticUser=User.createEmptyUser();
 
     }
 
